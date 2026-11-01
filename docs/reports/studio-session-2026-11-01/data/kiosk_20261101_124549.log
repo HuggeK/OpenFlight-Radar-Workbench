@@ -1,0 +1,641 @@
+[OpenFlight] Starting startup splash on port 8081...
+[OpenFlight] Launching kiosk shell (Electron)...
+[OpenFlight] Starting OpenFlight server on port 8080
+[OpenFlight] Waiting for server to start...
+[10380:1101/124549.718505:ERROR:ui/gl/angle_platform_impl.cc:48] Display.cpp:1115 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+ERR: Display.cpp:1115 (initialize): ANGLE Display::initialize error 12289: Could not create a backing OpenGL context.
+[10380:1101/124549.718858:ERROR:ui/gl/egl_util.cc:92] EGL Driver message (Critical) eglInitialize: Could not create a backing OpenGL context.
+[10380:1101/124549.718931:ERROR:ui/gl/gl_display.cc:630] eglInitialize OpenGL failed with error EGL_NOT_INITIALIZED, trying next display type
+[1:40:17.850036059] [10416]  INFO Camera camera_manager.cpp:340 libcamera v0.7.2+rpt20261009
+[1:40:17.867288270] [10452]  INFO RPI pisp.cpp:725 libpisp version v1.7.0 07-08-2026 (09:22:13)
+[1:40:17.876314437] [10452]  INFO IPAProxy ipa_proxy.cpp:184 Using tuning file /usr/share/libcamera/ipa/rpi/pisp/ov9281_mono.json
+[1:40:17.877582149] [10452]  INFO Camera camera_manager.cpp:223 Adding camera '/base/axi/pcie@1000120000/rp1/i2c@80000/ov9281@60' for pipeline handler rpi/pisp
+[1:40:17.877610649] [10452]  INFO RPI pisp.cpp:1186 Registered camera /base/axi/pcie@1000120000/rp1/i2c@80000/ov9281@60 to CFE device /dev/media0 and ISP device /dev/media2 using PiSP variant BCM2712_D0
+2026-11-01 12:45:51,306 - picamera2.picamera2 - INFO - Initialization successful.
+2026-11-01 12:45:51,307 - picamera2.picamera2 - INFO - Camera now open.
+[1:40:17.883555767] [10452]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc30
+[1:40:17.883595174] [10452]  WARN V4L2 v4l2_pixelformat.cpp:346 Unsupported V4L2 pixel format Nc12
+2026-11-01 12:45:51,309 - picamera2.picamera2 - INFO - Camera configuration has been adjusted!
+[1:40:17.884214299] [10416]  INFO Camera camera.cpp:1216 configuring streams: (0) 320x200-YUV420/SMPTE170M (1) 320x200-R16/RAW
+[1:40:17.884306076] [10452]  INFO RPI pisp.cpp:1502 Sensor: /base/axi/pcie@1000120000/rp1/i2c@80000/ov9281@60 - Selected sensor format: 320x200-Y8_1X8/RAW - Selected CFE format: 320x200-Y16 /RAW/Linear/Rec601/Limited
+2026-11-01 12:45:51,309 - picamera2.picamera2 - INFO - Configuration successful!
+2026-11-01 12:45:51,337 - picamera2.picamera2 - INFO - Camera started
+2026-11-01 12:45:51,550 - openflight.camera.capture_runtime - INFO - [CAMERA] Live controls updated: exposure=650us gain=15.00
+2026-11-01 12:45:51,550 - openflight.camera.capture_runtime - INFO - [CAMERA] Auto exposure: too_dark -> 650us gain 15.0 (Calibrating camera exposure (1/3))
+2026-11-01 12:45:51,852 - openflight.camera.capture_runtime - INFO - [CAMERA] Live controls updated: exposure=800us gain=18.00
+2026-11-01 12:45:51,852 - openflight.camera.capture_runtime - INFO - [CAMERA] Auto exposure: too_dark -> 800us gain 18.0 (Calibrating camera exposure (2/3))
+2026-11-01 12:45:52,154 - openflight.camera.capture_runtime - INFO - [CAMERA] Live controls updated: exposure=1000us gain=20.00
+2026-11-01 12:45:52,154 - openflight.camera.capture_runtime - INFO - [CAMERA] Auto exposure: too_dark -> 1000us gain 20.0 (Calibrating camera exposure (3/3))
+2026-11-01 12:45:52,456 - openflight.camera.capture_runtime - INFO - [CAMERA] Startup exposure locked: 1000us gain 20.0 (ready)
+2026-11-01 12:45:52,618 - openflight.camera.capture_runtime - INFO - [CAMERA] Capture armed at 320x200 450.0fps (raw, 68 pre/23 post)
+2026-11-01 12:45:52,631 - openflight.server - INFO - [SERVER] Camera capture initialized: {'enabled': True, 'shot_analysis_enabled': False, 'output_dir': '/home/openfl/openflight_sessions/trackman/camera', 'gpio_pin_bcm': 17, 'trigger_source': 'iwr6843_fanout', 'width': 320, 'height': 200, 'fps': 450.0, 'pre_ms': 150.0, 'post_ms': 50.0, 'pre_frames': 68, 'post_frames': 23, 'exposure_us': 1000, 'gain': 20.0, 'auto_exposure_enabled': True, 'stream': 'raw', 'rotate_180': False, 'mirror_horizontal': False, 'roll_correction_deg': 0.0, 'scaler_crop': None, 'mount_height_m': 0.20955, 'lateral_offset_m': 0.0, 'horizontal_offset_deg': 0.0, 'alignment_x_pct': 50.0, 'alignment_y_pct': 50.0}
+2026-11-01 12:45:52,649 - openflight.server - INFO - [IWR6843] Calibration: config/iwr6843_calibration_reference.json
+2026-11-01 12:45:52,664 - openflight.server - WARNING - [IWR6843] Self-trigger drives the OPS with S!. Disconnect the SEN-14262 GATE from OPS HOST_INT, or both will trigger it.
+2026-11-01 12:45:52,665 - openflight.iwr6843.monitor - INFO - [IWR6843] Capture windows on the tee (bin 34): phaseCaptureCfg 20 53 9 30 53 7 30 53 56 8 1
+2026-11-01 12:45:52,667 - openflight.iwr6843.monitor - INFO - [IWR6843] Firmware 1.0.3 (git 4e4e9c5d94b7, hybrid-cadence, built 2026-10-09T15:58:05Z)
+2026-11-01 12:45:53,064 - openflight.iwr6843.monitor - INFO - [IWR6843] On-chip tracker armed: trackCfg 0.00013499999999999997 0.046875 5.0800000000000001 1 1.6500000000000001
+2026-11-01 12:45:53,066 - openflight.iwr6843.monitor - INFO - [IWR6843] Configured on BCM17 using /dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_01310F8D-if00-port0 (iwr6843_l3dump_wide_24f2ms_53bin_iq16_window_hann.cfg, waiting for OPS, self-trigger 'triggerCfg 36 3.0 1')
+2026-11-01 12:45:53,066 - openflight.server - INFO - [SERVER] IWR6843 initialized (port=/dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_01310F8D-if00-port0, BCM17, estimator=LCMF-v1, firmware boundary freeze)
+2026-11-01 12:45:53,936 - ops243 - INFO - [OPS] UART answered at 230400 baud (firmware 1.3.3)
+2026-11-01 12:45:53,936 - ops243 - INFO - [OPS] Transport=uart port=/dev/ttyAMA0 baud=230400 (dump ~2.0s)
+2026-11-01 12:45:55,044 - ops243 - INFO - [OPS] Units: MPH
+2026-11-01 12:45:55,152 - ops243 - INFO - [OPS] Transmit power: level 3 (reduced to avoid clipping)
+2026-11-01 12:45:55,259 - ops243 - INFO - [OPS] Sample rate: 30ksps
+2026-11-01 12:45:55,460 - ops243 - INFO - [OPS] Re-arm drain: 0 bytes in 0.2s
+2026-11-01 12:45:55,831 - ops243 - INFO - [OPS] Rolling buffer re-armed (S#24)
+2026-11-01 12:45:55,831 - ops243 - INFO - [OPS] Persisted rolling buffer prepared (S#24, 30ksps)
+2026-11-01 12:45:55,831 - openflight.rolling_buffer.monitor - INFO - [MONITOR] Rolling buffer mode configured with S#24, S=30
+2026-11-01 12:45:55,832 - openflight.server - INFO - [SERVER] Starting monitor: mode=rolling-buffer, trigger=sound, sample_rate=30ksps
+2026-11-01 12:45:56,545 - ops243 - INFO - [OPS] Clock sync: method=integer_rollover offset=1793527519.539s best_read_latency=1.0ms spread=988.4ms rollover_uncertainty=11.6ms (52/52 valid)
+2026-11-01 12:45:56,546 - openflight.rolling_buffer.monitor - INFO - [MONITOR] Rolling buffer monitor started (trigger: sound)
+2026-11-01 12:45:56,546 - openflight.iwr6843.monitor - INFO - [IWR6843] Armed on firmware self-trigger
+2026-11-01 12:45:56,549 - openflight.server - INFO - [POWER] Battery monitoring enabled with provider=geekworm
+2026-11-01 12:45:56,574 - werkzeug - WARNING - Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
+==================================================
+  OpenFlight UI Server
+==================================================
+
+Session logging enabled (location: trackman)
+Ballistic carry model: ENABLED (simulator + drag/Magnus)
+Camera capture enabled: /home/openfl/openflight_sessions/trackman/camera
+IWR6843 enabled (onboard launch angles, BCM17, normal TX order)
+IWR6843 raw dumps enabled: /home/openfl/openflight_sessions/iwr6843
+Inclinometer enabled (raw pitch -1.53deg, calibrated -0.09deg)
+IWR6843 tilt: configured 10.10deg, effective 10.01deg
+[MODE] Rolling buffer mode (trigger: sound, sample_rate: 30ksps)
+[SESSION] Started logging: /home/openfl/openflight_sessions/session_20261101_124555_trackman.jsonl
+[SESSION] Mode: rolling-buffer (trigger: sound)
+[SESSION] Raw radar log: /home/openfl/openflight_sessions/radar_raw_20261101_124555.log
+Battery monitoring: ENABLED (geekworm)
+Server starting at http://0.0.0.0:8080
+
+ * Serving Flask app 'openflight.server'
+ * Debug mode: off
+2026-11-01 12:45:56,577 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.3.113:8080
+2026-11-01 12:45:56,577 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-11-01 12:45:56,846 - werkzeug - INFO - 127.0.0.1 - - [01/Nov/2026 12:45:56] "GET / HTTP/1.1" 200 -
+2026-11-01 12:45:56,860 - werkzeug - INFO - 127.0.0.1 - - [01/Nov/2026 12:45:56] "[36mGET / HTTP/1.1[0m" 304 -
+2026-11-01 12:45:56,886 - werkzeug - INFO - 127.0.0.1 - - [01/Nov/2026 12:45:56] "GET / HTTP/1.1" 200 -
+2026-11-01 12:45:56,909 - werkzeug - INFO - 127.0.0.1 - - [01/Nov/2026 12:45:56] "GET / HTTP/1.1" 200 -
+2026-11-01 12:45:56,933 - werkzeug - INFO - 127.0.0.1 - - [01/Nov/2026 12:45:56] "[36mGET /assets/index-DndzWcBH.css HTTP/1.1[0m" 304 -
+2026-11-01 12:45:56,938 - werkzeug - INFO - 127.0.0.1 - - [01/Nov/2026 12:45:56] "[36mGET /assets/index-y-dlp6kF.js HTTP/1.1[0m" 304 -
+[OpenFlight] Startup splash will continue to OpenFlight
+[OpenFlight] OpenFlight is running. Press Ctrl+C to stop.
+[10380:1101/124601.592701:ERROR:ui/gl/gl_surface_presentation_helper.cc:260] GetVSyncParametersIfAvailable() failed for 1 times!
+2026-11-01 12:46:26,551 - ops243 - DEBUG - [OPS] Hardware trigger: no data received within 30s
+2026-11-01 12:46:56,568 - ops243 - DEBUG - [OPS] Hardware trigger: no data received within 30s
+[10380:1101/124716.623376:ERROR:ui/gl/gl_surface_presentation_helper.cc:260] GetVSyncParametersIfAvailable() failed for 2 times!
+[10380:1101/124725.616346:ERROR:ui/gl/gl_surface_presentation_helper.cc:260] GetVSyncParametersIfAvailable() failed for 3 times!
+2026-11-01 12:47:26,570 - ops243 - DEBUG - [OPS] Hardware trigger: no data received within 30s
+2026-11-01 12:47:30,613 - openflight.server - INFO - [SERVER] Club changed to 7-iron
+2026-11-01 12:47:40,451 - openflight.iwr6843.monitor - INFO - [IWR6843] Onboard result: shot 114 partial, 1 club / 3 ball points
+2026-11-01 12:47:40,451 - openflight.iwr6843.monitor - INFO - [IWR6843] Trigger #1: reading track samples
+2026-11-01 12:47:40,475 - ops243 - DEBUG - [OPS] Hardware trigger: first byte after 13.9s
+2026-11-01 12:47:40,571 - openflight.camera.capture_runtime - INFO - [CAMERA] Capture #1 saved: 91 frames, 430.9fps, gaps=0 -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_124740_434_001
+2026-11-01 12:47:42,251 - ops243 - INFO - [OPS] Hardware trigger: 41064 bytes in 15.7s
+2026-11-01 12:47:42,251 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger fired, 41064 bytes received
+2026-11-01 12:47:42,665 - ops243 - INFO - [OPS] Clock sync: method=integer_rollover offset=1793527519.534s best_read_latency=1.0ms spread=988.7ms rollover_uncertainty=11.3ms (36/36 valid)
+2026-11-01 12:47:42,665 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] OPS clock sync selected: fresh offset=1793527519.533788s age=0.0ms (fresh=valid_integer_rollover, previous=valid_integer_rollover, delta=-5.1ms)
+2026-11-01 12:47:42,865 - ops243 - INFO - [OPS] Re-arm drain: 0 bytes in 0.2s
+2026-11-01 12:47:43,239 - ops243 - INFO - [OPS] Rolling buffer re-armed (S#24)
+2026-11-01 12:47:43,239 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger wall time 1793533660.432 (source=ops_clock_sync, first byte 1793533660.476, post-trigger 34.5ms)
+2026-11-01 12:47:43,239 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger accepted — peak 57.0 mph, 27 outbound readings
+2026-11-01 12:47:43,280 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ball speed outlier rejected: max=57.0, mode=31.0 mph (2 occurrences)
+2026-11-01 12:47:43,280 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ball speed: 31.0 mph (mode-based, 27 outbound readings)
+2026-11-01 12:47:43,280 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Club speed: 21.3 mph at 17.1ms before ball
+2026-11-01 12:47:43,280 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Impact estimate: sound_trigger 102.0ms (speed_delta_below_threshold)
+2026-11-01 12:47:43,282 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Multitaper repaired 8.37% clipped I/Q samples
+2026-11-01 12:47:43,309 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ungated multitaper spin: 7910 RPM, evidence=3.60, fade=89.89 Hz, window=21.7ms
+2026-11-01 12:47:43,309 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Spin result: 7910 RPM, SNR=3.60, quality=experimental
+2026-11-01 12:47:43,309 - openflight.rolling_buffer.monitor - INFO - [MONITOR] process_capture: 69.6ms
+2026-11-01 12:47:43,309 - openflight.rolling_buffer.monitor - INFO - [MONITOR] Shot detected: ball=31.0 mph, club=21.3, spin=7910
+2026-11-01 12:47:43,312 - openflight.server - INFO - [SERVER] Shot callback: 31.0 mph
+2026-11-01 12:47:43,313 - openflight.server - INFO - [SERVER] Initial OPS metrics emitted 2882ms after impact; hardware enrichment continues in background
+2026-11-01 12:47:43,314 - openflight.server - INFO - [SERVER] Inclinometer pitch: raw -1.41deg, calibrated +0.02deg, IWR tilt 10.12deg (age 63ms)
+2026-11-01 12:47:43,315 - openflight.rolling_buffer.monitor - INFO - [SHOT] #1: ball=31.0 mph, club=21.3, carry=42 yds | trigger=16669ms, process=70ms, callback=3ms, total=16745ms
+2026-11-01 12:47:47,537 - openflight.iwr6843.monitor - INFO - [IWR6843] Capture #1 complete: 733301 bytes in 7.10s
+2026-11-01 12:47:47,739 - openflight.server - INFO - [SERVER] Self-trigger impact -> S!: 2.6 ms (OPS pre-trigger 102.4 ms)
+2026-11-01 12:47:47,739 - openflight.server - INFO - [SERVER] IWR6843 host LCMF-v1 withheld angle: rejected_by_ball_tracker
+2026-11-01 12:47:47,740 - openflight.server - INFO - [SERVER] IWR6843 onboard shot 114 v2: partial, impact range, club 1 pts / ball 3 pts, quality ball_from_origin,impact_identified,speeds_plausible
+  ball speed    169.3 mph  conf 0.00 MEASURED [fallback,radial]| OPS 31.0 mph  Δ +138.3
+  club speed            -                           | OPS 21.3 mph
+  launch V              -                           | host -
+  launch H              -                           | host -
+  club path             -                           | host cand -
+  attack                -                           | host cand -
+  spin rate             -                           | OPS 7910
+  spin axis             -                           | host -
+  impact range     1.62 m  conf 0.50 MEASURED [fallback]
+  smash                 -                           | OPS 1.45
+  impact fit   single_track, refined-trigger 776 us, spread 0 us, no lock; club_in few_points, club_out missing, ball_out ok 169.3 mph
+2026-11-01 12:47:47,745 - openflight.server - INFO - [SERVER] Camera capture #1 matched -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_124740_434_001
+2026-11-01 12:47:47,793 - openflight.server - INFO - [SERVER] Camera-assisted horizontal: selected=None camera=None IWR=None delta=None status=camera_withheld_fallback_iwr support=0
+2026-11-01 12:47:47,797 - openflight.iwr6843.monitor - WARNING - [IWR6843] l3release refused (IWR6843 did not release the frozen ring: Error: self-trigger freeze timed out
+Error -1
+l3dump:/>): restarting the radar
+2026-11-01 12:47:47,835 - openflight.server - INFO - [SERVER] Camera/IWR chained club delivery: AoA None path None (status=rejected_no_ball, features=0, speed_ratio=None, velocity_mad=None mph, path_windows=0, path_mad=None deg, impact_frame=None)
+2026-11-01 12:47:47,835 - openflight.server - INFO - [SERVER] Camera analysis: 88.8ms
+2026-11-01 12:47:47,835 - openflight.server - INFO - [SERVER] Angle source: estimated (43.2°, conf=50%)
+2026-11-01 12:47:47,835 - openflight.server - INFO - [SERVER] Horizontal angle unavailable; no measured trajectory
+2026-11-01 12:47:47,835 - openflight.server - INFO - [SERVER] Ball speed cosine correction: 31.0 -> 37.1 mph (LA 43.2)
+2026-11-01 12:47:47,849 - openflight.server - INFO - [SERVER] Ballistic carry: 28 yds (spin: 6500 rpm, source: club_typical, landing: 47.1 deg)
+2026-11-01 12:47:47,850 - openflight.server - INFO - [SERVER] Shot: ball=37.1 mph, carry=45 yds, Launch: 43.2°
+2026-11-01 12:47:48,199 - openflight.iwr6843.monitor - INFO - [IWR6843] On-chip tracker armed: trackCfg 0.00013499999999999997 0.046875 5.0800000000000001 1 1.6500000000000001
+2026-11-01 12:47:48,200 - openflight.iwr6843.monitor - WARNING - [IWR6843] Radar restarted to rearm it after a capture
+2026-11-01 12:48:01,539 - openflight.iwr6843.monitor - INFO - [IWR6843] Trigger #2: reading track samples
+2026-11-01 12:48:01,573 - ops243 - DEBUG - [OPS] Hardware trigger: first byte after 18.3s
+2026-11-01 12:48:01,649 - openflight.camera.capture_runtime - INFO - [CAMERA] Capture #2 saved: 91 frames, 430.9fps, gaps=0 -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_124801_522_002
+2026-11-01 12:48:03,344 - ops243 - INFO - [OPS] Hardware trigger: 41075 bytes in 20.0s
+2026-11-01 12:48:03,344 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger fired, 41075 bytes received
+2026-11-01 12:48:03,754 - ops243 - INFO - [OPS] Clock sync: method=integer_rollover offset=1793527519.532s best_read_latency=1.1ms spread=988.7ms rollover_uncertainty=11.3ms (36/36 valid)
+2026-11-01 12:48:03,755 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] OPS clock sync selected: fresh offset=1793527519.532193s age=0.0ms (fresh=valid_integer_rollover, previous=valid_integer_rollover, delta=-1.6ms)
+2026-11-01 12:48:03,955 - ops243 - INFO - [OPS] Re-arm drain: 0 bytes in 0.2s
+2026-11-01 12:48:04,327 - ops243 - INFO - [OPS] Rolling buffer re-armed (S#24)
+2026-11-01 12:48:04,328 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger wall time 1793533681.519 (source=ops_clock_sync, first byte 1793533681.574, post-trigger 34.5ms)
+2026-11-01 12:48:04,328 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger accepted — peak 74.0 mph, 29 outbound readings
+2026-11-01 12:48:04,370 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ball speed: 74.0 mph (mode-based, 29 outbound readings)
+2026-11-01 12:48:04,371 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Club speed: 60.0 mph at 18.1ms before ball
+2026-11-01 12:48:04,371 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Impact estimate: sound_trigger 102.0ms (speed_delta_below_threshold)
+2026-11-01 12:48:04,372 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Multitaper repaired 2.03% clipped I/Q samples
+2026-11-01 12:48:04,376 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ball signal lost at 126.0ms (window trimmed from 136.5ms)
+2026-11-01 12:48:04,406 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ungated multitaper spin: 10986 RPM, evidence=0.35, fade=73.57 Hz, window=19.4ms
+2026-11-01 12:48:04,406 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Spin result: 10986 RPM, SNR=0.35, quality=experimental
+2026-11-01 12:48:04,406 - openflight.rolling_buffer.monitor - INFO - [MONITOR] process_capture: 78.1ms
+2026-11-01 12:48:04,406 - openflight.rolling_buffer.monitor - INFO - [MONITOR] Shot detected: ball=74.0 mph, club=60.0, spin=10986
+2026-11-01 12:48:04,408 - openflight.server - INFO - [SERVER] Shot callback: 74.0 mph
+2026-11-01 12:48:04,409 - openflight.server - INFO - [SERVER] Initial OPS metrics emitted 2890ms after impact; hardware enrichment continues in background
+2026-11-01 12:48:04,410 - openflight.server - INFO - [SERVER] Inclinometer pitch: raw -1.52deg, calibrated -0.09deg, IWR tilt 10.01deg (age 100ms)
+2026-11-01 12:48:04,411 - openflight.rolling_buffer.monitor - INFO - [SHOT] #2: ball=74.0 mph, club=60.0, carry=101 yds | trigger=21013ms, process=78ms, callback=2ms, total=21095ms
+2026-11-01 12:48:08,624 - openflight.iwr6843.monitor - INFO - [IWR6843] Capture #2 complete: 733301 bytes in 7.10s
+2026-11-01 12:48:08,887 - openflight.iwr6843.monitor - WARNING - [IWR6843] l3release refused (IWR6843 did not release the frozen ring: Error: self-trigger freeze timed out
+Error -1
+l3dump:/>): restarting the radar
+2026-11-01 12:48:08,967 - openflight.server - INFO - [SERVER] Self-trigger impact -> S!: 3.2 ms (OPS pre-trigger 102.4 ms)
+2026-11-01 12:48:08,967 - openflight.server - INFO - [SERVER] IWR6843 host LCMF-v1 withheld angle: rejected_track_quality
+2026-11-01 12:48:08,967 - openflight.server - WARNING - [SERVER] IWR6843 capture #2 carried no onboard result; preserving OPS shot
+2026-11-01 12:48:08,968 - openflight.server - INFO - [SERVER] Camera capture #2 matched -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_124801_522_002
+2026-11-01 12:48:09,007 - openflight.server - INFO - [SERVER] Camera-assisted horizontal: selected=None camera=None IWR=None delta=None status=camera_withheld_fallback_iwr support=0
+2026-11-01 12:48:09,051 - openflight.server - INFO - [SERVER] Camera/IWR chained club delivery: AoA None path None (status=rejected_no_ball, features=0, speed_ratio=None, velocity_mad=None mph, path_windows=0, path_mad=None deg, impact_frame=None)
+2026-11-01 12:48:09,051 - openflight.server - INFO - [SERVER] Camera analysis: 82.0ms
+2026-11-01 12:48:09,051 - openflight.server - INFO - [SERVER] Angle source: estimated (27.1°, conf=50%)
+2026-11-01 12:48:09,051 - openflight.server - INFO - [SERVER] Horizontal angle unavailable; no measured trajectory
+2026-11-01 12:48:09,051 - openflight.server - INFO - [SERVER] Ball speed cosine correction: 74.0 -> 77.4 mph (LA 27.1)
+2026-11-01 12:48:09,076 - openflight.server - INFO - [SERVER] Ballistic carry: 93 yds (spin: 6500 rpm, source: club_typical, landing: 43.0 deg)
+2026-11-01 12:48:09,077 - openflight.server - INFO - [SERVER] Shot: ball=77.4 mph, carry=100 yds, Launch: 27.1°
+2026-11-01 12:48:09,294 - openflight.iwr6843.monitor - INFO - [IWR6843] On-chip tracker armed: trackCfg 0.00013499999999999997 0.046875 5.0800000000000001 1 1.6500000000000001
+2026-11-01 12:48:09,295 - openflight.iwr6843.monitor - WARNING - [IWR6843] Radar restarted to rearm it after a capture
+2026-11-01 12:48:19,939 - openflight.iwr6843.monitor - INFO - [IWR6843] Trigger #3: reading track samples
+2026-11-01 12:48:19,957 - ops243 - DEBUG - [OPS] Hardware trigger: first byte after 15.5s
+2026-11-01 12:48:20,066 - openflight.camera.capture_runtime - INFO - [CAMERA] Capture #3 saved: 91 frames, 430.9fps, gaps=0 -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_124819_921_003
+2026-11-01 12:48:21,744 - ops243 - INFO - [OPS] Hardware trigger: 41035 bytes in 17.3s
+2026-11-01 12:48:21,744 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger fired, 41035 bytes received
+2026-11-01 12:48:21,956 - ops243 - INFO - [OPS] Re-arm drain: 0 bytes in 0.2s
+2026-11-01 12:48:22,327 - ops243 - INFO - [OPS] Rolling buffer re-armed (S#24)
+2026-11-01 12:48:22,328 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger rejected — no outbound speed >= 15 mph (peak=0.0 mph, 0 readings)
+2026-11-01 12:48:27,023 - openflight.iwr6843.monitor - INFO - [IWR6843] Capture #3 complete: 733301 bytes in 7.09s
+2026-11-01 12:48:27,282 - openflight.iwr6843.monitor - WARNING - [IWR6843] l3release refused (IWR6843 did not release the frozen ring: Error: self-trigger freeze timed out
+Error -1
+l3dump:/>): restarting the radar
+2026-11-01 12:48:27,680 - openflight.iwr6843.monitor - INFO - [IWR6843] On-chip tracker armed: trackCfg 0.00013499999999999997 0.046875 5.0800000000000001 1 1.6500000000000001
+2026-11-01 12:48:27,681 - openflight.iwr6843.monitor - WARNING - [IWR6843] Radar restarted to rearm it after a capture
+2026-11-01 12:48:52,335 - ops243 - DEBUG - [OPS] Hardware trigger: no data received within 30s
+2026-11-01 12:49:22,342 - ops243 - DEBUG - [OPS] Hardware trigger: no data received within 30s
+2026-11-01 12:49:39,406 - openflight.iwr6843.monitor - INFO - [IWR6843] Trigger #4: reading track samples
+2026-11-01 12:49:39,437 - ops243 - DEBUG - [OPS] Hardware trigger: first byte after 17.1s
+2026-11-01 12:49:39,534 - openflight.camera.capture_runtime - INFO - [CAMERA] Capture #4 saved: 91 frames, 430.9fps, gaps=0 -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_124939_385_004
+2026-11-01 12:49:41,201 - ops243 - INFO - [OPS] Hardware trigger: 41075 bytes in 18.9s
+2026-11-01 12:49:41,201 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger fired, 41075 bytes received
+2026-11-01 12:49:41,613 - ops243 - INFO - [OPS] Clock sync: method=integer_rollover offset=1793527519.527s best_read_latency=1.2ms spread=988.7ms rollover_uncertainty=11.3ms (36/36 valid)
+2026-11-01 12:49:41,613 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] OPS clock sync selected: fresh offset=1793527519.527448s age=0.0ms (fresh=valid_integer_rollover, previous=valid_integer_rollover, delta=-4.7ms)
+2026-11-01 12:49:41,814 - ops243 - INFO - [OPS] Re-arm drain: 0 bytes in 0.2s
+2026-11-01 12:49:42,187 - ops243 - INFO - [OPS] Rolling buffer re-armed (S#24)
+2026-11-01 12:49:42,187 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger wall time 1793533779.384 (source=ops_clock_sync, first byte 1793533779.438, post-trigger 34.5ms)
+2026-11-01 12:49:42,187 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger accepted — peak 126.2 mph, 41 outbound readings
+2026-11-01 12:49:42,233 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ball speed: 122.2 mph (mode-based, 41 outbound readings)
+2026-11-01 12:49:42,234 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Club speed: 79.8 mph at 18.1ms before ball
+2026-11-01 12:49:42,234 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Impact estimate: OPS transition 86.4ms (club 84.7 mph @ 84.3ms -> ball 123.7 mph @ 88.5ms, delta=39.0 mph)
+2026-11-01 12:49:42,236 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Multitaper repaired 2.76% clipped I/Q samples
+2026-11-01 12:49:42,283 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ungated multitaper spin: 9668 RPM, evidence=1.90, fade=32.04 Hz, window=40.9ms
+2026-11-01 12:49:42,283 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Spin result: 9668 RPM, SNR=1.90, quality=experimental
+2026-11-01 12:49:42,284 - openflight.rolling_buffer.monitor - INFO - [MONITOR] process_capture: 96.0ms
+2026-11-01 12:49:42,284 - openflight.rolling_buffer.monitor - INFO - [MONITOR] Shot detected: ball=122.2 mph, club=79.8, spin=9668
+2026-11-01 12:49:42,286 - openflight.server - INFO - [SERVER] Shot callback: 122.2 mph
+2026-11-01 12:49:42,287 - openflight.server - INFO - [SERVER] Initial OPS metrics emitted 2903ms after impact; hardware enrichment continues in background
+2026-11-01 12:49:42,289 - openflight.server - INFO - [SERVER] Inclinometer pitch: raw -1.52deg, calibrated -0.08deg, IWR tilt 10.02deg (age 66ms)
+2026-11-01 12:49:42,289 - openflight.iwr6843.monitor - WARNING - [IWR6843] Discarding unmatched capture #3 (edge 1793533699.922, shot 1793533779.384)
+2026-11-01 12:49:42,289 - openflight.rolling_buffer.monitor - INFO - [SHOT] #3: ball=122.2 mph, club=79.8, carry=195 yds | trigger=19845ms, process=96ms, callback=3ms, total=19946ms
+2026-11-01 12:49:46,492 - openflight.iwr6843.monitor - INFO - [IWR6843] Capture #4 complete: 733301 bytes in 7.10s
+2026-11-01 12:49:46,752 - openflight.iwr6843.monitor - WARNING - [IWR6843] l3release refused (IWR6843 did not release the frozen ring: Error: self-trigger freeze timed out
+Error -1
+l3dump:/>): restarting the radar
+2026-11-01 12:49:46,864 - openflight.server - INFO - [SERVER] Self-trigger impact -> S!: 0.6 ms (OPS pre-trigger 102.4 ms)
+2026-11-01 12:49:46,865 - openflight.server - INFO - [SERVER] IWR6843 host LCMF-v1 withheld angle: rejected_track_quality
+2026-11-01 12:49:46,865 - openflight.server - WARNING - [SERVER] IWR6843 capture #4 carried no onboard result; preserving OPS shot
+2026-11-01 12:49:46,865 - openflight.camera.capture_runtime - WARNING - [CAMERA] Discarding unmatched capture #3 (edge 1793533699.922, shot 1793533779.384)
+2026-11-01 12:49:46,865 - openflight.server - INFO - [SERVER] Camera capture #4 matched -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_124939_385_004
+2026-11-01 12:49:46,900 - openflight.server - INFO - [SERVER] Camera-assisted horizontal: selected=None camera=None IWR=None delta=None status=camera_withheld_fallback_iwr support=0
+2026-11-01 12:49:46,941 - openflight.server - INFO - [SERVER] Camera/IWR chained club delivery: AoA None path None (status=rejected_no_ball, features=0, speed_ratio=None, velocity_mad=None mph, path_windows=0, path_mad=None deg, impact_frame=None)
+2026-11-01 12:49:46,941 - openflight.server - INFO - [SERVER] Camera analysis: 75.4ms
+2026-11-01 12:49:46,941 - openflight.server - INFO - [SERVER] Angle source: estimated (17.3°, conf=50%)
+2026-11-01 12:49:46,941 - openflight.server - INFO - [SERVER] Horizontal angle unavailable; no measured trajectory
+2026-11-01 12:49:46,941 - openflight.server - INFO - [SERVER] Ball speed cosine correction: 122.2 -> 124.3 mph (LA 17.3)
+2026-11-01 12:49:46,979 - openflight.server - INFO - [SERVER] Ballistic carry: 173 yds (spin: 6500 rpm, source: club_typical, landing: 47.8 deg)
+2026-11-01 12:49:46,980 - openflight.server - INFO - [SERVER] Shot: ball=124.3 mph, carry=198 yds, Launch: 17.3°
+2026-11-01 12:49:47,164 - openflight.iwr6843.monitor - INFO - [IWR6843] On-chip tracker armed: trackCfg 0.00013499999999999997 0.046875 5.0800000000000001 1 1.6500000000000001
+2026-11-01 12:49:47,165 - openflight.iwr6843.monitor - WARNING - [IWR6843] Radar restarted to rearm it after a capture
+2026-11-01 12:50:12,308 - ops243 - DEBUG - [OPS] Hardware trigger: no data received within 30s
+2026-11-01 12:50:16,975 - openflight.iwr6843.monitor - INFO - [IWR6843] Trigger #5: reading track samples
+2026-11-01 12:50:16,989 - ops243 - DEBUG - [OPS] Hardware trigger: first byte after 4.7s
+2026-11-01 12:50:17,098 - openflight.camera.capture_runtime - INFO - [CAMERA] Capture #5 saved: 91 frames, 430.9fps, gaps=0 -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125016_950_005
+2026-11-01 12:50:18,767 - ops243 - INFO - [OPS] Hardware trigger: 41075 bytes in 6.5s
+2026-11-01 12:50:18,767 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger fired, 41075 bytes received
+2026-11-01 12:50:19,533 - ops243 - INFO - [OPS] Clock sync: method=integer_rollover offset=1793527519.527s best_read_latency=1.2ms spread=988.5ms rollover_uncertainty=11.5ms (67/67 valid)
+2026-11-01 12:50:19,533 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] OPS clock sync selected: fresh offset=1793527519.526933s age=0.0ms (fresh=valid_integer_rollover, previous=valid_integer_rollover, delta=-0.5ms)
+2026-11-01 12:50:19,734 - ops243 - INFO - [OPS] Re-arm drain: 0 bytes in 0.2s
+2026-11-01 12:50:20,111 - ops243 - INFO - [OPS] Rolling buffer re-armed (S#24)
+2026-11-01 12:50:20,111 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger wall time 1793533816.952 (source=ops_clock_sync, first byte 1793533816.990, post-trigger 34.5ms)
+2026-11-01 12:50:20,111 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger accepted — peak 168.2 mph, 38 outbound readings
+2026-11-01 12:50:20,157 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ball speed outlier rejected: max=168.2, mode=115.0 mph (4 occurrences)
+2026-11-01 12:50:20,157 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ball speed: 116.1 mph (mode-based, 38 outbound readings)
+2026-11-01 12:50:20,158 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Club speed: 80.7 mph at 12.8ms before ball
+2026-11-01 12:50:20,158 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Impact estimate: OPS transition 91.2ms (club 80.1 mph @ 90.7ms -> ball 116.1 mph @ 91.7ms, delta=35.9 mph)
+2026-11-01 12:50:20,159 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Multitaper repaired 3.81% clipped I/Q samples
+2026-11-01 12:50:20,208 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ungated multitaper spin: 10767 RPM, evidence=2.36, fade=36.61 Hz, window=39.9ms
+2026-11-01 12:50:20,209 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Spin result: 10767 RPM, SNR=2.36, quality=experimental
+2026-11-01 12:50:20,210 - openflight.rolling_buffer.monitor - INFO - [MONITOR] process_capture: 98.1ms
+2026-11-01 12:50:20,210 - openflight.rolling_buffer.monitor - INFO - [MONITOR] Shot detected: ball=116.1 mph, club=80.7, spin=10767
+2026-11-01 12:50:20,213 - openflight.server - INFO - [SERVER] Shot callback: 116.1 mph
+2026-11-01 12:50:20,215 - openflight.server - INFO - [SERVER] Initial OPS metrics emitted 3263ms after impact; hardware enrichment continues in background
+2026-11-01 12:50:20,216 - openflight.server - INFO - [SERVER] Inclinometer pitch: raw -1.47deg, calibrated -0.03deg, IWR tilt 10.07deg (age 90ms)
+2026-11-01 12:50:20,218 - openflight.rolling_buffer.monitor - INFO - [SHOT] #4: ball=116.1 mph, club=80.7, carry=180 yds | trigger=7804ms, process=98ms, callback=5ms, total=7910ms
+2026-11-01 12:50:24,059 - openflight.iwr6843.monitor - INFO - [IWR6843] Capture #5 complete: 733301 bytes in 7.10s
+2026-11-01 12:50:24,318 - openflight.server - INFO - [SERVER] Self-trigger impact -> S!: -1.3 ms (OPS pre-trigger 102.4 ms)
+2026-11-01 12:50:24,318 - openflight.server - INFO - [SERVER] IWR6843 host LCMF-v1 withheld angle: rejected_track_quality
+2026-11-01 12:50:24,318 - openflight.server - WARNING - [SERVER] IWR6843 capture #5 carried no onboard result; preserving OPS shot
+2026-11-01 12:50:24,319 - openflight.server - INFO - [SERVER] Camera capture #5 matched -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125016_950_005
+2026-11-01 12:50:24,319 - openflight.iwr6843.monitor - WARNING - [IWR6843] l3release refused (IWR6843 did not release the frozen ring: Error: self-trigger freeze timed out
+Error -1
+l3dump:/>): restarting the radar
+2026-11-01 12:50:24,353 - openflight.server - INFO - [SERVER] Camera-assisted horizontal: selected=None camera=None IWR=None delta=None status=camera_withheld_fallback_iwr support=0
+2026-11-01 12:50:24,390 - openflight.server - INFO - [SERVER] Camera/IWR chained club delivery: AoA None path None (status=rejected_no_ball, features=0, speed_ratio=None, velocity_mad=None mph, path_windows=0, path_mad=None deg, impact_frame=None)
+2026-11-01 12:50:24,390 - openflight.server - INFO - [SERVER] Camera analysis: 70.6ms
+2026-11-01 12:50:24,391 - openflight.server - INFO - [SERVER] Angle source: estimated (19.6°, conf=50%)
+2026-11-01 12:50:24,391 - openflight.server - INFO - [SERVER] Horizontal angle unavailable; no measured trajectory
+2026-11-01 12:50:24,391 - openflight.server - INFO - [SERVER] Ball speed cosine correction: 116.1 -> 118.4 mph (LA 19.6)
+2026-11-01 12:50:24,428 - openflight.server - INFO - [SERVER] Ballistic carry: 163 yds (spin: 6500 rpm, source: club_typical, landing: 48.4 deg)
+2026-11-01 12:50:24,430 - openflight.server - INFO - [SERVER] Shot: ball=118.4 mph, carry=185 yds, Launch: 19.6°
+2026-11-01 12:50:24,721 - openflight.iwr6843.monitor - INFO - [IWR6843] On-chip tracker armed: trackCfg 0.00013499999999999997 0.046875 5.0800000000000001 1 1.6500000000000001
+2026-11-01 12:50:24,722 - openflight.iwr6843.monitor - WARNING - [IWR6843] Radar restarted to rearm it after a capture
+2026-11-01 12:50:43,458 - openflight.iwr6843.monitor - INFO - [IWR6843] Trigger #6: reading track samples
+2026-11-01 12:50:43,484 - ops243 - DEBUG - [OPS] Hardware trigger: first byte after 23.3s
+2026-11-01 12:50:43,578 - openflight.camera.capture_runtime - INFO - [CAMERA] Capture #6 saved: 91 frames, 430.9fps, gaps=0 -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125043_442_006
+2026-11-01 12:50:45,259 - ops243 - INFO - [OPS] Hardware trigger: 41075 bytes in 25.0s
+2026-11-01 12:50:45,260 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger fired, 41075 bytes received
+2026-11-01 12:50:45,672 - ops243 - INFO - [OPS] Clock sync: method=integer_rollover offset=1793527519.518s best_read_latency=1.2ms spread=988.6ms rollover_uncertainty=11.4ms (36/36 valid)
+2026-11-01 12:50:45,673 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] OPS clock sync selected: fresh offset=1793527519.518203s age=0.0ms (fresh=valid_integer_rollover, previous=valid_integer_rollover, delta=-8.7ms)
+2026-11-01 12:50:45,873 - ops243 - INFO - [OPS] Re-arm drain: 0 bytes in 0.2s
+2026-11-01 12:50:46,239 - ops243 - INFO - [OPS] Rolling buffer re-armed (S#24)
+2026-11-01 12:50:46,239 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger wall time 1793533843.436 (source=ops_clock_sync, first byte 1793533843.485, post-trigger 34.5ms)
+2026-11-01 12:50:46,239 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger accepted — peak 87.3 mph, 41 outbound readings
+2026-11-01 12:50:46,279 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ball speed: 79.4 mph (mode-based, 41 outbound readings)
+2026-11-01 12:50:46,280 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Club speed: 59.4 mph at 14.9ms before ball
+2026-11-01 12:50:46,281 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Impact estimate: OPS transition 96.0ms (club 58.4 mph @ 94.9ms -> ball 77.3 mph @ 97.1ms, delta=18.8 mph)
+2026-11-01 12:50:46,284 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Multitaper repaired 3.69% clipped I/Q samples
+2026-11-01 12:50:46,332 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ungated multitaper spin: 6152 RPM, evidence=2.05, fade=34.61 Hz, window=34.5ms
+2026-11-01 12:50:46,332 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Spin result: 6152 RPM, SNR=2.05, quality=experimental
+2026-11-01 12:50:46,332 - openflight.rolling_buffer.monitor - INFO - [MONITOR] process_capture: 92.7ms
+2026-11-01 12:50:46,333 - openflight.rolling_buffer.monitor - INFO - [MONITOR] Shot detected: ball=79.4 mph, club=59.4, spin=6152
+2026-11-01 12:50:46,334 - openflight.server - INFO - [SERVER] Shot callback: 79.4 mph
+2026-11-01 12:50:46,335 - openflight.server - INFO - [SERVER] Initial OPS metrics emitted 2899ms after impact; hardware enrichment continues in background
+2026-11-01 12:50:46,336 - openflight.server - INFO - [SERVER] Inclinometer pitch: raw -1.55deg, calibrated -0.11deg, IWR tilt 9.99deg (age 45ms)
+2026-11-01 12:50:46,337 - openflight.rolling_buffer.monitor - INFO - [SHOT] #5: ball=79.4 mph, club=59.4, carry=108 yds | trigger=26022ms, process=93ms, callback=2ms, total=26119ms
+2026-11-01 12:50:50,544 - openflight.iwr6843.monitor - INFO - [IWR6843] Capture #6 complete: 733301 bytes in 7.10s
+2026-11-01 12:50:50,804 - openflight.iwr6843.monitor - WARNING - [IWR6843] l3release refused (IWR6843 did not release the frozen ring: Error: self-trigger freeze timed out
+Error -1
+l3dump:/>): restarting the radar
+2026-11-01 12:50:51,162 - openflight.server - INFO - [SERVER] Self-trigger impact -> S!: 6.0 ms (OPS pre-trigger 102.4 ms)
+2026-11-01 12:50:51,162 - openflight.server - INFO - [SERVER] IWR6843 host LCMF-v1 launch: 19.17° (42 snapshots/14 frames, component std 3.67°)
+2026-11-01 12:50:51,162 - openflight.server - WARNING - [SERVER] IWR6843 capture #6 carried no onboard result; preserving OPS shot
+2026-11-01 12:50:51,163 - openflight.server - INFO - [SERVER] Camera capture #6 matched -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125043_442_006
+2026-11-01 12:50:51,201 - openflight.server - INFO - [SERVER] Camera-assisted horizontal: selected=None camera=None IWR=None delta=None status=camera_withheld_fallback_iwr support=0
+2026-11-01 12:50:51,212 - openflight.iwr6843.monitor - INFO - [IWR6843] On-chip tracker armed: trackCfg 0.00013499999999999997 0.046875 5.0800000000000001 1 1.6500000000000001
+2026-11-01 12:50:51,213 - openflight.iwr6843.monitor - WARNING - [IWR6843] Radar restarted to rearm it after a capture
+2026-11-01 12:50:51,242 - openflight.server - INFO - [SERVER] Camera/IWR chained club delivery: AoA None path None (status=rejected_no_ball, features=0, speed_ratio=None, velocity_mad=None mph, path_windows=0, path_mad=None deg, impact_frame=None)
+2026-11-01 12:50:51,242 - openflight.server - INFO - [SERVER] Camera analysis: 78.0ms
+2026-11-01 12:50:51,242 - openflight.server - INFO - [SERVER] Angle source: estimated (25.5°, conf=50%)
+2026-11-01 12:50:51,242 - openflight.server - INFO - [SERVER] Horizontal angle unavailable; no measured trajectory
+2026-11-01 12:50:51,242 - openflight.server - INFO - [SERVER] Ball speed cosine correction: 79.4 -> 82.6 mph (LA 25.5)
+2026-11-01 12:50:51,268 - openflight.server - INFO - [SERVER] Ballistic carry: 102 yds (spin: 6500 rpm, source: club_typical, landing: 43.2 deg)
+2026-11-01 12:50:51,269 - openflight.server - INFO - [SERVER] Shot: ball=82.6 mph, carry=109 yds, Launch: 25.5°
+2026-11-01 12:51:11,613 - openflight.iwr6843.monitor - INFO - [IWR6843] Trigger #7: reading track samples
+2026-11-01 12:51:11,646 - ops243 - DEBUG - [OPS] Hardware trigger: first byte after 25.3s
+2026-11-01 12:51:11,704 - openflight.camera.capture_runtime - INFO - [CAMERA] Capture #7 saved: 91 frames, 430.9fps, gaps=0 -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125111_596_007
+2026-11-01 12:51:13,414 - ops243 - INFO - [OPS] Hardware trigger: 41075 bytes in 27.1s
+2026-11-01 12:51:13,414 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger fired, 41075 bytes received
+2026-11-01 12:51:13,824 - ops243 - INFO - [OPS] Clock sync: method=integer_rollover offset=1793527519.523s best_read_latency=0.9ms spread=988.7ms rollover_uncertainty=11.3ms (36/36 valid)
+2026-11-01 12:51:13,825 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] OPS clock sync selected: fresh offset=1793527519.522655s age=0.0ms (fresh=valid_integer_rollover, previous=valid_integer_rollover, delta=4.5ms)
+2026-11-01 12:51:14,025 - ops243 - INFO - [OPS] Re-arm drain: 0 bytes in 0.2s
+2026-11-01 12:51:14,399 - ops243 - INFO - [OPS] Rolling buffer re-armed (S#24)
+2026-11-01 12:51:14,400 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger wall time 1793533871.598 (source=ops_clock_sync, first byte 1793533871.646, post-trigger 34.5ms)
+2026-11-01 12:51:14,400 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger accepted — peak 75.2 mph, 44 outbound readings
+2026-11-01 12:51:14,445 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ball speed: 75.2 mph (mode-based, 44 outbound readings)
+2026-11-01 12:51:14,445 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Club speed: 68.2 mph at 9.6ms before ball
+2026-11-01 12:51:14,446 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Impact estimate: sound_trigger 102.0ms (speed_delta_below_threshold)
+2026-11-01 12:51:14,448 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Multitaper repaired 4.83% clipped I/Q samples
+2026-11-01 12:51:14,488 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ungated multitaper spin: 10986 RPM, evidence=0.38, fade=72.57 Hz, window=22.8ms
+2026-11-01 12:51:14,488 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Spin result: 10986 RPM, SNR=0.38, quality=experimental
+2026-11-01 12:51:14,488 - openflight.rolling_buffer.monitor - INFO - [MONITOR] process_capture: 88.2ms
+2026-11-01 12:51:14,488 - openflight.rolling_buffer.monitor - INFO - [MONITOR] Shot detected: ball=75.2 mph, club=68.2, spin=10986
+2026-11-01 12:51:14,491 - openflight.server - INFO - [SERVER] Shot callback: 75.2 mph
+2026-11-01 12:51:14,491 - openflight.server - INFO - [SERVER] Initial OPS metrics emitted 2894ms after impact; hardware enrichment continues in background
+2026-11-01 12:51:14,492 - openflight.server - INFO - [SERVER] Inclinometer pitch: raw -1.54deg, calibrated -0.11deg, IWR tilt 9.99deg (age 6ms)
+2026-11-01 12:51:14,492 - openflight.rolling_buffer.monitor - INFO - [SHOT] #6: ball=75.2 mph, club=68.2, carry=102 yds | trigger=28063ms, process=88ms, callback=2ms, total=28155ms
+2026-11-01 12:51:18,700 - openflight.iwr6843.monitor - INFO - [IWR6843] Capture #7 complete: 733301 bytes in 7.10s
+2026-11-01 12:51:18,962 - openflight.iwr6843.monitor - WARNING - [IWR6843] l3release refused (IWR6843 did not release the frozen ring: Error: self-trigger freeze timed out
+Error -1
+l3dump:/>): restarting the radar
+2026-11-01 12:51:19,376 - openflight.iwr6843.monitor - INFO - [IWR6843] On-chip tracker armed: trackCfg 0.00013499999999999997 0.046875 5.0800000000000001 1 1.6500000000000001
+2026-11-01 12:51:19,380 - openflight.iwr6843.monitor - WARNING - [IWR6843] Radar restarted to rearm it after a capture
+2026-11-01 12:51:19,463 - openflight.server - INFO - [SERVER] Self-trigger impact -> S!: -1.5 ms (OPS pre-trigger 102.4 ms)
+2026-11-01 12:51:19,463 - openflight.server - INFO - [SERVER] IWR6843 host TX2 horizontal proxy: -1.97° (coherence 90%, status=hlcmf_v1_accepted)
+2026-11-01 12:51:19,463 - openflight.server - INFO - [SERVER] IWR6843 host LCMF-v1 launch: 27.80° (60 snapshots/15 frames, component std 7.10°)
+2026-11-01 12:51:19,463 - openflight.server - WARNING - [SERVER] IWR6843 capture #7 carried no onboard result; preserving OPS shot
+2026-11-01 12:51:19,464 - openflight.server - INFO - [SERVER] Camera capture #7 matched -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125111_596_007
+2026-11-01 12:51:19,502 - openflight.server - INFO - [SERVER] Camera-assisted horizontal: selected=None camera=None IWR=None delta=None status=camera_withheld_fallback_iwr support=0
+2026-11-01 12:51:19,582 - openflight.server - INFO - [SERVER] Camera/IWR chained club delivery: AoA None path 9.34 (status=camera_ops_fallback, features=0, speed_ratio=None, velocity_mad=None mph, path_windows=2, path_mad=0.46 deg, impact_frame=62)
+2026-11-01 12:51:19,582 - openflight.server - INFO - [SERVER] Camera analysis: 117.3ms
+2026-11-01 12:51:19,583 - openflight.server - INFO - [SERVER] Angle source: estimated (26.7°, conf=50%)
+2026-11-01 12:51:19,583 - openflight.server - INFO - [SERVER] Horizontal angle unavailable; no measured trajectory
+2026-11-01 12:51:19,583 - openflight.server - INFO - [SERVER] Ball speed cosine correction: 75.2 -> 78.6 mph (LA 26.7)
+2026-11-01 12:51:19,607 - openflight.server - INFO - [SERVER] Ballistic carry: 95 yds (spin: 6500 rpm, source: club_typical, landing: 43.0 deg)
+2026-11-01 12:51:19,608 - openflight.server - INFO - [SERVER] Shot: ball=78.6 mph, carry=102 yds, Launch: 26.7°
+2026-11-01 12:51:44,512 - ops243 - DEBUG - [OPS] Hardware trigger: no data received within 30s
+2026-11-01 12:51:55,080 - openflight.iwr6843.monitor - INFO - [IWR6843] Trigger #8: reading track samples
+2026-11-01 12:51:55,098 - ops243 - DEBUG - [OPS] Hardware trigger: first byte after 10.6s
+2026-11-01 12:51:55,186 - openflight.camera.capture_runtime - INFO - [CAMERA] Capture #8 saved: 91 frames, 430.9fps, gaps=0 -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125155_063_008
+2026-11-01 12:51:56,883 - ops243 - INFO - [OPS] Hardware trigger: 41075 bytes in 12.4s
+2026-11-01 12:51:56,883 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger fired, 41075 bytes received
+2026-11-01 12:51:57,529 - ops243 - INFO - [OPS] Clock sync: method=integer_rollover offset=1793527519.523s best_read_latency=1.0ms spread=988.4ms rollover_uncertainty=11.6ms (56/56 valid)
+2026-11-01 12:51:57,529 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] OPS clock sync selected: fresh offset=1793527519.522800s age=0.0ms (fresh=valid_integer_rollover, previous=valid_integer_rollover, delta=0.1ms)
+2026-11-01 12:51:57,730 - ops243 - INFO - [OPS] Re-arm drain: 0 bytes in 0.2s
+2026-11-01 12:51:58,096 - ops243 - INFO - [OPS] Rolling buffer re-armed (S#24)
+2026-11-01 12:51:58,096 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger wall time 1793533915.069 (source=ops_clock_sync, first byte 1793533915.098, post-trigger 34.5ms)
+2026-11-01 12:51:58,096 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger accepted — peak 29.9 mph, 1 outbound readings
+2026-11-01 12:51:58,144 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ball speed: 29.9 mph (mode-based, 1 outbound readings)
+2026-11-01 12:51:58,144 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Impact estimate: sound_trigger 102.0ms (no_club_transition_candidate)
+2026-11-01 12:51:58,145 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Multitaper repaired 1.22% clipped I/Q samples
+2026-11-01 12:51:58,159 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ungated multitaper spin: 10986 RPM, evidence=0.24, fade=89.89 Hz, window=4.3ms
+2026-11-01 12:51:58,160 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Spin result: 10986 RPM, SNR=0.24, quality=experimental
+2026-11-01 12:51:58,160 - openflight.rolling_buffer.monitor - INFO - [MONITOR] process_capture: 63.3ms
+2026-11-01 12:51:58,160 - openflight.rolling_buffer.monitor - INFO - [MONITOR] Shot detected: ball=29.9 mph, club=N/A, spin=10986
+2026-11-01 12:51:58,162 - openflight.server - INFO - [SERVER] Shot callback: 29.9 mph
+2026-11-01 12:51:58,164 - openflight.server - INFO - [SERVER] Initial OPS metrics emitted 3096ms after impact; hardware enrichment continues in background
+2026-11-01 12:51:58,165 - openflight.server - INFO - [SERVER] Inclinometer pitch: raw -1.58deg, calibrated -0.14deg, IWR tilt 9.96deg (age 2ms)
+2026-11-01 12:51:58,165 - openflight.rolling_buffer.monitor - INFO - [SHOT] #7: ball=29.9 mph, club=N/A, carry=41 yds | trigger=13584ms, process=63ms, callback=3ms, total=13653ms
+2026-11-01 12:52:02,165 - openflight.iwr6843.monitor - INFO - [IWR6843] Capture #8 complete: 733301 bytes in 7.10s
+2026-11-01 12:52:02,242 - openflight.server - INFO - [SERVER] Self-trigger impact -> S!: -4.8 ms (OPS pre-trigger 102.4 ms)
+2026-11-01 12:52:02,242 - openflight.server - INFO - [SERVER] IWR6843 host LCMF-v1 withheld angle: rejected_by_ball_tracker
+2026-11-01 12:52:02,243 - openflight.server - WARNING - [SERVER] IWR6843 capture #8 carried no onboard result; preserving OPS shot
+2026-11-01 12:52:02,243 - openflight.server - INFO - [SERVER] Camera capture #8 matched -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125155_063_008
+2026-11-01 12:52:02,279 - openflight.server - INFO - [SERVER] Camera-assisted horizontal: selected=None camera=None IWR=None delta=None status=camera_withheld_fallback_iwr support=0
+2026-11-01 12:52:02,280 - openflight.server - INFO - [SERVER] Camera/IWR chained club delivery: AoA None path None (status=rejected_no_ops_speed, features=0, speed_ratio=None, velocity_mad=None mph, path_windows=0, path_mad=None deg, impact_frame=None)
+2026-11-01 12:52:02,280 - openflight.server - INFO - [SERVER] Camera analysis: 35.7ms
+2026-11-01 12:52:02,280 - openflight.server - INFO - [SERVER] Angle source: estimated (43.3°, conf=35%)
+2026-11-01 12:52:02,280 - openflight.server - INFO - [SERVER] Horizontal angle unavailable; no measured trajectory
+2026-11-01 12:52:02,280 - openflight.server - INFO - [SERVER] Ball speed cosine correction: 29.9 -> 36.0 mph (LA 43.3)
+2026-11-01 12:52:02,294 - openflight.server - INFO - [SERVER] Ballistic carry: 27 yds (spin: 6500 rpm, source: club_typical, landing: 47.0 deg)
+2026-11-01 12:52:02,295 - openflight.server - INFO - [SERVER] Shot: ball=36.0 mph, carry=44 yds, Launch: 43.3°
+2026-11-01 12:52:02,425 - openflight.iwr6843.monitor - WARNING - [IWR6843] l3release refused (IWR6843 did not release the frozen ring: Error: self-trigger freeze timed out
+Error -1
+l3dump:/>): restarting the radar
+2026-11-01 12:52:02,826 - openflight.iwr6843.monitor - INFO - [IWR6843] On-chip tracker armed: trackCfg 0.00013499999999999997 0.046875 5.0800000000000001 1 1.6500000000000001
+2026-11-01 12:52:02,827 - openflight.iwr6843.monitor - WARNING - [IWR6843] Radar restarted to rearm it after a capture
+2026-11-01 12:52:12,126 - openflight.iwr6843.monitor - INFO - [IWR6843] Trigger #9: reading track samples
+2026-11-01 12:52:12,143 - ops243 - DEBUG - [OPS] Hardware trigger: first byte after 14.0s
+2026-11-01 12:52:12,230 - openflight.camera.capture_runtime - INFO - [CAMERA] Capture #9 saved: 91 frames, 430.9fps, gaps=0 -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125212_104_009
+2026-11-01 12:52:13,923 - ops243 - INFO - [OPS] Hardware trigger: 41075 bytes in 15.8s
+2026-11-01 12:52:13,923 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger fired, 41075 bytes received
+2026-11-01 12:52:14,518 - ops243 - INFO - [OPS] Clock sync: method=integer_rollover offset=1793527519.512s best_read_latency=0.9ms spread=988.6ms rollover_uncertainty=11.4ms (52/52 valid)
+2026-11-01 12:52:14,518 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] OPS clock sync selected: fresh offset=1793527519.511680s age=0.0ms (fresh=valid_integer_rollover, previous=valid_integer_rollover, delta=-11.1ms)
+2026-11-01 12:52:14,718 - ops243 - INFO - [OPS] Re-arm drain: 0 bytes in 0.2s
+2026-11-01 12:52:15,095 - ops243 - INFO - [OPS] Rolling buffer re-armed (S#24)
+2026-11-01 12:52:15,095 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger wall time 1793533932.100 (source=ops_clock_sync, first byte 1793533932.144, post-trigger 34.5ms)
+2026-11-01 12:52:15,095 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger accepted — peak 132.3 mph, 38 outbound readings
+2026-11-01 12:52:15,136 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ball speed: 126.0 mph (mode-based, 38 outbound readings)
+2026-11-01 12:52:15,137 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Club speed: 84.2 mph at 12.8ms before ball
+2026-11-01 12:52:15,138 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Impact estimate: OPS transition 94.9ms (club 85.2 mph @ 91.7ms -> ball 124.9 mph @ 98.1ms, delta=39.7 mph)
+2026-11-01 12:52:15,140 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Multitaper repaired 3.25% clipped I/Q samples
+2026-11-01 12:52:15,183 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ungated multitaper spin: 10547 RPM, evidence=3.17, fade=45.52 Hz, window=33.5ms
+2026-11-01 12:52:15,183 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Spin result: 10547 RPM, SNR=3.17, quality=experimental
+2026-11-01 12:52:15,184 - openflight.rolling_buffer.monitor - INFO - [MONITOR] process_capture: 88.2ms
+2026-11-01 12:52:15,184 - openflight.rolling_buffer.monitor - INFO - [MONITOR] Shot detected: ball=126.0 mph, club=84.2, spin=10547
+2026-11-01 12:52:15,187 - openflight.server - INFO - [SERVER] Shot callback: 126.0 mph
+2026-11-01 12:52:15,188 - openflight.server - INFO - [SERVER] Initial OPS metrics emitted 3089ms after impact; hardware enrichment continues in background
+2026-11-01 12:52:15,189 - openflight.server - INFO - [SERVER] Inclinometer pitch: raw -1.55deg, calibrated -0.11deg, IWR tilt 9.99deg (age 16ms)
+2026-11-01 12:52:15,190 - openflight.rolling_buffer.monitor - INFO - [SHOT] #8: ball=126.0 mph, club=84.2, carry=205 yds | trigger=16930ms, process=88ms, callback=3ms, total=17024ms
+2026-11-01 12:52:19,213 - openflight.iwr6843.monitor - INFO - [IWR6843] Capture #9 complete: 733301 bytes in 7.10s
+2026-11-01 12:52:19,474 - openflight.iwr6843.monitor - WARNING - [IWR6843] l3release refused (IWR6843 did not release the frozen ring: Error: self-trigger freeze timed out
+Error -1
+l3dump:/>): restarting the radar
+2026-11-01 12:52:19,488 - openflight.server - INFO - [SERVER] Self-trigger impact -> S!: 4.4 ms (OPS pre-trigger 102.4 ms)
+2026-11-01 12:52:19,488 - openflight.server - INFO - [SERVER] IWR6843 host LCMF-v1 withheld angle: insufficient_channel_snapshots
+2026-11-01 12:52:19,488 - openflight.server - WARNING - [SERVER] IWR6843 capture #9 carried no onboard result; preserving OPS shot
+2026-11-01 12:52:19,489 - openflight.server - INFO - [SERVER] Camera capture #9 matched -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125212_104_009
+2026-11-01 12:52:19,527 - openflight.server - INFO - [SERVER] Camera-assisted horizontal: selected=None camera=None IWR=None delta=None status=camera_withheld_fallback_iwr support=0
+2026-11-01 12:52:19,632 - openflight.server - INFO - [SERVER] Camera/IWR chained club delivery: AoA None path None (status=rejected_no_stable_clubhead, features=0, speed_ratio=None, velocity_mad=None mph, path_windows=0, path_mad=None deg, impact_frame=62)
+2026-11-01 12:52:19,632 - openflight.server - INFO - [SERVER] Camera analysis: 140.0ms
+2026-11-01 12:52:19,632 - openflight.server - INFO - [SERVER] Angle source: estimated (16.7°, conf=50%)
+2026-11-01 12:52:19,632 - openflight.server - INFO - [SERVER] Horizontal angle unavailable; no measured trajectory
+2026-11-01 12:52:19,632 - openflight.server - INFO - [SERVER] Ball speed cosine correction: 126.0 -> 128.0 mph (LA 16.7)
+2026-11-01 12:52:19,669 - openflight.server - INFO - [SERVER] Ballistic carry: 178 yds (spin: 6500 rpm, source: club_typical, landing: 48.2 deg)
+2026-11-01 12:52:19,670 - openflight.server - INFO - [SERVER] Shot: ball=128.0 mph, carry=206 yds, Launch: 16.7°
+2026-11-01 12:52:19,881 - openflight.iwr6843.monitor - INFO - [IWR6843] On-chip tracker armed: trackCfg 0.00013499999999999997 0.046875 5.0800000000000001 1 1.6500000000000001
+2026-11-01 12:52:19,882 - openflight.iwr6843.monitor - WARNING - [IWR6843] Radar restarted to rearm it after a capture
+2026-11-01 12:52:43,099 - openflight.iwr6843.monitor - INFO - [IWR6843] Trigger #10: reading track samples
+2026-11-01 12:52:43,118 - ops243 - DEBUG - [OPS] Hardware trigger: first byte after 27.9s
+2026-11-01 12:52:43,223 - openflight.camera.capture_runtime - INFO - [CAMERA] Capture #10 saved: 91 frames, 430.9fps, gaps=0 -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125243_074_010
+2026-11-01 12:52:44,893 - ops243 - INFO - [OPS] Hardware trigger: 41075 bytes in 29.7s
+2026-11-01 12:52:44,893 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger fired, 41075 bytes received
+2026-11-01 12:52:45,524 - ops243 - INFO - [OPS] Clock sync: method=integer_rollover offset=1793527519.518s best_read_latency=1.2ms spread=988.6ms rollover_uncertainty=11.4ms (55/55 valid)
+2026-11-01 12:52:45,524 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] OPS clock sync selected: fresh offset=1793527519.518117s age=0.0ms (fresh=valid_integer_rollover, previous=valid_integer_rollover, delta=6.4ms)
+2026-11-01 12:52:45,725 - ops243 - INFO - [OPS] Re-arm drain: 0 bytes in 0.2s
+2026-11-01 12:52:46,099 - ops243 - INFO - [OPS] Rolling buffer re-armed (S#24)
+2026-11-01 12:52:46,099 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger wall time 1793533963.076 (source=ops_clock_sync, first byte 1793533963.118, post-trigger 34.5ms)
+2026-11-01 12:52:46,099 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger accepted — peak 135.6 mph, 35 outbound readings
+2026-11-01 12:52:46,141 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ball speed: 128.9 mph (mode-based, 35 outbound readings)
+2026-11-01 12:52:46,142 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Club speed: 84.1 mph at 11.7ms before ball
+2026-11-01 12:52:46,142 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Impact estimate: OPS transition 93.3ms (club 87.5 mph @ 90.7ms -> ball 126.4 mph @ 96.0ms, delta=38.9 mph)
+2026-11-01 12:52:46,144 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Multitaper repaired 2.76% clipped I/Q samples
+2026-11-01 12:52:46,194 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ungated multitaper spin: 6042 RPM, evidence=2.55, fade=38.78 Hz, window=37.7ms
+2026-11-01 12:52:46,194 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Spin result: 6042 RPM, SNR=2.55, quality=experimental
+2026-11-01 12:52:46,195 - openflight.rolling_buffer.monitor - INFO - [MONITOR] process_capture: 94.7ms
+2026-11-01 12:52:46,195 - openflight.rolling_buffer.monitor - INFO - [MONITOR] Shot detected: ball=128.9 mph, club=84.1, spin=6042
+2026-11-01 12:52:46,197 - openflight.server - INFO - [SERVER] Shot callback: 128.9 mph
+2026-11-01 12:52:46,198 - openflight.server - INFO - [SERVER] Initial OPS metrics emitted 3122ms after impact; hardware enrichment continues in background
+2026-11-01 12:52:46,199 - openflight.server - INFO - [SERVER] Inclinometer pitch: raw -1.50deg, calibrated -0.06deg, IWR tilt 10.04deg (age 48ms)
+2026-11-01 12:52:46,199 - openflight.rolling_buffer.monitor - INFO - [SHOT] #9: ball=128.9 mph, club=84.1, carry=212 yds | trigger=30910ms, process=95ms, callback=2ms, total=31009ms
+2026-11-01 12:52:50,184 - openflight.iwr6843.monitor - INFO - [IWR6843] Capture #10 complete: 733301 bytes in 7.10s
+2026-11-01 12:52:50,366 - openflight.server - INFO - [SERVER] Self-trigger impact -> S!: -1.8 ms (OPS pre-trigger 102.4 ms)
+2026-11-01 12:52:50,366 - openflight.server - INFO - [SERVER] IWR6843 host LCMF-v1 withheld angle: rejected_track_quality
+2026-11-01 12:52:50,366 - openflight.server - WARNING - [SERVER] IWR6843 capture #10 carried no onboard result; preserving OPS shot
+2026-11-01 12:52:50,366 - openflight.server - INFO - [SERVER] Camera capture #10 matched -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125243_074_010
+2026-11-01 12:52:50,402 - openflight.server - INFO - [SERVER] Camera-assisted horizontal: selected=None camera=None IWR=None delta=None status=camera_withheld_fallback_iwr support=0
+2026-11-01 12:52:50,444 - openflight.iwr6843.monitor - WARNING - [IWR6843] l3release refused (IWR6843 did not release the frozen ring: Error: self-trigger freeze timed out
+Error -1
+l3dump:/>): restarting the radar
+2026-11-01 12:52:50,446 - openflight.server - INFO - [SERVER] Camera/IWR chained club delivery: AoA None path None (status=rejected_no_ball, features=0, speed_ratio=None, velocity_mad=None mph, path_windows=0, path_mad=None deg, impact_frame=None)
+2026-11-01 12:52:50,446 - openflight.server - INFO - [SERVER] Camera analysis: 78.8ms
+2026-11-01 12:52:50,446 - openflight.server - INFO - [SERVER] Angle source: estimated (13.2°, conf=50%)
+2026-11-01 12:52:50,446 - openflight.server - INFO - [SERVER] Horizontal angle unavailable; no measured trajectory
+2026-11-01 12:52:50,446 - openflight.server - INFO - [SERVER] Ball speed cosine correction: 128.9 -> 130.5 mph (LA 13.2)
+2026-11-01 12:52:50,482 - openflight.server - INFO - [SERVER] Ballistic carry: 182 yds (spin: 6500 rpm, source: club_typical, landing: 45.4 deg)
+2026-11-01 12:52:50,483 - openflight.server - INFO - [SERVER] Shot: ball=130.5 mph, carry=209 yds, Launch: 13.2°
+2026-11-01 12:52:50,842 - openflight.iwr6843.monitor - INFO - [IWR6843] On-chip tracker armed: trackCfg 0.00013499999999999997 0.046875 5.0800000000000001 1 1.6500000000000001
+2026-11-01 12:52:50,843 - openflight.iwr6843.monitor - WARNING - [IWR6843] Radar restarted to rearm it after a capture
+2026-11-01 12:53:16,204 - ops243 - DEBUG - [OPS] Hardware trigger: no data received within 30s
+2026-11-01 12:53:22,584 - openflight.iwr6843.monitor - INFO - [IWR6843] Trigger #11: reading track samples
+2026-11-01 12:53:22,613 - ops243 - DEBUG - [OPS] Hardware trigger: first byte after 6.4s
+2026-11-01 12:53:22,695 - openflight.camera.capture_runtime - INFO - [CAMERA] Capture #11 saved: 91 frames, 430.9fps, gaps=0 -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125322_568_011
+2026-11-01 12:53:24,388 - ops243 - INFO - [OPS] Hardware trigger: 41075 bytes in 8.2s
+2026-11-01 12:53:24,389 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger fired, 41075 bytes received
+2026-11-01 12:53:24,600 - ops243 - INFO - [OPS] Re-arm drain: 0 bytes in 0.2s
+2026-11-01 12:53:24,975 - ops243 - INFO - [OPS] Rolling buffer re-armed (S#24)
+2026-11-01 12:53:24,975 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger rejected — no outbound speed >= 15 mph (peak=0.0 mph, 0 readings)
+2026-11-01 12:53:29,670 - openflight.iwr6843.monitor - INFO - [IWR6843] Capture #11 complete: 733301 bytes in 7.10s
+2026-11-01 12:53:29,929 - openflight.iwr6843.monitor - WARNING - [IWR6843] l3release refused (IWR6843 did not release the frozen ring: Error: self-trigger freeze timed out
+Error -1
+l3dump:/>): restarting the radar
+2026-11-01 12:53:30,326 - openflight.iwr6843.monitor - INFO - [IWR6843] On-chip tracker armed: trackCfg 0.00013499999999999997 0.046875 5.0800000000000001 1 1.6500000000000001
+2026-11-01 12:53:30,327 - openflight.iwr6843.monitor - WARNING - [IWR6843] Radar restarted to rearm it after a capture
+2026-11-01 12:53:54,981 - ops243 - DEBUG - [OPS] Hardware trigger: no data received within 30s
+2026-11-01 12:54:24,991 - ops243 - DEBUG - [OPS] Hardware trigger: no data received within 30s
+2026-11-01 12:54:25,246 - openflight.iwr6843.monitor - INFO - [IWR6843] Trigger #12: reading track samples
+2026-11-01 12:54:25,273 - ops243 - DEBUG - [OPS] Hardware trigger: first byte after 0.3s
+2026-11-01 12:54:25,357 - openflight.camera.capture_runtime - INFO - [CAMERA] Capture #12 saved: 91 frames, 430.9fps, gaps=0 -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125425_223_012
+2026-11-01 12:54:27,042 - ops243 - INFO - [OPS] Hardware trigger: 41075 bytes in 2.1s
+2026-11-01 12:54:27,042 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger fired, 41075 bytes received
+2026-11-01 12:54:27,509 - ops243 - INFO - [OPS] Clock sync: method=integer_rollover offset=1793527519.503s best_read_latency=1.2ms spread=988.7ms rollover_uncertainty=11.3ms (41/41 valid)
+2026-11-01 12:54:27,509 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] OPS clock sync selected: fresh offset=1793527519.502613s age=0.0ms (fresh=valid_integer_rollover, previous=valid_integer_rollover, delta=-15.5ms)
+2026-11-01 12:54:27,709 - ops243 - INFO - [OPS] Re-arm drain: 0 bytes in 0.2s
+2026-11-01 12:54:28,079 - ops243 - INFO - [OPS] Rolling buffer re-armed (S#24)
+2026-11-01 12:54:28,079 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger wall time 1793534065.220 (source=ops_clock_sync, first byte 1793534065.274, post-trigger 34.5ms)
+2026-11-01 12:54:28,079 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger accepted — peak 127.2 mph, 32 outbound readings
+2026-11-01 12:54:28,122 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ball speed: 127.2 mph (mode-based, 32 outbound readings)
+2026-11-01 12:54:28,123 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Club speed: 84.1 mph at 12.8ms before ball
+2026-11-01 12:54:28,123 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Impact estimate: OPS transition 99.7ms (club 88.2 mph @ 99.2ms -> ball 124.7 mph @ 100.3ms, delta=36.6 mph)
+2026-11-01 12:54:28,125 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Multitaper repaired 3.52% clipped I/Q samples
+2026-11-01 12:54:28,168 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ungated multitaper spin: 6812 RPM, evidence=1.00, fade=43.27 Hz, window=31.3ms
+2026-11-01 12:54:28,168 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Spin result: 6812 RPM, SNR=1.00, quality=experimental
+2026-11-01 12:54:28,168 - openflight.rolling_buffer.monitor - INFO - [MONITOR] process_capture: 88.5ms
+2026-11-01 12:54:28,168 - openflight.rolling_buffer.monitor - INFO - [MONITOR] Shot detected: ball=127.2 mph, club=84.1, spin=6812
+2026-11-01 12:54:28,170 - openflight.server - INFO - [SERVER] Shot callback: 127.2 mph
+2026-11-01 12:54:28,171 - openflight.server - INFO - [SERVER] Initial OPS metrics emitted 2952ms after impact; hardware enrichment continues in background
+2026-11-01 12:54:28,172 - openflight.server - INFO - [SERVER] Inclinometer pitch: raw -1.53deg, calibrated -0.09deg, IWR tilt 10.01deg (age 62ms)
+2026-11-01 12:54:28,172 - openflight.iwr6843.monitor - WARNING - [IWR6843] Discarding unmatched capture #11 (edge 1793534002.568, shot 1793534065.220)
+2026-11-01 12:54:28,173 - openflight.rolling_buffer.monitor - INFO - [SHOT] #10: ball=127.2 mph, club=84.1, carry=208 yds | trigger=3088ms, process=88ms, callback=3ms, total=3181ms
+2026-11-01 12:54:32,332 - openflight.iwr6843.monitor - INFO - [IWR6843] Capture #12 complete: 733301 bytes in 7.10s
+2026-11-01 12:54:32,595 - openflight.iwr6843.monitor - WARNING - [IWR6843] l3release refused (IWR6843 did not release the frozen ring: Error: self-trigger freeze timed out
+Error -1
+l3dump:/>): restarting the radar
+2026-11-01 12:54:32,625 - openflight.server - INFO - [SERVER] Self-trigger impact -> S!: 3.8 ms (OPS pre-trigger 102.4 ms)
+2026-11-01 12:54:32,625 - openflight.server - INFO - [SERVER] IWR6843 host LCMF-v1 withheld angle: insufficient_channel_snapshots
+2026-11-01 12:54:32,625 - openflight.server - WARNING - [SERVER] IWR6843 capture #12 carried no onboard result; preserving OPS shot
+2026-11-01 12:54:32,625 - openflight.camera.capture_runtime - WARNING - [CAMERA] Discarding unmatched capture #11 (edge 1793534002.568, shot 1793534065.220)
+2026-11-01 12:54:32,626 - openflight.server - INFO - [SERVER] Camera capture #12 matched -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125425_223_012
+2026-11-01 12:54:32,663 - openflight.server - INFO - [SERVER] Camera-assisted horizontal: selected=None camera=None IWR=None delta=None status=camera_withheld_fallback_iwr support=0
+2026-11-01 12:54:32,703 - openflight.server - INFO - [SERVER] Camera/IWR chained club delivery: AoA None path None (status=rejected_no_ball, features=0, speed_ratio=None, velocity_mad=None mph, path_windows=0, path_mad=None deg, impact_frame=None)
+2026-11-01 12:54:32,703 - openflight.server - INFO - [SERVER] Camera analysis: 76.0ms
+2026-11-01 12:54:32,703 - openflight.server - INFO - [SERVER] Angle source: estimated (14.2°, conf=50%)
+2026-11-01 12:54:32,703 - openflight.server - INFO - [SERVER] Horizontal angle unavailable; no measured trajectory
+2026-11-01 12:54:32,704 - openflight.server - INFO - [SERVER] Ball speed cosine correction: 127.2 -> 128.9 mph (LA 14.2)
+2026-11-01 12:54:32,741 - openflight.server - INFO - [SERVER] Ballistic carry: 180 yds (spin: 6500 rpm, source: club_typical, landing: 46.0 deg)
+2026-11-01 12:54:32,742 - openflight.server - INFO - [SERVER] Shot: ball=128.9 mph, carry=206 yds, Launch: 14.2°
+2026-11-01 12:54:33,005 - openflight.iwr6843.monitor - INFO - [IWR6843] On-chip tracker armed: trackCfg 0.00013499999999999997 0.046875 5.0800000000000001 1 1.6500000000000001
+2026-11-01 12:54:33,006 - openflight.iwr6843.monitor - WARNING - [IWR6843] Radar restarted to rearm it after a capture
+2026-11-01 12:54:48,113 - openflight.iwr6843.monitor - INFO - [IWR6843] Trigger #13: reading track samples
+2026-11-01 12:54:48,131 - ops243 - DEBUG - [OPS] Hardware trigger: first byte after 20.0s
+2026-11-01 12:54:48,227 - openflight.camera.capture_runtime - INFO - [CAMERA] Capture #13 saved: 91 frames, 430.9fps, gaps=0 -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125448_093_013
+2026-11-01 12:54:49,909 - ops243 - INFO - [OPS] Hardware trigger: 41057 bytes in 21.7s
+2026-11-01 12:54:49,909 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger fired, 41057 bytes received
+2026-11-01 12:54:50,518 - ops243 - INFO - [OPS] Clock sync: method=integer_rollover offset=1793527519.512s best_read_latency=1.2ms spread=988.4ms rollover_uncertainty=11.6ms (53/53 valid)
+2026-11-01 12:54:50,518 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] OPS clock sync selected: fresh offset=1793527519.511501s age=0.0ms (fresh=valid_integer_rollover, previous=valid_integer_rollover, delta=8.9ms)
+2026-11-01 12:54:50,718 - ops243 - INFO - [OPS] Re-arm drain: 0 bytes in 0.2s
+2026-11-01 12:54:51,084 - ops243 - INFO - [OPS] Rolling buffer re-armed (S#24)
+2026-11-01 12:54:51,084 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger wall time 1793534088.101 (source=ops_clock_sync, first byte 1793534088.132, post-trigger 34.5ms)
+2026-11-01 12:54:51,084 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger accepted — peak 140.1 mph, 34 outbound readings
+2026-11-01 12:54:51,124 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ball speed: 133.0 mph (mode-based, 34 outbound readings)
+2026-11-01 12:54:51,124 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Club speed: 88.7 mph at 13.9ms before ball
+2026-11-01 12:54:51,125 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Impact estimate: OPS transition 97.1ms (club 91.0 mph @ 96.0ms -> ball 132.9 mph @ 98.1ms, delta=41.9 mph)
+2026-11-01 12:54:51,127 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Multitaper repaired 3.56% clipped I/Q samples
+2026-11-01 12:54:51,168 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ungated multitaper spin: 10986 RPM, evidence=3.78, fade=46.93 Hz, window=29.2ms
+2026-11-01 12:54:51,168 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Spin result: 10986 RPM, SNR=3.78, quality=experimental
+2026-11-01 12:54:51,168 - openflight.rolling_buffer.monitor - INFO - [MONITOR] process_capture: 84.0ms
+2026-11-01 12:54:51,168 - openflight.rolling_buffer.monitor - INFO - [MONITOR] Shot detected: ball=133.0 mph, club=88.7, spin=10986
+2026-11-01 12:54:51,170 - openflight.server - INFO - [SERVER] Shot callback: 133.0 mph
+2026-11-01 12:54:51,171 - openflight.server - INFO - [SERVER] Initial OPS metrics emitted 3071ms after impact; hardware enrichment continues in background
+2026-11-01 12:54:51,173 - openflight.server - INFO - [SERVER] Inclinometer pitch: raw -1.50deg, calibrated -0.06deg, IWR tilt 10.04deg (age 21ms)
+2026-11-01 12:54:51,173 - openflight.rolling_buffer.monitor - INFO - [SHOT] #11: ball=133.0 mph, club=88.7, carry=222 yds | trigger=22911ms, process=84ms, callback=2ms, total=23000ms
+2026-11-01 12:54:55,199 - openflight.iwr6843.monitor - INFO - [IWR6843] Capture #13 complete: 733301 bytes in 7.10s
+2026-11-01 12:54:55,471 - openflight.iwr6843.monitor - WARNING - [IWR6843] l3release refused (IWR6843 did not release the frozen ring: Error: self-trigger freeze timed out
+Error -1
+l3dump:/>): restarting the radar
+2026-11-01 12:54:55,476 - openflight.server - INFO - [SERVER] Self-trigger impact -> S!: -7.2 ms (OPS pre-trigger 102.4 ms)
+2026-11-01 12:54:55,476 - openflight.server - INFO - [SERVER] IWR6843 host LCMF-v1 withheld angle: insufficient_channel_snapshots
+2026-11-01 12:54:55,476 - openflight.server - WARNING - [SERVER] IWR6843 capture #13 carried no onboard result; preserving OPS shot
+2026-11-01 12:54:55,477 - openflight.server - INFO - [SERVER] Camera capture #13 matched -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125448_093_013
+2026-11-01 12:54:55,515 - openflight.server - INFO - [SERVER] Camera-assisted horizontal: selected=None camera=None IWR=None delta=None status=camera_withheld_fallback_iwr support=0
+2026-11-01 12:54:55,619 - openflight.server - INFO - [SERVER] Camera/IWR chained club delivery: AoA None path None (status=rejected_no_stable_clubhead, features=0, speed_ratio=None, velocity_mad=None mph, path_windows=0, path_mad=None deg, impact_frame=64)
+2026-11-01 12:54:55,619 - openflight.server - INFO - [SERVER] Camera analysis: 141.4ms
+2026-11-01 12:54:55,619 - openflight.server - INFO - [SERVER] Angle source: estimated (14.6°, conf=50%)
+2026-11-01 12:54:55,619 - openflight.server - INFO - [SERVER] Horizontal angle unavailable; no measured trajectory
+2026-11-01 12:54:55,619 - openflight.server - INFO - [SERVER] Ball speed cosine correction: 133.0 -> 134.8 mph (LA 14.6)
+2026-11-01 12:54:55,658 - openflight.server - INFO - [SERVER] Ballistic carry: 189 yds (spin: 6500 rpm, source: club_typical, landing: 47.9 deg)
+2026-11-01 12:54:55,659 - openflight.server - INFO - [SERVER] Shot: ball=134.8 mph, carry=221 yds, Launch: 14.6°
+2026-11-01 12:54:55,877 - openflight.iwr6843.monitor - INFO - [IWR6843] On-chip tracker armed: trackCfg 0.00013499999999999997 0.046875 5.0800000000000001 1 1.6500000000000001
+2026-11-01 12:54:55,878 - openflight.iwr6843.monitor - WARNING - [IWR6843] Radar restarted to rearm it after a capture
+2026-11-01 12:55:13,756 - openflight.iwr6843.monitor - INFO - [IWR6843] Trigger #14: reading track samples
+2026-11-01 12:55:13,781 - ops243 - DEBUG - [OPS] Hardware trigger: first byte after 22.6s
+2026-11-01 12:55:13,866 - openflight.camera.capture_runtime - INFO - [CAMERA] Capture #14 saved: 91 frames, 430.9fps, gaps=0 -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125513_743_014
+2026-11-01 12:55:15,560 - ops243 - INFO - [OPS] Hardware trigger: 41035 bytes in 24.4s
+2026-11-01 12:55:15,561 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger fired, 41035 bytes received
+2026-11-01 12:55:16,512 - ops243 - INFO - [OPS] Clock sync: method=integer_rollover offset=1793527519.506s best_read_latency=0.9ms spread=988.7ms rollover_uncertainty=11.3ms (83/83 valid)
+2026-11-01 12:55:16,513 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] OPS clock sync selected: fresh offset=1793527519.506150s age=0.0ms (fresh=valid_integer_rollover, previous=valid_integer_rollover, delta=-5.4ms)
+2026-11-01 12:55:16,713 - ops243 - INFO - [OPS] Re-arm drain: 0 bytes in 0.2s
+2026-11-01 12:55:17,087 - ops243 - INFO - [OPS] Rolling buffer re-armed (S#24)
+2026-11-01 12:55:17,088 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger wall time 1793534113.745 (source=ops_clock_sync, first byte 1793534113.781, post-trigger 34.5ms)
+2026-11-01 12:55:17,088 - openflight.rolling_buffer.trigger - INFO - [TRIGGER] IWR6843 self-trigger accepted — peak 18.8 mph, 2 outbound readings
+2026-11-01 12:55:17,136 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ball speed: 18.8 mph (mode-based, 2 outbound readings)
+2026-11-01 12:55:17,137 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Impact estimate: sound_trigger 102.0ms (no_club_transition_candidate)
+2026-11-01 12:55:17,175 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Ungated multitaper spin: 8130 RPM, evidence=0.40, fade=88.57 Hz, window=23.9ms
+2026-11-01 12:55:17,175 - openflight.rolling_buffer.processor - INFO - [PROCESSOR] Spin result: 8130 RPM, SNR=0.40, quality=experimental
+2026-11-01 12:55:17,175 - openflight.rolling_buffer.monitor - INFO - [MONITOR] process_capture: 87.3ms
+2026-11-01 12:55:17,175 - openflight.rolling_buffer.monitor - INFO - [MONITOR] Shot detected: ball=18.8 mph, club=N/A, spin=8130
+2026-11-01 12:55:17,177 - openflight.server - INFO - [SERVER] Shot callback: 18.8 mph
+2026-11-01 12:55:17,178 - openflight.server - INFO - [SERVER] Initial OPS metrics emitted 3433ms after impact; hardware enrichment continues in background
+2026-11-01 12:55:17,179 - openflight.server - INFO - [SERVER] Inclinometer pitch: raw -1.50deg, calibrated -0.06deg, IWR tilt 10.04deg (age 21ms)
+2026-11-01 12:55:17,179 - openflight.rolling_buffer.monitor - INFO - [SHOT] #12: ball=18.8 mph, club=N/A, carry=26 yds | trigger=25914ms, process=87ms, callback=2ms, total=26006ms
+2026-11-01 12:55:20,844 - openflight.iwr6843.monitor - INFO - [IWR6843] Capture #14 complete: 733301 bytes in 7.10s
+2026-11-01 12:55:20,936 - openflight.server - INFO - [SERVER] Self-trigger impact -> S!: -1.8 ms (OPS pre-trigger 102.4 ms)
+2026-11-01 12:55:20,936 - openflight.server - INFO - [SERVER] IWR6843 host LCMF-v1 withheld angle: rejected_by_ball_tracker
+2026-11-01 12:55:20,937 - openflight.server - WARNING - [SERVER] IWR6843 capture #14 carried no onboard result; preserving OPS shot
+2026-11-01 12:55:20,937 - openflight.server - INFO - [SERVER] Camera capture #14 matched -> /home/openfl/openflight_sessions/trackman/camera/camera_20261101_125513_743_014
+2026-11-01 12:55:20,976 - openflight.server - INFO - [SERVER] Camera-assisted horizontal: selected=None camera=None IWR=None delta=None status=camera_withheld_fallback_iwr support=0
+2026-11-01 12:55:20,976 - openflight.server - INFO - [SERVER] Camera/IWR chained club delivery: AoA None path None (status=rejected_no_ops_speed, features=0, speed_ratio=None, velocity_mad=None mph, path_windows=0, path_mad=None deg, impact_frame=None)
+2026-11-01 12:55:20,977 - openflight.server - INFO - [SERVER] Camera analysis: 38.5ms
+2026-11-01 12:55:20,977 - openflight.server - INFO - [SERVER] Angle source: estimated (44.9°, conf=35%)
+2026-11-01 12:55:20,977 - openflight.server - INFO - [SERVER] Horizontal angle unavailable; no measured trajectory
+2026-11-01 12:55:20,977 - openflight.server - INFO - [SERVER] Ball speed cosine correction: 18.8 -> 25.0 mph (LA 44.9)
+2026-11-01 12:55:20,986 - openflight.server - INFO - [SERVER] Ballistic carry: 13 yds (spin: 6500 rpm, source: club_typical, landing: 46.7 deg)
+2026-11-01 12:55:20,987 - openflight.server - INFO - [SERVER] Shot: ball=25.0 mph, carry=31 yds, Launch: 44.9°
+2026-11-01 12:55:21,105 - openflight.iwr6843.monitor - WARNING - [IWR6843] l3release refused (IWR6843 did not release the frozen ring: Error: self-trigger freeze timed out
+Error -1
+l3dump:/>): restarting the radar
+2026-11-01 12:55:21,504 - openflight.iwr6843.monitor - INFO - [IWR6843] On-chip tracker armed: trackCfg 0.00013499999999999997 0.046875 5.0800000000000001 1 1.6500000000000001
+2026-11-01 12:55:21,505 - openflight.iwr6843.monitor - WARNING - [IWR6843] Radar restarted to rearm it after a capture
+2026-11-01 12:55:47,189 - ops243 - DEBUG - [OPS] Hardware trigger: no data received within 30s
+[OpenFlight] Shutting down...
+[OpenFlight] Closing kiosk shell...
+/home/openfl/openflight/ui/node_modules/electron/dist/electron exited with signal SIGTERM

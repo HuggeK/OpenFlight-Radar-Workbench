@@ -9,6 +9,8 @@
 - [Analysis metrics and interpretation](ANALYSIS_METRICS.md)
 - [Migrating an existing Windows checkout](LOCAL_MIGRATION.md)
 - [Test fixtures and external regression datasets](../tests/FIXTURES.md)
+- [Field-session tools for a self-triggered OpenFlight unit](../session_tools/README.md)
+- [Next studio tests](NEXT_STUDIO_TESTS.md)
 
 ## UART and integrity reference
 
@@ -20,6 +22,7 @@
 
 ## Reports
 
+- [Studio session with the IWR self-trigger beside a TrackMan 4, November 1](reports/studio-session-2026-11-01/README.md)
 - [Interactive Raspberry Pi baseline report](reports/pi-uart-baseline-2026-09-14/index.html)
 - [September 19 material-test graphs](reports/material-testing-2026-09-19/bench_20260919_graphs.pdf)
 - [September 19 material-test phase plots](reports/material-testing-2026-09-19/bench_20260919_phase.pdf)

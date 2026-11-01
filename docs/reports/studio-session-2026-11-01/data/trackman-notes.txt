@@ -1,0 +1,180 @@
+2026-11-01T11:31:35+01:00 Session notes (trackman)
+- Measured: tee 1.57 m (unit front -> ball), net 5.30 m (unit front -> net), IWR board centre 0.04 m above floor.
+- Shots 11:18-11:27 (log terminal_logs/kiosk_20261101_111546.log) ran with --iwr6843-net-m 3.0 by mistake:
+  every IWR track was clipped at 2.75 m -> no measured launch angle (rejected_track_quality / rejected_by_ball_tracker).
+  Offline re-run of the same dumps with net 4.6 / none gives good tracks (24-41 ms) on all real shots.
+- Net corrected to 5.30 m; OpenFlight restarted after this note.
+- Observed on every capture: "l3release refused ... self-trigger freeze timed out" -> radar restart to rearm (~0.4 s). For Robinante.
+2026-11-01T11:34:36+01:00
+- Restarted 11:32 with net 5.30 m. Host LCMF now measures launch (e.g. 23.27 deg on shot #1), but it is debug-log only.
+- Shot angle stays "estimated": firmware onboard result is never ready (triggerLog result ready=0) at read time,
+  also in the Oct 30/31 sessions without --debug. Only once: "shot 12 invalid, 0 club / 2 ball points".
+- l3release refused after every --debug capture = bug fixed in firmware source by cb8fbffb (2026-10-30), no new binary yet.
+2026-11-01T11:49:33+01:00 Player notes
+- 11:37 lob wedge: player says OpenFlight missed it. Log: shot #6 11:37:23 (83.5 mph ball / 80.3 club, LCMF 28.2 deg), shot #7 11:37:53 (135.8 / 125.7, LCMF 18.8 deg).
+- 11:41 hit a 7-iron with the club set to lob wedge. Log: shot #11 11:40:55 ball 194.4 / club 85.1 (OPS mode of 31 readings) - implausible.
+- "Low Point" noted by player.
+- IWR short dumps (18 bytes, ValueError) at 11:38:05 and 11:45:18, both on false triggers right after a radar restart.
+- Host LCMF launch angles after net fix: 24.1, 18.7, 30.0, 28.2, 18.8, 30.0, 30.0, 25.9 deg; withheld on slow/bad shots.
+2026-11-01T11:58:49+01:00 Setup change
+- OpenFlight moved (TrackMan 4 NOT moved): TrackMan now sits to the left of OpenFlight, looking downrange at the net, so TrackMan can also give club data.
+- 11:49 and 11:51: shots hit OUTSIDE the OpenFlight hitting spot (TrackMan only reports balls inside its configured zone).
+- Next: 15 shots in this setup at normal priority, then real-time priority (chrt -f 50) for the A/B.
+2026-11-01T12:03:50+01:00
+- FALSE SHOT #26 (12:02:40, IWR trigger #42, camera_20261101_120240_461_042): player confirmed. Camera shows the club
+  swinging above a ball that never moves (practice swing/waggle). Accepted with 22.5 mph and only 1 outbound OPS reading.
+  The other ~20 mph shots (#17, #19, #22, #23, 17 mph "club") look like the same thing.
+- Shot #27 (12:03:20) driver 192 mph: first driver with an IWR LCMF launch (9.92 deg, std 5.98).
+2026-11-01T12:05:25+01:00
+- FALSE SHOT #30 (12:04:46): person walked up to the unit to adjust the screen and it triggered. Not a swing.
+- UI banner "TI radar capture failed" shows on every shot only because the onboard result is missing (state=error, "no onboard result"); captures themselves are saved. Misleading wording.
+2026-11-01T12:13:44+01:00 Real-time priority ON (chrt -a -f -p 50, pid 4416) after shot #34. Shots after this are the RT half of the A/B.
+2026-11-01T12:13:49+01:00
+- MISSED SHOT: 3-wood ~12:13 (club set to 3-wood at 12:12:49) did NOT trigger. IWR was rearmed at 12:11:54 (after the
+  usual l3release restart); no IWR trigger and no GPIO edge between 12:11:54 and 12:13:33.
+- Next trigger 12:13:33 = shot #34: 208.2 mph ball / 114.1 club (smash 1.82, implausible), LCMF rejected_track_speed.
+2026-11-01T12:15:17+01:00 Feature request
+- In --debug mode the UI should show each shot's exact time (HH:MM:SS, ideally ms) in the shot history, so shots,
+  false triggers and missed shots can be matched against TrackMan and the log without guessing.
+2026-11-01T12:15:33+01:00
+- 12:15 "Impact detected" with no metrics: player was only ADDRESSING the ball (no swing). IWR self-trigger fired on the address.
+    12:15:10,036 [IWR6843] Trigger #56: reading track samples
+    12:15:13,267 [TRIGGER] IWR6843 self-trigger accepted — peak 20.3 mph, 3 outbound readings
+    12:15:13,405 [SHOT] #36: ball=20.3 mph, club=N/A, carry=28 yds | trigger=16598ms, process=131ms, callback=3ms, total=16735ms
+    12:15:30,647 [IWR6843] Trigger #57: reading track samples
+2026-11-01T12:17:49+01:00
+- Shot #38: player says CLUB SPEED reads too FAST (compare TrackMan).
+    12:16:27,248 [TRIGGER] IWR6843 self-trigger accepted — peak 165.0 mph, 24 outbound readings
+    12:16:27,302 [PROCESSOR] Ball speed: 165.0 mph (mode-based, 24 outbound readings)
+    12:16:27,302 [PROCESSOR] Club speed: 106.6 mph at 11.7ms before ball
+    12:16:27,303 [PROCESSOR] Impact estimate: OPS transition 120.5ms (club 128.3 mph @ 119.5ms -> ball 162.6 mph @ 121.6ms, delta=34.3 mph)
+    12:16:27,344 [SHOT] #38: ball=165.0 mph, club=106.6, carry=288 yds | trigger=19436ms, process=89ms, callback=3ms, total=19532ms
+    12:16:31,537 [CLUB] track=ops_speed_prior OPS=106.6 mph radial=47.5 m/s ratio=1.00 impact_error=0.109 m inliers=11 rms=0.24 bins
+    12:16:31,570 [SERVER] IWR6843 host LCMF-v1 withheld angle: rejected_track_quality
+2026-11-01T12:19:45+01:00
+- Shot #40: deliberate TEST, ball hit NOT on the camera line (off the camera's aim). 12:19:35,313 [SHOT] #40: ball=169.3 mph, club=101.8, carry=306 yds | trigger=13750ms, process=75ms, callback=3ms, total=13831ms
+2026-11-01T12:20:55+01:00 A/B interim (normal 74 triggers vs real-time 8 triggers)
+- S! -> OPS receives it (J3 rise): 0.17 +/- 0.01 ms normal, 0.16 +/- 0.01 ms RT (no difference).
+- J3 rise -> fall (OPS capture window as seen on GPIO18): 41.3 +/- 7.8 ms normal (range 30-51), 48.7 +/- 1.3 ms RT (range 47-50).
+- Server impact -> S!: 0.3 +/- 3.6 ms normal (n=44), -1.0 +/- 2.5 ms RT (n=6). Dominated by impact-estimate noise.
+- RT sample still small; needs ~15 more shots.
+2026-11-01T12:23:49+01:00
+- 12:23 "Impact detected": player ADDRESSING the ball, set the club down onto the ground FROM ABOVE (no swing).
+    12:23:08,815 [IWR6843] Trigger #65: reading track samples
+    12:23:11,207 [TRIGGER] IWR6843 self-trigger rejected — no outbound speed >= 15 mph (peak=0.0 mph, 0 readings)
+2026-11-01T12:25:17+01:00
+- FALSE SHOT #43: triggered on the BACKSWING (player confirmed). The real downswing/impact then falls in the ~8 s blind window.
+    12:25:03,215 [TRIGGER] IWR6843 self-trigger accepted — peak 66.4 mph, 11 outbound readings
+    12:25:03,260 [PROCESSOR] Ball speed: 66.4 mph (mode-based, 11 outbound readings)
+    12:25:03,261 [PROCESSOR] Club speed: 44.5 mph at 9.6ms before ball
+    12:25:03,287 [SHOT] #43: ball=66.4 mph, club=44.5, carry=90 yds | trigger=8897ms, process=65ms, callback=3ms, total=8968ms
+    12:25:07,542 [SERVER] Self-trigger impact -> S!: 6.0 ms (OPS pre-trigger 102.4 ms)
+    12:25:07,543 [SERVER] IWR6843 host LCMF-v1 withheld angle: rejected_by_ball_tracker
+2026-11-01T12:26:39+01:00
+- MISSED SHOT after #43: player hit within ~9 s of the false backswing trigger (12:25:00). IWR was blind until the
+  rearm at 12:25:08.1 (7.85 s). No IWR trigger at all from 12:25:08 to 12:26:31. Blind window = --debug readback (7.1 s) + restart.
+2026-11-01T12:27:59+01:00
+- Two quick shots (<8 s apart): first = shot #44 (12:26:45, OK, LCMF 21.6 deg). Second NOT registered.
+  IWR trigger #70 at 12:26:53.84, 0.44 s after the radar rearm (12:26:53.40); camera shows no ball/club on the mat
+  -> spurious trigger right after restart, OPS rejected it, radar blind again until 12:27:01.6.
+- Triggers <2 s after a rearm today: #11 (0.53 s, rejected, 18-byte dump), #31 (0.56 s, accepted), #70 (0.44 s, rejected).
+2026-11-01T12:29:55+01:00 A/B FINAL (normal priority, same run 11:32-12:13, n=54 triggers  vs  SCHED_FIFO 50, n=19 triggers)
+- S! -> OPS receives it (J3 rise):   0.17 +/- 0.01 ms  vs  0.17 +/- 0.01 ms   -> no difference
+- J3 rise -> fall window:            44.8 +/- 6.1 ms   vs  47.7 +/- 2.7 ms    -> jitter roughly halved
+- Server impact -> S!:               0.3 +/- 3.6 ms (n=44) vs -0.4 +/- 2.9 ms (n=12) -> within noise
+- OPS processing time:               88 +/- 28 ms      vs  89 +/- 20 ms       -> no difference
+- Verdict: real-time priority is not needed for trigger timing; the S! path is already sub-millisecond and
+  impact->S! error is dominated by the impact estimate, not OS scheduling.
+2026-11-01T12:33:32+01:00 SNR TEST
+- Last shot at SNR 1.5: #49 (12:30:54) 159.6/117.0 mph, smash 1.36 (plausible), LCMF 21.5 deg.
+- Restarted OpenFlight with --iwr6843-self-trigger-snr 2.0 (was 1.5). Real-time priority is OFF again (normal scheduling).
+  New log: /home/openfl/openflight_sessions/terminal_logs/kiosk_20261101_113221.log
+2026-11-01T12:35:49+01:00 SNR TEST
+- Last shot at SNR 1.5: #49 (12:30:54) 159.6/117.0 mph, smash 1.36 (plausible), LCMF 21.5 deg.
+- Restarted OpenFlight with --iwr6843-self-trigger-snr 2.0 (was 1.5). Real-time priority OFF again (normal scheduling).
+  (Old process had SIGINT ignored because it was launched over SSH in the background; stopped with SIGTERM, so no OPS idle.)
+  New log: /home/openfl/openflight_sessions/terminal_logs/kiosk_20261101_123514.log
+2026-11-01T12:38:21+01:00 SNR 2.0 (radar confirmed: triggerCfg 36 2.0 1)
+- People just MOVING AROUND the unit (no swing) 12:36:58-12:37:40: 4 IWR triggers in ~45 s.
+  3 rejected by OPS, 1 saved as FALSE SHOT #1 (12:37:18, 16.7 mph, 1 outbound reading).
+  -> SNR 2.0 does not stop movement triggers.
+2026-11-01T12:38:34+01:00
+- SNR 2.0: shot #2 was a REAL shot (player confirmed).
+    12:38:11,427 [TRIGGER] IWR6843 self-trigger accepted — peak 183.9 mph, 42 outbound readings
+    12:38:11,543 [SHOT] #2: ball=118.7 mph, club=79.7, carry=187 yds | trigger=29035ms, process=109ms, callback=3ms, total=29150ms
+    12:38:15,986 [SERVER] Self-trigger impact -> S!: 5.0 ms (OPS pre-trigger 102.4 ms)
+    12:38:15,986 [SERVER] IWR6843 host LCMF-v1 withheld angle: insufficient_channel_snapshots
+2026-11-01T12:39:02+01:00
+- SNR 2.0: FALSE TRIGGER reported by player at 12:39.
+    12:38:50,982 [IWR6843] Trigger #6: reading track samples
+    12:38:53,363 [TRIGGER] IWR6843 self-trigger rejected — no outbound speed >= 15 mph (peak=0.0 mph, 0 readings)
+    12:39:01,079 [IWR6843] Trigger #7: reading track samples
+2026-11-01T12:39:23+01:00
+- SNR 2.0: shot #3 was a REAL shot (player confirmed). 12:39:04,239 [SHOT] #3: ball=117.8 mph, club=108.7, carry=184 yds | trigger=10795ms, process=72ms, callback=5ms, total=
+2026-11-01T12:43:10+01:00
+- SNR 2.0: latest swing was a PRACTICE SWING, no ball (player).
+    12:42:25,233 [SHOT] #7: ball=84.7 mph, club=75.1, carry=115 yds | trigger=11849ms, process=89ms, callback=3ms, total=11943ms
+    12:42:55,683 [IWR6843] Trigger #13: reading track samples
+    12:42:58,456 [TRIGGER] IWR6843 self-trigger accepted — peak 59.9 mph, 27 outbound readings
+    12:42:58,541 [SHOT] #8: ball=57.9 mph, club=41.0, carry=79 yds | trigger=3216ms, process=81ms, callback=2ms, total=3301ms
+  -> = FALSE SHOT #8 (12:42:55): no ball, but OPS accepted 57.9 mph "ball" / 41.0 club with 27 outbound readings (club head read as ball).
+2026-11-01T12:44:23+01:00
+- SNR 2.0: FALSE TRIGGER on the BACKSWING (player). Real shot that followed is lost in the blind window.
+    12:44:13,135 [TRIGGER] IWR6843 self-trigger accepted — peak 41.0 mph, 10 outbound readings
+    12:44:13,210 [SHOT] #9: ball=27.1 mph, club=N/A, carry=37 yds | trigger=14579ms, process=71ms, callback=2ms, total=14653ms
+    12:44:21,142 [IWR6843] Trigger #15: reading track samples
+2026-11-01T12:44:37+01:00
+- SNR 2.0: FALSE SHOT #10 on the ADDRESS (player correction, not backswing). 12:44:24,309 [SHOT] #10: ball=31.6 mph, club=22.4, carry=43 yds | trigger=10921ms, process=173ms, callback=2ms, total=1
+2026-11-01T12:46:24+01:00 SNR TEST
+- SNR 2.0 summary: 2 real shots (#2, #3), 4 false shots (#1 moving around, #8 practice swing no ball 27 readings,
+  #9 backswing, #10 address), several impact-detected without ball. No improvement over 1.5.
+- Restarted OpenFlight with --iwr6843-self-trigger-snr 3.0. New log: /home/openfl/openflight_sessions/terminal_logs/kiosk_20261101_124549.log
+2026-11-01T12:48:05+01:00
+- SNR 3.0: PRACTICE SWING (player).
+    12:47:43,315 [SHOT] #1: ball=31.0 mph, club=21.3, carry=42 yds | trigger=16669ms, process=70ms, callback=3ms, total=16745ms
+    12:48:01,539 [IWR6843] Trigger #2: reading track samples
+    12:48:04,328 [TRIGGER] IWR6843 self-trigger accepted — peak 74.0 mph, 29 outbound readings
+    12:48:04,411 [SHOT] #2: ball=74.0 mph, club=60.0, carry=101 yds | trigger=21013ms, process=78ms, callback=2ms, total=21095ms
+  -> practice swing = FALSE SHOT #2 (12:48:01): 74.0 mph "ball" / 60.0 club, 29 readings. Shot #1 (12:47:40, 31.0/21.3 mph) unconfirmed, likely false too.
+2026-11-01T12:48:33+01:00
+- SNR 3.0: player hit 2 REAL shots now.
+    12:48:08,967 [SERVER] IWR6843 host LCMF-v1 withheld angle: rejected_track_quality
+    12:48:19,939 [IWR6843] Trigger #3: reading track samples
+    12:48:22,328 [TRIGGER] IWR6843 self-trigger rejected — no outbound speed >= 15 mph (peak=0.0 mph, 0 readings)
+  -> BOTH real shots MISSED at SNR 3.0. Only trigger: #3 12:48:19.9 (camera: ball still on mat, no club = false), blind until 12:48:27.7; no trigger after that up to 12:48:50.
+2026-11-01T12:49:41+01:00
+- SNR 3.0: REAL SHOT just now NOT registered (player). Log since 12:48:28: 12:49:39,406 [IWR6843] Trigger #4: reading track samples
+    12:49:39,406 [IWR6843] Trigger #4: reading track samples
+    12:49:42,187 [TRIGGER] IWR6843 self-trigger accepted — peak 126.2 mph, 41 outbound readings
+    12:49:42,289 [SHOT] #3: ball=122.2 mph, club=79.8, carry=195 yds | trigger=19845ms, process=96ms, callback=3ms, total=19946ms
+  -> CORRECTION: this shot WAS registered as shot #3 (12:49:39, 122.2/79.8 mph); camera shows club through impact. Player looked before the result appeared (~3 s).
+2026-11-01T12:51:51+01:00
+- SNR 3.0: player SLOWED the swing tempo -> ball NOT registered at all. Log after 12:49:43:
+    12:49:47,165 [IWR6843] Radar restarted to rearm it after a capture
+    12:50:16,975 [IWR6843] Trigger #5: reading track samples
+    12:50:20,111 [TRIGGER] IWR6843 self-trigger accepted — peak 168.2 mph, 38 outbound readings
+    12:50:20,218 [SHOT] #4: ball=116.1 mph, club=80.7, carry=180 yds | trigger=7804ms, process=98ms, callback=5ms, total=7910ms
+    12:50:24,722 [IWR6843] Radar restarted to rearm it after a capture
+    12:50:43,458 [IWR6843] Trigger #6: reading track samples
+    12:50:46,239 [TRIGGER] IWR6843 self-trigger accepted — peak 87.3 mph, 41 outbound readings
+    12:50:46,337 [SHOT] #5: ball=79.4 mph, club=59.4, carry=108 yds | trigger=26022ms, process=93ms, callback=2ms, total=26119ms
+    12:50:51,213 [IWR6843] Radar restarted to rearm it after a capture
+    12:51:11,613 [IWR6843] Trigger #7: reading track samples
+    12:51:14,400 [TRIGGER] IWR6843 self-trigger accepted — peak 75.2 mph, 44 outbound readings
+    12:51:14,492 [SHOT] #6: ball=75.2 mph, club=68.2, carry=102 yds | trigger=28063ms, process=88ms, callback=2ms, total=28155ms
+    12:51:19,380 [IWR6843] Radar restarted to rearm it after a capture
+2026-11-01T12:52:29+01:00
+- SNR 3.0: player hit a VERY FAST swing (~128 mph per player). Log after 12:51:20:
+    12:51:55,080 [IWR6843] Trigger #8: reading track samples
+    12:51:58,096 [TRIGGER] IWR6843 self-trigger accepted — peak 29.9 mph, 1 outbound readings
+    12:51:58,165 [SHOT] #7: ball=29.9 mph, club=N/A, carry=41 yds | trigger=13584ms, process=63ms, callback=3ms, total=13653ms
+    12:52:02,242 [SERVER] IWR6843 host LCMF-v1 withheld angle: rejected_by_ball_tracker
+    12:52:12,126 [IWR6843] Trigger #9: reading track samples
+    12:52:15,095 [TRIGGER] IWR6843 self-trigger accepted — peak 132.3 mph, 38 outbound readings
+    12:52:15,190 [SHOT] #8: ball=126.0 mph, club=84.2, carry=205 yds | trigger=16930ms, process=88ms, callback=3ms, total=17024ms
+    12:52:19,488 [SERVER] IWR6843 host LCMF-v1 withheld angle: insufficient_channel_snapshots
+2026-11-01T12:53:49+01:00
+- SNR 3.0: 12:53 trigger from PLACING THE BALL on the mat (player).
+    12:53:22,584 [IWR6843] Trigger #11: reading track samples
+    12:53:24,975 [TRIGGER] IWR6843 self-trigger rejected — no outbound speed >= 15 mph (peak=0.0 mph, 0 readings)
+2026-11-01T12:55:59+01:00 Session ended: OpenFlight stopped by Claude on player request. Summary to be written later.

@@ -1,0 +1,25 @@
+2026-11-01T11:12:11+01:00
+openflight
+## feat/iwr-self-trigger...origin/feat/iwr-self-trigger [ahead 2]
+ M scripts/kiosk-browser.sh
+ M scripts/require-node.sh
+ M ui/package-lock.json
+f71a3ef8f403248d8ad20c3ba6363d49e7005b7f
+f71a3ef8 fix(touchscreen): find the display backlight instead of assuming panel_backlight@1
+1548287d feat(ops243): idle the radar while OpenFlight is not running
+bash: line 5: uv: command not found
+Python 3.13.5
+Linux openflight 6.18.50+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.18.50-1+rpt1 (2026-09-11) aarch64 GNU/Linux
+PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+NAME="Debian GNU/Linux"
+VERSION_ID="13"
+VERSION="13 (trixie)"
+VERSION_CODENAME=trixie
+DEBIAN_VERSION_FULL=13.7
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+f83a73647cb549f8bf0e1b362c4a618b096d812f8da7c3e024b98dc43f3568e4  config/iwr6843_l3dump_wide_24f2ms_53bin_iq16_window_hann.cfg
+               Local time: Sun 2026-11-01 11:12:12 CET
+System clock synchronized: yes
