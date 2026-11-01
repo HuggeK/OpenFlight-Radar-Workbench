@@ -109,9 +109,9 @@ Export TrackMan through SwingSync again and run
 - [ ] Note what happened just before (here: a normal rearm at 11:37:26, the
       shot before had 83.5 mph and 1.34 % clipped samples).
 - [ ] Check whether a restart alone fixes it (it did on 2026-11-01).
-- [ ] Faster check than J3: `python -m openflight_bench.session triage` is not
-      needed — every `rolling_buffer_capture` in the session JSONL carries
-      `trigger_offset_ms`, 102.0 at 30 kS/s and 154.0 at 20 kS/s.
+- [ ] Check without J3 too: every `rolling_buffer_capture` in the session
+      JSONL carries the OPS's `trigger_offset_ms`, 102.0 at 30 kS/s and 154.0
+      at 20 kS/s.
 - [ ] Read the OPS's UART error counters (`query_uart_baud()` in
       `openflight.ops243`) before and after the session.
 - [ ] Note the time of the "cue" games (poking the ball to set off the
