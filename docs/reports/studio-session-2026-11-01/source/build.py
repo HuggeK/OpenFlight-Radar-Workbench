@@ -131,6 +131,13 @@ def build(mode: str) -> str:
     page = page.replace("{{J3_CHART}}", j3_chart(captures))
     page = page.replace("{{CAPTURE_ROWS}}", capture_rows(captures))
     page = page.replace("{{J3_LOG}}", html.escape((HERE / "ops_j3_20261101_111438.log").read_text()))
+    logs = sorted(p.relative_to(OUT / "logs").as_posix() for p in (OUT / "logs").rglob("*") if p.is_file())
+    page = page.replace("{{LOG_OPTIONS}}", '<option value="">Choose a file</option>' + "".join(
+        f'<option value="{html.escape(n)}">{html.escape(n)} ({(OUT / "logs" / n).stat().st_size / 1024:,.0f} KB)</option>'
+        for n in logs))
+    page = page.replace("{{LOG_ROWS}}", "".join(
+        f'<tr><td><code>{html.escape(n)}</code></td><td class="r">{(OUT / "logs" / n).stat().st_size / 1024:,.0f} KB</td></tr>'
+        for n in logs))
     page = page.replace("{{PHOTO_BASE}}", "photos/" if mode == "web" else PHOTOS.as_uri() + "/")
     if mode == "web":
         page = re.sub(r"<!--PRINT-ONLY-->.*?<!--/PRINT-ONLY-->", "", page, flags=re.S)

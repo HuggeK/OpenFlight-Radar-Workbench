@@ -91,6 +91,9 @@ svg.chart .dot.ok{fill:var(--ok)} svg.chart .dot.warn{fill:var(--warn)} svg.char
 .captures tbody tr:hover,.captures tbody tr[aria-current="true"]{background:var(--accent-soft)}
 .captures .chip{white-space:nowrap}
 details pre{max-height:320px}
+.logviewer{display:grid;gap:8px}
+.logviewer select{font:15px var(--body);padding:6px 8px;border:1px solid var(--rule);border-radius:4px;background:var(--sheet);color:var(--ink);max-width:100%}
+#logtext{max-height:520px;white-space:pre;margin:0}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 @media print{
   body{background:#fff;font-size:11.5pt}
@@ -306,6 +309,27 @@ details pre{max-height:320px}
   </ul>
 </section>
 
+<section aria-labelledby="logs">
+  <div class="col">
+    <h2 id="logs">Logs</h2>
+    <p>Every text file from the session: the kiosk logs (every IWR trigger, OPS verdict and shot, false ones included), the OPS event logs, the session JSONL (shots, OPS captures with raw I/Q, IWR results), the J3 edge log, the camera trigger stamps, the TrackMan export, the notes taken during the session, and each run's launcher.</p>
+  </div>
+  <!--WEB-ONLY-->
+  <div class="logviewer">
+    <label for="logpick" class="note">File</label>
+    <select id="logpick">
+{{LOG_OPTIONS}}
+    </select>
+    <pre id="logtext" tabindex="0">Pick a file to show it here.</pre>
+  </div>
+  <!--/WEB-ONLY-->
+  <!--PRINT-ONLY-->
+  <div class="table col"><table><thead><tr><th>File</th><th class="r">Size</th></tr></thead><tbody>
+{{LOG_ROWS}}
+  </tbody></table></div>
+  <!--/PRINT-ONLY-->
+</section>
+
 <footer class="col">
   <!--WEB-ONLY--><script>
   (function () {
@@ -331,6 +355,18 @@ details pre{max-height:320px}
         buttons.forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
         rows.forEach(function (r) { r.hidden = b.dataset.filter !== "all" && r.dataset.cat !== b.dataset.filter; });
       });
+    });
+    var pick = document.getElementById("logpick"), logtext = document.getElementById("logtext");
+    pick.addEventListener("change", function () {
+      if (!pick.value) { return; }
+      logtext.textContent = "Loading " + pick.value + " ...";
+      fetch("logs/" + pick.value).then(function (r) {
+        if (!r.ok) { throw new Error(r.status); }
+        return r.text();
+      }).then(function (t) {
+        logtext.textContent = t.length > 2000000 ? t.slice(0, 2000000) + "
+... (cut at 2 MB)" : t;
+      }).catch(function (e) { logtext.textContent = "Could not load " + pick.value + " (" + e.message + ")."; });
     });
     var first = rows.filter(function (r) { return r.dataset.cat === "ok"; })[0];
     if (first) { first.setAttribute("aria-current", "true"); player.src = "captures/" + first.dataset.tag + ".mp4"; }

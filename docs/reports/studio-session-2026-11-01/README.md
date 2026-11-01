@@ -236,6 +236,9 @@ real-time priority a default.**
 | `data/trackman_compare.txt` | Shot-by-shot TrackMan ↔ OpenFlight table |
 | `data/trackman-notes.txt` | Notes taken during the session, with the player's observations |
 | `data/ops_j3_20261101_111438.log` | GPIO18 edges (monotonic seconds) |
+| `data/radar_raw_20261101_*.log` | OPS243 event logs per run (trigger, dump, clock sync, rearm) |
+| `data/launcher/` | `run-openflight.sh` as it stood for each run (flags, SNR, net) |
+| `data/captures_20261101.json` | Every camera capture matched to its trigger, OPS verdict and TrackMan |
 | `data/camera_triggers_20261101.csv` | Camera trigger timestamps, 127 captures |
 | `data/trackman-build-info.txt`, `data/trackman-local-changes.patch` | Build stamp |
 | `OpenFlight-studio-session-2026-11-01.pdf` | This report as a PDF, with camera strips |

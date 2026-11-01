@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+openflight_installed_dir=/home/openfl/openflight
+# Example user-local OpenFlight launcher.
+#
+# Copy this file outside the repository, then add this Pi's hardware and
+# calibration arguments to openflight_args. The desktop installer derives a
+# checkout-specific filename and records the checkout path automatically.
+
+set -o pipefail
+
+openflight_installed_dir="${openflight_installed_dir:-$HOME/openflight}"
+project_dir="${OPENFLIGHT_DIR:-$openflight_installed_dir}"
+runtime_dir="${XDG_RUNTIME_DIR:-/tmp}"
+log_dir="${OPENFLIGHT_LOG_DIR:-$HOME/openflight_sessions/terminal_logs}"
+lock_file="$runtime_dir/openflight-launch.lock"
+
+# Ignore repeated taps while this launcher owns the hardware.
+mkdir -p "$runtime_dir" "$log_dir"
+exec 9>"$lock_file"
+if ! flock -n 9; then
+    exit 0
+fi
+
+if ! cd "$project_dir"; then
+    logger -t openflight "OpenFlight project directory not found: $project_dir"
+    exit 1
+fi
+
+# Keep the splash flag first. Add optional hardware only when it is installed
+# and calibrated on this Pi.
+
+openflight_args=(
+    --startup-splash
+    --ballistics
+    --radar-port /dev/ttyAMA0
+    --iwr6843
+    --iwr6843-port /dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_01310F8D-if00-port0
+    --iwr6843-self-trigger
+    --iwr6843-tee-m 1.575            # your distance, enclosure front -> ball
+    --iwr6843-tilt-deg 10.1          # experimental case: CAD plate angle vs enclosure base
+    --inclinometer
+    --inclinometer-zero-offset +1.436
+    --iwr6843-radar-height-m 0.1524  # your antenna-center height
+    --iwr6843-ball-height-m 0.04
+    --battery geekworm
+    --camera-capture
+    --camera-capture-width 320
+    --camera-capture-height 200
+    --camera-capture-fps 450
+    --camera-capture-pre-ms 150
+    --camera-capture-post-ms 50
+      # remove if replays are upside down
+)
+
+# Optional startup optimization after dependencies have already been synced:
+# export OPENFLIGHT_UV_RUN_ARGS=--no-sync
+#
+# Camera capture uses Raspberry Pi OS's system Picamera2 package. A local
+# camera profile may also need:
+# export UV_PYTHON=/usr/bin/python3
+
+log_file="$log_dir/kiosk_$(date +%Y%m%d_%H%M%S).log"
+scripts/start-kiosk.sh "${openflight_args[@]}" 2>&1 | tee -a "$log_file"
+status=${PIPESTATUS[0]}
+
+if (( status != 0 )); then
+    logger -t openflight "OpenFlight exited with status $status; see $log_file"
+fi
+exit "$status"
