@@ -13,6 +13,7 @@ only read what OpenFlight already writes. The analysis runs anywhere with
 | A shot looks wrong | `camera_strip.py CAPTURE... -o FILE` | Frames around the trigger: real shot or false trigger |
 | After the session | `export_camera_triggers.py CAMERA_DIR` | Trigger timestamps as CSV for the latency analysis |
 | After the session | `iwr_net_replay.py DUMP... --net ...` | Re-runs the IWR ball tracker with other net distances |
+| After the session | `lcmf_height_replay.py SHOTS.json` | Re-runs LCMF launch with other radar/ball heights against TrackMan |
 
 ## Run a session
 

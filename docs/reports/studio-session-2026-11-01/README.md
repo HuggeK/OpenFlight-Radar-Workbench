@@ -35,9 +35,15 @@ through `python -m openflight_bench.session` (see
    ball speed matched TrackMan to 0.995 ± 0.028. The OPS post-trigger window
    on J3 pin 1 grew from ~32 ms to ~48 ms (×1.5) at the same moment, the log's
    `post-trigger` went from 34.5 ms to 0.0 ms, and the clock sync went from 36
-   to 59 valid readings; no host command was sent in between. It looks like
-   the OPS dropped from 30 kS/s to ~20 kS/s while OpenFlight kept computing
-   for 30. A restart fixed it.
+   to 59 valid readings; no host command was sent in between. The OPS's own
+   trigger offset in every `rolling_buffer_capture` record went from exactly
+   102.00 ms to exactly 154.00 ms: S#24's 3072 pre-trigger samples at
+   30 kS/s, then at 20 kS/s. It was not an OPS reboot (it powers up at
+   30 kS/s in continuous mode, checked 2026-11-01 evening) and not the move
+   (~11:52). The OPS reports UART receive errors (4 noise, 4 framing, 1 break
+   since boot); one candidate is a re-arm `S#24` that lost its `#` and read
+   as `S2` (20 kS/s) — to be confirmed against OmniPreSense's API. A restart
+   fixed it.
 2. **`--iwr6843-net-m` is unit → net, not ball → net.** 3.0 m (meant as ball
    → net) left the tracker 0.5 m (~10 ms) of flight. Replay with 4.6 m tracked
    24-41 ms on every real shot. Measured unit → net was 5.30 m.
@@ -56,7 +62,16 @@ through `python -m openflight_bench.session` (see
    shots with correct OPS speed: 2.4° MAE, 1.4° median, +1.5° bias (n=8),
    against 0.83° / 0.67° / −0.04° in the
    [project's TrackMan validation](https://github.com/open-flight/openflight/blob/feat/iwr-self-trigger/docs/how-it-works/launch-angle.md).
-   Few shots, and the radar sat lower (0.04 m) than any validated mount.
+   Few shots, and the radar sat lower (0.04 m) than any validated mount
+   (0.1524 m). Replaying 31 shots with the real ball-centre height (0.061 m:
+   4 cm mat + 2.1 cm radius, not 0.04 m) cut the bias on the 23 good tracks
+   from +0.87° to +0.39°; 8 shots stayed 5-11° off, so wrong tracks, not
+   geometry, dominate ([`lcmf_height_replay.txt`](data/lcmf_height_replay.txt)).
+   Measure radar height to the centre of the IWR antenna group and ball height
+   to the ball centre, both from the floor the unit stands on.
+10. **The clocks were fine.** NTP (systemd-timesyncd) syncs whenever there is
+    a connection; the RTC battery charges (`rtc_bbat_vchg=3000000`) and kept
+    the time across power-off. TrackMan's clock, not the Pi's, was 425.5 s off.
 7. **Real-time scheduling buys nothing.** S! reached the OPS 0.17 ± 0.01 ms
    after the host acted, with or without `chrt -f 50`.
 8. **The UI banner "TI radar capture failed" is misleading.** It appears on

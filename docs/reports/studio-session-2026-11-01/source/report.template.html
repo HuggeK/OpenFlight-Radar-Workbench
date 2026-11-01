@@ -72,6 +72,25 @@ figure.clip.ok{border-top:4px solid var(--ok)} figure.clip.warn{border-top:4px s
 .checklist{margin:0;padding-left:20px;display:grid;gap:8px}
 pre{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:12px 14px;overflow-x:auto;font:400 13.5px/1.5 var(--mono);margin:6px 0 14px}
 footer{color:var(--muted);font-size:14px;border-top:1px solid var(--rule);padding-top:16px}
+.chartbox{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:8px;overflow-x:auto}
+svg.chart{display:block;width:100%;min-width:640px;height:auto}
+svg.chart .grid{stroke:var(--rule);stroke-width:1}
+svg.chart .tick{fill:var(--muted);font:12px var(--mono)}
+svg.chart .ref{stroke:var(--accent);stroke-width:1.5;stroke-dasharray:6 4}
+svg.chart .reflabel{fill:var(--accent);font:600 12px var(--mono)}
+svg.chart .event{stroke:var(--muted);stroke-width:1;stroke-dasharray:2 4}
+svg.chart .dot.ok{fill:var(--ok)} svg.chart .dot.warn{fill:var(--warn)} svg.chart .dot.bad{fill:var(--bad)}
+.browser{display:grid;gap:12px}
+.player{display:grid;gap:6px;max-width:720px}
+.player video{width:100%;height:auto;background:#000;border-radius:4px;aspect-ratio:16/10}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.filters button{font:600 13px var(--body);padding:7px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--sheet);color:var(--ink);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--sheet)}
+.captures{max-height:560px;overflow:auto}
+.captures tbody tr{cursor:pointer}
+.captures tbody tr:hover,.captures tbody tr[aria-current="true"]{background:var(--accent-soft)}
+.captures .chip{white-space:nowrap}
+details pre{max-height:320px}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 @media print{
   body{background:#fff;font-size:11.5pt}
@@ -81,6 +100,10 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--rule);paddin
   section,figure.clip,.table,.tldr,.gauge{break-inside:avoid}
   .clips{grid-template-columns:1fr}
   .photos{grid-template-columns:1fr 1fr}
+  .captures{max-height:none;overflow:visible}
+  .captures table{font-size:8.5pt}
+  .captures th,.captures td{padding:2px 6px}
+  svg.chart{min-width:0}
   a{color:var(--ink)}
 }
 </style>
@@ -94,7 +117,7 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--rule);paddin
 <section class="tldr col" aria-labelledby="tldr">
   <h2 id="tldr">TL;DR</h2>
   <ul>
-    <li><strong>The OPS243 read 1.49 × TrackMan's ball speed from 11:37:53 until a restart at 12:35.</strong> Its capture window grew from 34 to 48 ms at the same moment: it looks like the radar dropped from 30 to ~20 kS/s mid-run. Outside that period, ball speed matched TrackMan to 0.995 ± 0.028.</li>
+    <li><strong>The OPS243 dropped from 30 to 20 kS/s at 11:37:53 and read 1.49 × TrackMan's ball speed until a restart at 12:35.</strong> Its own trigger offset went from 102 to 154 ms and its J3 window from 34 to 48 ms; UART noise sending <code>S2</code> is the leading suspect. Outside that period, ball speed matched TrackMan to 0.995 ± 0.028.</li>
     <li><strong>The self-trigger caught 57 of 76 real shots on time (75 %).</strong> Six fired on the takeaway or backswing, ten never fired, three fired 60-70 ms too early.</li>
     <li><strong>False triggers are frequent and SNR does not fix them.</strong> Addresses, waggles, practice swings, placing a ball and walking up all fired it at SNR 1.5, 2.0 and 3.0; each one blinds the IWR for 7.7 s and can cost the next real shot.</li>
     <li><strong>IWR launch was 2.4° MAE (n=8)</strong>, three times the project's 0.83° TrackMan baseline. <code>--iwr6843-net-m</code> must be unit → net; entering ball → net (3.0 m) clipped every track.</li>
@@ -115,12 +138,14 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--rule);paddin
 <section class="col" aria-labelledby="lessons">
   <h2 id="lessons">Lessons learned</h2>
   <ol class="lessons">
-    <li><strong>The OPS changed its sampling mid-run.</strong> At 11:37:53, with no host command in between, ball speed went to 1.486 ± 0.035 × TrackMan, club speed to 1.37 ×, the J3 post-trigger window from ~32 to ~48 ms, the log's <code>post-trigger</code> from 34.5 to 0.0 ms, and the clock sync from 36 to 59 valid readings. A restart fixed it.</li>
+    <li><strong>The OPS changed its sampling mid-run.</strong> At 11:37:53, with no host command in between, ball speed went to 1.486 ± 0.035 × TrackMan, club speed to 1.37 ×, the J3 post-trigger window from ~32 to ~48 ms, the log's <code>post-trigger</code> from 34.5 to 0.0 ms, and the clock sync from 36 to 59 valid readings. The OPS's own trigger offset in every capture went from exactly 102.00 to exactly 154.00 ms: 3072 pre-trigger samples at 30 kS/s, then at 20 kS/s. It was not a reboot (the OPS powers up at 30 kS/s in continuous mode) and not the move (that came at ~11:52). The OPS reported UART receive errors (4 noise, 4 framing, 1 break since boot); one candidate is a re-arm <code>S#24</code> that lost its <code>#</code> and read as <code>S2</code> (20 kS/s), to be confirmed against OmniPreSense's API. A restart fixed it.</li>
     <li><strong><code>--iwr6843-net-m</code> is unit → net.</strong> 3.0 m (meant as ball → net) left the tracker 0.5 m, about 10 ms of flight. Replaying the same dumps with 4.6 m tracked 24-41 ms on every real shot. Unit → net was 5.30 m.</li>
     <li><strong>The self-trigger caught 75 % of real shots on time.</strong> Early triggers on the takeaway left the OPS reading the slow backswing (20-50 mph) and the real shot fell in the blind window.</li>
     <li><strong>False triggers are frequent; SNR does not fix them.</strong> 20 saved shots and 41 no-ball triggers had no TrackMan shot behind them. At SNR 3.0 a practice swing still triggered and real shots went missing.</li>
     <li><strong>Every trigger blinds the IWR for ~7.7 s</strong> with <code>--debug</code>: 7.1 s readback plus a radar restart.</li>
-    <li><strong>IWR launch angles were 3× worse than the baseline</strong>: 2.4° MAE, 1.4° median, +1.5° bias on 8 clean shots, with the radar 0.04 m above the floor, lower than any validated mount.</li>
+    <li><strong>IWR launch angles were 3× worse than the baseline</strong>: 2.4° MAE, 1.4° median, +1.5° bias on 8 clean shots, with the radar 0.04 m above the floor, lower than any validated mount (0.1524 m). Replaying 31 shots with the ball centre at its real 0.061 m (4 cm mat + 2.1 cm radius) instead of 0.04 m cut the bias on the 23 good tracks from +0.87° to +0.39°, but 8 shots stayed 5-11° off: wrong tracks, not geometry, dominate the error.</li>
+    <li><strong>Measure both heights from the floor the unit stands on.</strong> Radar height to the centre of the IWR antenna group, ball height to the centre of the ball (mat + 0.021 m).</li>
+    <li><strong>The clocks were fine.</strong> NTP (systemd-timesyncd) syncs whenever there is a connection, and the RTC battery charges and kept time across power-off. TrackMan's clock, not the Pi's, was 425.5 s off.</li>
     <li><strong>Real-time scheduling buys nothing.</strong> The window jitter that looked halved was the 11:37:53 switch.</li>
     <li><strong>“TI radar capture failed” is misleading.</strong> It shows on every shot because the firmware never has an onboard result ready; the data is still saved.</li>
     <li><strong>Launch OpenFlight from the desktop icon.</strong> Over SSH with <code>nohup … &amp;</code> the server ignored SIGINT, and SIGTERM skipped the OPS idle step.</li>
@@ -135,6 +160,43 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--rule);paddin
   <div class="clips">
 {{CLIPS}}
   </div>
+</section>
+
+<section aria-labelledby="all">
+  <div class="col">
+    <h2 id="all">Every capture</h2>
+    <p>All 127 camera captures, each matched to its IWR trigger, the OPS verdict and TrackMan. Speeds are ball/club in mph; the last column is the OPS capture window from J3 pin 1.</p>
+  </div>
+  <!--WEB-ONLY-->
+  <div class="browser">
+    <div class="player">
+      <video id="player" muted loop playsinline controls preload="none" aria-label="Selected capture"></video>
+      <p id="player-label" class="note">Pick a row to play its capture.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter captures">
+      <button type="button" id="f-all" data-filter="all" aria-pressed="true">All 127</button>
+      <button type="button" id="f-ok" data-filter="ok" aria-pressed="false">Captured</button>
+      <button type="button" id="f-warn" data-filter="warn" aria-pressed="false">Wrong speed</button>
+      <button type="button" id="f-bad" data-filter="bad" aria-pressed="false">Lost or false</button>
+    </div>
+  </div>
+  <!--/WEB-ONLY-->
+  <div class="table captures"><table>
+    <thead><tr><th>Time</th><th class="r">SNR</th><th>Outcome</th><th>OpenFlight</th><th>TrackMan</th><th class="r">J3 ms</th></tr></thead>
+    <tbody id="capture-rows">
+{{CAPTURE_ROWS}}
+    </tbody></table></div>
+</section>
+
+<section aria-labelledby="j3">
+  <div class="col">
+    <h2 id="j3">J3 pin 1 on GPIO18</h2>
+    <p>The OPS243 raises J3 pin 1 when it receives S! and drops it when its post-trigger capture closes. Each dot is one trigger. At 11:37:53 the window jumps from the 34 ms that S#24 takes at 30 kS/s to the ~48-51 ms it takes at 20 kS/s, and drops back after the restart at 12:35.</p>
+  </div>
+  <div class="chartbox">{{J3_CHART}}</div>
+  <!--WEB-ONLY-->
+  <details class="col"><summary>Raw gpiomon log (<code>ops_j3_20261101_111438.log</code>, monotonic seconds)</summary><pre>{{J3_LOG}}</pre></details>
+  <!--/WEB-ONLY-->
 </section>
 
 <section class="col" aria-labelledby="trackman">
@@ -245,6 +307,35 @@ footer{color:var(--muted);font-size:14px;border-top:1px solid var(--rule);paddin
 </section>
 
 <footer class="col">
+  <!--WEB-ONLY--><script>
+  (function () {
+    var player = document.getElementById("player");
+    var label = document.getElementById("player-label");
+    var rows = Array.prototype.slice.call(document.querySelectorAll("#capture-rows tr"));
+    function play(row) {
+      rows.forEach(function (r) { r.removeAttribute("aria-current"); });
+      row.setAttribute("aria-current", "true");
+      player.src = "captures/" + row.dataset.tag + ".mp4";
+      var cells = row.querySelectorAll("td");
+      label.textContent = cells[0].textContent + " · " + cells[2].textContent + " · OpenFlight " +
+        cells[3].textContent + " · TrackMan " + cells[4].textContent;
+      var p = player.play(); if (p && p.catch) { p.catch(function () {}); }
+    }
+    rows.forEach(function (row) {
+      row.addEventListener("click", function () { play(row); });
+      row.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); play(row); } });
+    });
+    var buttons = Array.prototype.slice.call(document.querySelectorAll(".filters button"));
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () {
+        buttons.forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+        rows.forEach(function (r) { r.hidden = b.dataset.filter !== "all" && r.dataset.cat !== b.dataset.filter; });
+      });
+    });
+    var first = rows.filter(function (r) { return r.dataset.cat === "ok"; })[0];
+    if (first) { first.setAttribute("aria-current", "true"); player.src = "captures/" + first.dataset.tag + ".mp4"; }
+  })();
+  </script><!--/WEB-ONLY-->
   Data, tools and the full report: <a href="https://github.com/HuggeK/OpenFlight-Radar-Workbench/tree/session/2026-11-01-studio/docs/reports/studio-session-2026-11-01">HuggeK/OpenFlight-Radar-Workbench</a>, <code>docs/reports/studio-session-2026-11-01</code>. Numbers come from the kiosk logs, the J3 edge log, the camera metadata and the SwingSync export, through <code>python -m openflight_bench.session</code>.
 </footer>
 </div>

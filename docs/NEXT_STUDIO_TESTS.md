@@ -9,6 +9,15 @@ real shot that did not register, with its time or shot number.
 
 - [ ] Start OpenFlight from the desktop icon, not over SSH (Ctrl+C must work).
 - [ ] Measure ball and net **from the front of the unit**: `--iwr6843-tee-m`, `--iwr6843-net-m`.
+- [ ] Measure both heights **from the floor the unit stands on** (lay a level
+      across if the mat is higher):
+      `--iwr6843-radar-height-m` = centre of the IWR antenna group (TX + RX
+      patches, not the board centre or the enclosure bottom);
+      `--iwr6843-ball-height-m` = centre of the ball = mat height + 0.021 m
+      (4 cm mat → 0.061 m; 2026-11-01 ran 0.04 by mistake).
+- [ ] Photograph the IWR front square-on with a ruler beside it, so the
+      antenna centre of the experimental mount can be documented.
+- [ ] Try the validated height: antenna centre ~0.15 m above the floor, ~10° tilt.
 - [ ] `session_tools/build_info.sh studio` and `session_tools/gpio_j3_logger.sh`.
 - [ ] Clock synced (`timedatectl`), battery charged above 0 °C.
 - [ ] **Run Robinante's log tails** in two extra SSH terminals for the whole
@@ -100,6 +109,14 @@ Export TrackMan through SwingSync again and run
 - [ ] Note what happened just before (here: a normal rearm at 11:37:26, the
       shot before had 83.5 mph and 1.34 % clipped samples).
 - [ ] Check whether a restart alone fixes it (it did on 2026-11-01).
+- [ ] Faster check than J3: `python -m openflight_bench.session triage` is not
+      needed — every `rolling_buffer_capture` in the session JSONL carries
+      `trigger_offset_ms`, 102.0 at 30 kS/s and 154.0 at 20 kS/s.
+- [ ] Read the OPS's UART error counters (`query_uart_baud()` in
+      `openflight.ops243`) before and after the session.
+- [ ] Note the time of the "cue" games (poking the ball to set off the
+      trigger): the camera only records around a trigger, so only the log
+      shows what happened between triggers.
 
 ## Other checks
 
