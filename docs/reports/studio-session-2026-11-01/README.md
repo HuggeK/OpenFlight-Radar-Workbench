@@ -187,8 +187,9 @@ real-time priority a default.**
   open-flight/openflight `cb8fbffb`; no binary yet.
 - Only 3 captures failed (18-byte dumps), all on triggers where the OPS saw
   no ball.
-- Storage: the session used 1.4 GB on the Pi (127 camera clips at ~5.8 MB,
-  124 IWR dumps at ~0.73 MB, logs).
+- Storage: this session's recordings take ~0.83 GB on the Pi (127 camera
+  clips at 5.83 MB, 124 IWR dumps at 0.73 MB, ~6.6 MB per trigger); the whole
+  `~/openflight_sessions` folder was 1.4 GB with 16 GB free on a 32 GB card.
 - Request: in `--debug`, show each shot's time (HH:MM:SS) in the history tab.
 
 ## Files
