@@ -14,6 +14,7 @@ only read what OpenFlight already writes. The analysis runs anywhere with
 | After the session | `export_camera_triggers.py CAMERA_DIR` | Trigger timestamps as CSV for the latency analysis |
 | After the session | `iwr_net_replay.py DUMP... --net ...` | Re-runs the IWR ball tracker with other net distances |
 | After the session | `lcmf_height_replay.py SHOTS.json` | Re-runs LCMF launch with other radar/ball heights against TrackMan |
+| After the session | `iwr_maps.py DUMP_DIR CAPTURES_JSON OUT_DIR` | Range-time picture of every IWR capture (needs OpenFlight's `src` on `PYTHONPATH`) |
 
 ## Run a session
 

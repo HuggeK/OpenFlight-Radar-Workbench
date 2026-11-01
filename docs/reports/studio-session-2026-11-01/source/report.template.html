@@ -69,6 +69,7 @@ figure.clip.ok{border-top:4px solid var(--ok)} figure.clip.warn{border-top:4px s
 .note{font-size:14px;color:var(--muted)}
 .photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
 .photos img{width:100%;height:auto;border-radius:4px;border:1px solid var(--rule)}
+.photos figure{margin:0;display:grid;gap:4px}
 .checklist{margin:0;padding-left:20px;display:grid;gap:8px}
 pre{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:12px 14px;overflow-x:auto;font:400 13.5px/1.5 var(--mono);margin:6px 0 14px}
 footer{color:var(--muted);font-size:14px;border-top:1px solid var(--rule);padding-top:16px}
@@ -82,6 +83,7 @@ svg.chart .event{stroke:var(--muted);stroke-width:1;stroke-dasharray:2 4}
 svg.chart .dot.ok{fill:var(--ok)} svg.chart .dot.warn{fill:var(--warn)} svg.chart .dot.bad{fill:var(--bad)}
 .browser{display:grid;gap:12px}
 .player{display:grid;gap:6px;max-width:720px}
+.player img{width:100%;height:auto;border-radius:4px;border:1px solid var(--rule);background:var(--sheet)}
 .player video{width:100%;height:auto;background:#000;border-radius:4px;aspect-ratio:16/10}
 .filters{display:flex;flex-wrap:wrap;gap:8px}
 .filters button{font:600 13px var(--body);padding:7px 12px;border-radius:999px;border:1px solid var(--rule);background:var(--sheet);color:var(--ink);cursor:pointer}
@@ -175,6 +177,8 @@ details pre{max-height:320px}
     <div class="player">
       <video id="player" muted loop playsinline controls preload="none" aria-label="Selected capture"></video>
       <p id="player-label" class="note">Pick a row to play its capture.</p>
+      <img id="iwrmap" alt="IWR range-time map of the selected capture" hidden>
+      <p class="note">IWR map: moving-target power by range and time over the capture's 48 ms. A real shot draws a streak climbing away from the ball line; a waggle or address stays near it.</p>
     </div>
     <div class="filters" role="group" aria-label="Filter captures">
       <button type="button" id="f-all" data-filter="all" aria-pressed="true">All 127</button>
@@ -239,6 +243,22 @@ details pre{max-height:320px}
   <p>It started between two shots with nothing logged but a normal rearm, and survived the move next to the TrackMan at ~11:52, so it is not TrackMan proximity.</p>
 </section>
 
+<section class="col" aria-labelledby="move">
+  <h2 id="move">Moving the unit: right side to left side</h2>
+  <p>At about 11:52 OpenFlight was moved from the right side of the hitting area to the left side (looking downrange), next to the TrackMan 4 in its wall alcove, so TrackMan could also give club data. Ball and net distances stayed the same (1.57 m and 5.30 m). Comparing the same run, the same SNR 1.5 and TrackMan's ball speed as the input:</p>
+  <div class="table"><table>
+    <thead><tr><th></th><th>Right side · 11:32-11:52</th><th>Left side · 11:52-12:35</th></tr></thead>
+    <tbody>
+      <tr><td>IWR launch − TrackMan, tracks within 4°</td><td><strong>0.90° MAE</strong>, −0.34° bias (n=9)</td><td>2.00° MAE, +1.85° bias (n=8)</td></tr>
+      <tr><td>IWR tracks off by more than 4°</td><td>1 of 10</td><td><strong>5 of 13</strong></td></tr>
+      <tr><td>Launch measured live, on-time real shots</td><td>10 of 13</td><td>10 of 23</td></tr>
+      <tr><td>False shots and no-ball triggers per minute</td><td>0.50</td><td>0.53</td></tr>
+      <tr><td>OPS ball / TrackMan, divided by 1.5 (20 kS/s)</td><td>1.002 (n=8)</td><td>0.985 (n=19)</td></tr>
+      <tr><td>OPS club / TrackMan</td><td>1.42 ± 0.21</td><td>1.34 ± 0.08</td></tr>
+    </tbody></table></div>
+  <p>On the right side the IWR matched the project's 0.83° baseline; beside the TrackMan it got worse, with more wrong tracks. The trigger and the OPS behaved the same in both places. The alcove wall next to the unit (extra reflections) and the aim are the first suspects; the samples are small, so treat it as a lead. Positions should not be mixed when comparing IWR results.</p>
+</section>
+
 <section class="col" aria-labelledby="runs">
   <h2 id="runs">Runs</h2>
   <div class="table"><table>
@@ -292,8 +312,11 @@ details pre{max-height:320px}
     <tr><td>Storage</td><td>~6.6 MB per trigger with camera and <code>--debug</code>; 0.83 GB for this session</td></tr>
   </tbody></table></div>
   <div class="photos">
-    <img src="{{PHOTO_BASE}}IMG_2821.webp" alt="OpenFlight unit at the hitting area, seen from behind the radar">
-    <img src="{{PHOTO_BASE}}IMG_2823.webp" alt="OpenFlight beside the TrackMan 4, where it stood from about 11:52">
+    <figure><img src="{{PHOTO_BASE}}IMG_2821.webp" alt="OpenFlight on the floor at the hitting area, seen from behind the radar"><figcaption class="note">IMG_2821 · the unit at the hitting area, from behind the radar</figcaption></figure>
+    <figure><img src="{{PHOTO_BASE}}IMG_2822.webp" alt="Same position through the swing"><figcaption class="note">IMG_2822 · the same position through the swing</figcaption></figure>
+    <figure><img src="{{PHOTO_BASE}}IMG_2823.webp" alt="OpenFlight beside the TrackMan 4 in its wall alcove"><figcaption class="note">IMG_2823 · OpenFlight beside the TrackMan 4, after the move at ~11:52</figcaption></figure>
+    <figure><img src="{{PHOTO_BASE}}IMG_2819.jpg" alt="The hitting area with OpenFlight beside the TrackMan"><figcaption class="note">IMG_2819 · the hitting area after the move</figcaption></figure>
+    <figure><img src="{{PHOTO_BASE}}IMG_2825.webp" alt="TrackMan's projected view of a 9-iron"><figcaption class="note">IMG_2825 · TrackMan's view of a 9-iron, for comparison</figcaption></figure>
   </div>
 </section>
 
@@ -305,6 +328,8 @@ details pre{max-height:320px}
     <li><strong>Self-trigger flags</strong>, one block each: <code>--iwr6843-self-trigger-offset-m</code> 0.4 and 0.6, <code>--iwr6843-ball-detector</code> on and follow (drives the “ball placed” banner), <code>--iwr6843-veto-no-ball</code>, then <code>self-trigger-bin</code>, SNR and <code>ball-snr</code>.</li>
     <li><strong>Watch the J3 window live</strong> for the ×1.49 switch (34 → 48 ms) and query the OPS before restarting when it happens.</li>
     <li><strong>Robinante's offset test</strong> against TrackMan interference: <code>?F</code>, <code>T=-2</code>, wait 15 s, <code>?F</code>, with OpenFlight stopped.</li>
+    <li><strong>Turn on persistent OS logs</strong> (<code>Storage=persistent</code> in journald) before the session, so kernel UART errors and NTP/RTC events around a sample-rate change survive a reboot; log the IWR's GPIO17 edge next to GPIO18.</li>
+    <li><strong>Measure both heights from the floor the unit stands on:</strong> radar to the centre of the IWR antenna group, ball to its centre (mat + 0.021 m). Keep the unit in one position per block.</li>
     <li><strong>A block without <code>--debug</code></strong> to shorten the blind window, and SwingSync export again for <code>python -m openflight_bench.session compare</code>.</li>
   </ul>
 </section>
@@ -336,10 +361,15 @@ details pre{max-height:320px}
     var player = document.getElementById("player");
     var label = document.getElementById("player-label");
     var rows = Array.prototype.slice.call(document.querySelectorAll("#capture-rows tr"));
+    var map = document.getElementById("iwrmap");
+    map.addEventListener("error", function () { map.hidden = true; });
+    map.addEventListener("load", function () { map.hidden = false; });
+    function showMap(tag) { map.hidden = true; map.src = "iwr/" + tag + ".png"; }
     function play(row) {
       rows.forEach(function (r) { r.removeAttribute("aria-current"); });
       row.setAttribute("aria-current", "true");
       player.src = "captures/" + row.dataset.tag + ".mp4";
+      showMap(row.dataset.tag);
       var cells = row.querySelectorAll("td");
       label.textContent = cells[0].textContent + " · " + cells[2].textContent + " · OpenFlight " +
         cells[3].textContent + " · TrackMan " + cells[4].textContent;
@@ -364,14 +394,14 @@ details pre{max-height:320px}
         if (!r.ok) { throw new Error(r.status); }
         return r.text();
       }).then(function (t) {
-        logtext.textContent = t.length > 2000000 ? t.slice(0, 2000000) + "
-... (cut at 2 MB)" : t;
+        logtext.textContent = t.length > 2000000 ? t.slice(0, 2000000) + "\n... (cut at 2 MB)" : t;
       }).catch(function (e) { logtext.textContent = "Could not load " + pick.value + " (" + e.message + ")."; });
     });
     var first = rows.filter(function (r) { return r.dataset.cat === "ok"; })[0];
-    if (first) { first.setAttribute("aria-current", "true"); player.src = "captures/" + first.dataset.tag + ".mp4"; }
+    if (first) { first.setAttribute("aria-current", "true"); player.src = "captures/" + first.dataset.tag + ".mp4"; showMap(first.dataset.tag); }
   })();
   </script><!--/WEB-ONLY-->
+  {{SESSION_LINK}}
   Data, tools and the full report: <a href="https://github.com/HuggeK/OpenFlight-Radar-Workbench/tree/session/2026-11-01-studio/docs/reports/studio-session-2026-11-01">HuggeK/OpenFlight-Radar-Workbench</a>, <code>docs/reports/studio-session-2026-11-01</code>. Numbers come from the kiosk logs, the J3 edge log, the camera metadata and the SwingSync export, through <code>python -m openflight_bench.session</code>.
 </footer>
 </div>

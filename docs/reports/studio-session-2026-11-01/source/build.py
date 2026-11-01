@@ -8,6 +8,10 @@ HERE = Path(__file__).parent
 CLIPS = HERE.parent / "clips"
 PHOTOS = HERE.parent / "workbench/docs/reports/studio-session-2026-11-01/photos"
 OUT = Path(r"C:\projects\setup openflight\test 2026-11-01\report")
+SESSION_LINK = (
+    "Interactive version with every clip, IWR map and log: "
+    '<a href="https://claude.ai/artifact/1Han6jXZFAemhFNtt7A4fu">claude.ai artifact</a>.'
+)
 
 CLIP_ROWS = [
     # tag, title, verdict class, caption
@@ -128,6 +132,7 @@ def build(mode: str) -> str:
     page = (HERE / "report.template.html").read_text(encoding="utf-8")
     captures = load_captures()
     page = page.replace("{{CLIPS}}", clip_cards(mode))
+    page = page.replace("{{SESSION_LINK}}", SESSION_LINK)
     page = page.replace("{{J3_CHART}}", j3_chart(captures))
     page = page.replace("{{CAPTURE_ROWS}}", capture_rows(captures))
     page = page.replace("{{J3_LOG}}", html.escape((HERE / "ops_j3_20261101_111438.log").read_text()))
@@ -166,7 +171,7 @@ if __name__ == "__main__":
         shutil.copy2(CLIPS / (tag + ".jpg"), OUT / "clips" / (tag + ".jpg"))
     for c in load_captures():
         assert (OUT / "captures" / f"{c['tag']}.mp4").exists(), c["tag"]
-    for name in ("IMG_2821.webp", "IMG_2823.webp"):
+    for name in ("IMG_2819.jpg", "IMG_2821.webp", "IMG_2822.webp", "IMG_2823.webp", "IMG_2825.webp"):
         shutil.copy2(PHOTOS / name, OUT / "photos" / name)
     (OUT / "studio-report.html").write_text(build("web"), encoding="utf-8")
     (HERE / "studio-report.print.html").write_text(build("print"), encoding="utf-8")

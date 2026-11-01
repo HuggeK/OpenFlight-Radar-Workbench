@@ -8,6 +8,8 @@ matched shot by shot. All numbers come from the files in [`data/`](data/),
 through `python -m openflight_bench.session` (see
 [session tools](../../../session_tools/README.md)).
 
+**Interactive report:** [claude.ai artifact](https://claude.ai/artifact/1Han6jXZFAemhFNtt7A4fu) with every camera clip (annotated), an IWR range-time map per capture, the J3 chart and a log viewer.
+
 **PDF:** [OpenFlight-studio-session-2026-11-01.pdf](OpenFlight-studio-session-2026-11-01.pdf)
 (TL;DR, all tables, camera strips).
 
@@ -72,6 +74,11 @@ through `python -m openflight_bench.session` (see
 10. **The clocks were fine.** NTP (systemd-timesyncd) syncs whenever there is
     a connection; the RTC battery charges (`rtc_bbat_vchg=3000000`) and kept
     the time across power-off. TrackMan's clock, not the Pi's, was 425.5 s off.
+11. **Do not mix unit positions when comparing the IWR.** On the right side
+    of the hitting area (11:32-11:52) IWR launch matched the 0.83° baseline
+    (0.90° MAE, 1 of 10 tracks wrong); after moving to the left side beside
+    the TrackMan it was 2.00° MAE with 5 of 13 tracks wrong. Trigger and OPS
+    behaved the same in both places. See [Moving the unit](#moving-the-unit-right-side-to-left-side).
 7. **Real-time scheduling buys nothing.** S! reached the OPS 0.17 ± 0.01 ms
    after the host acted, with or without `chrt -f 50`.
 8. **The UI banner "TI radar capture failed" is misleading.** It appears on
@@ -176,6 +183,35 @@ It started between two shots with nothing logged in between but a normal
 rearm, and survived the move next to the TrackMan at ~11:52, so it is not
 TrackMan proximity. Not reproduced yet; see
 [next tests](../../NEXT_STUDIO_TESTS.md).
+
+## Moving the unit: right side to left side
+
+At about 11:52 OpenFlight was moved from the right side of the hitting area to
+the left side (looking downrange), next to the TrackMan 4 in its wall alcove,
+so TrackMan could also give club data. Ball and net distances stayed the same.
+Same run, SNR 1.5, TrackMan ball speed as the LCMF input
+([`lcmf_height_replay.txt`](data/lcmf_height_replay.txt), ball 0.061 m):
+
+| | Right side, 11:32-11:52 | Left side, 11:52-12:35 |
+| --- | --- | --- |
+| IWR launch − TrackMan, tracks within 4° | **0.90° MAE**, −0.34° bias (n=9) | 2.00° MAE, +1.85° bias (n=8) |
+| IWR tracks off by more than 4° | 1 of 10 | **5 of 13** |
+| Launch measured live, on-time real shots | 10 of 13 | 10 of 23 |
+| False shots and no-ball triggers per minute | 0.50 | 0.53 |
+| OPS ball / TrackMan, ÷ 1.5 (20 kS/s) | 1.002 (n=8) | 0.985 (n=19) |
+
+On the right side the IWR matched the project's baseline; beside the TrackMan
+it picked more wrong tracks. The alcove wall (extra reflections) and the aim
+are the first suspects. Small samples: a lead, not a conclusion. Photos
+IMG_2823 and IMG_2819 show the left-side position.
+
+## IWR range-time maps
+
+[`session_tools/iwr_maps.py`](../../../session_tools/iwr_maps.py) draws each
+IWR capture's moving-target power by range and time (24 frames, 48 ms). A real
+shot draws a streak climbing away from the ball line; an address, waggle or
+practice swing stays near it. All 124 maps are in the interactive report,
+next to each camera clip.
 
 ## Net distance
 

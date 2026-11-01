@@ -20,6 +20,15 @@ real shot that did not register, with its time or shot number.
 - [ ] Try the validated height: antenna centre ~0.15 m above the floor, ~10° tilt.
 - [ ] `session_tools/build_info.sh studio` and `session_tools/gpio_j3_logger.sh`.
 - [ ] Clock synced (`timedatectl`), battery charged above 0 °C.
+- [ ] Turn on persistent OS logs before the session, so kernel UART errors,
+      NTP and RTC events around a sample-rate change survive a reboot:
+      `sudo mkdir -p /var/log/journal && sudo sed -i 's/^#\?Storage=.*/Storage=persistent/' /etc/systemd/journald.conf && sudo systemctl restart systemd-journald`
+- [ ] Log the IWR's GPIO17 trigger edge next to J3 (GPIO18):
+      `session_tools/gpio_j3_logger.sh 17`
+- [ ] Keep the unit in **one position per block** and note any move with the
+      time; on 2026-11-01 the IWR was much better on the right side than beside
+      the TrackMan.
+- [ ] Use `--session-location studio`, not a name that reads like TrackMan data.
 - [ ] **Run Robinante's log tails** in two extra SSH terminals for the whole
       session (forgotten on 2026-11-01):
 
