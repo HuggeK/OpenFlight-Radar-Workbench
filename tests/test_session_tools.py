@@ -20,6 +20,9 @@ from openflight_bench.session import (  # noqa: E402
     parse_kiosk_log, summarize,
 )
 from openflight_bench.session.latency import CameraTrigger  # noqa: E402
+from openflight_bench.session.trackman import (  # noqa: E402
+    find_offset, load_swingsync_csv, match_shots,
+)
 
 LOG = """\
 2026-11-01 12:45:53,066 - openflight.iwr6843.monitor - INFO - [IWR6843] Configured on BCM17 using /dev/ttyUSB0 (cfg, self-trigger 'triggerCfg 36 3.0 1')
@@ -87,6 +90,33 @@ def test_summary_flags(session):
     assert summary["capture_failed"] == 1
     assert summary["triggers_within_2s_of_rearm"] == 1
     assert summary["launch_measured"] == 1
+
+
+SWINGSYNC = """\
+Shot number,Date,Classification,Club type,Club name,Carry,Total,Club speed,Ball speed,Smash factor,Vertical Launch angle
+,,,,,[m],[m],[kph],[kph],,[°]
+1,2026-11-01T11:54:46.351Z,Baby Draw,,,146.490,149.040,132.980,186.618,1.403,21.070
+2,2026-11-01T11:55:12.900Z,Huge Push,,,134.310,136.170,134.880,182.716,1.355,23.330
+3,2026-11-01T11:55:19.900Z,Fade,,,140.000,142.000,130.000,180.000,1.385,20.000
+4,2026-11-01T11:58:00.000Z,Pull,,,120.000,122.000,125.000,170.000,1.360,18.000
+"""
+
+
+def test_trackman_offset_and_match(session, tmp_path):
+    path = tmp_path / "swingsync.csv"
+    path.write_text(SWINGSYNC, encoding="utf-8")
+    shots = load_swingsync_csv(path)
+    assert [s.number for s in shots] == [1, 2, 3, 4]
+    assert shots[0].ball_mph == pytest.approx(186.618 / 1.609344)
+    assert shots[0].launch_deg == 21.07
+
+    # Shots 1-3 are triggers #1, #3 and #4 seen on a TrackMan clock 425.9 s
+    # fast; shot 4 has no trigger.
+    offset, hits = find_offset(shots, session.triggers, utc_offset_s=3600)
+    assert hits == 3
+    assert offset == pytest.approx(425.9, abs=0.5)
+    matches = match_shots(shots, session.triggers, offset_s=offset, utc_offset_s=3600)
+    assert [m.trigger.sequence if m.trigger else None for m in matches] == [1, 3, 4, None]
 
 
 def test_gpio_edges_skip_noise(tmp_path):

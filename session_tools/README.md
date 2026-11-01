@@ -44,6 +44,14 @@ python -m openflight_bench.session latency --camera camera_triggers.csv --gpio o
     --window after  2026-11-01T12:13:44+01:00 2026-11-01T12:35:14+01:00
 ```
 
+With a TrackMan beside the unit, export the session from SwingSync (Shot
+Table → Export Session) and match it shot by shot; the clock offset between
+the two is found automatically:
+
+```bash
+python -m openflight_bench.session compare --shots swingsync.csv terminal_logs/kiosk_*.log
+```
+
 `triage` pairs each IWR self-trigger with the OPS verdict, the shot, the
 debug readback's launch angle and the rearm. It flags smash above 1.50,
 shots from three or fewer OPS readings, and triggers within 2 s of a rearm.

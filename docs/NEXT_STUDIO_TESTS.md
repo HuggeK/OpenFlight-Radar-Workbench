@@ -57,9 +57,21 @@ carrier away from TrackMan's might remove interference. With OpenFlight
 Untested so far: try it at home first and note how to undo it (`T=0`), and
 whether the setting survives a power cycle.
 
-The 2026-11-01 data says fast shots (ball ≥ 150 mph) read high in **both**
-positions, so also log TrackMan ball and club speed for every driver/wood
-shot to size the OPS error directly.
+On 2026-11-01 the large speed errors were not interference: the OPS read
+1.49 × TrackMan from 11:37:53 until a restart, in both positions (see below).
+Export TrackMan through SwingSync again and run
+`python -m openflight_bench.session compare` to size what is left.
+
+## OPS sampling change (×1.49 speeds)
+
+- [ ] Keep `gpio_j3_logger.sh` running and watch the J3 window: ~34 ms is
+      normal for S#24 at 30 kS/s; ~48-51 ms means the OPS slowed down.
+- [ ] When it happens, stop OpenFlight and query the OPS before any restart:
+      sample rate and module settings (`S?`, `??`; confirm the query commands
+      in OmniPreSense's API document AN-010 first), and save the replies.
+- [ ] Note what happened just before (here: a normal rearm at 11:37:26, the
+      shot before had 83.5 mph and 1.34 % clipped samples).
+- [ ] Check whether a restart alone fixes it (it did on 2026-11-01).
 
 ## Other checks
 
