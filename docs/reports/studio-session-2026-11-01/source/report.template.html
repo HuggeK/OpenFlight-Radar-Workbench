@@ -1,0 +1,250 @@
+<title>OpenFlight Studio Session</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one reading column (~68ch) on graph-paper ground; wide tables scroll in place; clips in a two-up grid. */
+:root{
+  --paper:#f3f5f2; --sheet:#ffffff; --ink:#18222e; --muted:#5b6672; --rule:#d5dcd8; --grid:#e6ebe7;
+  --accent:#1f6a72; --accent-soft:#e1efef;
+  --ok:#2d7a46; --ok-soft:#e3f1e7; --warn:#a2650a; --warn-soft:#f7ecd9; --bad:#b0332b; --bad-soft:#f7e2e0;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Source Sans 3","Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",Consolas,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#11171d; --sheet:#182028; --ink:#e4eaee; --muted:#9aa7b2; --rule:#2c3843; --grid:#1a222a;
+  --accent:#5fb7bf; --accent-soft:#183238;
+  --ok:#6cc58a; --ok-soft:#173022; --warn:#e3a54a; --warn-soft:#352813; --bad:#ef7b72; --bad-soft:#3a1d1b;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#11171d; --sheet:#182028; --ink:#e4eaee; --muted:#9aa7b2; --rule:#2c3843; --grid:#1a222a;
+  --accent:#5fb7bf; --accent-soft:#183238;
+  --ok:#6cc58a; --ok-soft:#173022; --warn:#e3a54a; --warn-soft:#352813; --bad:#ef7b72; --bad-soft:#3a1d1b;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--body);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px}
+.wrap{max-width:1080px;margin:0 auto;padding-block:40px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:grid;gap:40px}
+.col{max-width:72ch;min-width:0}
+header{display:grid;gap:12px}
+.eyebrow{font:600 13px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font:700 clamp(40px,7vw,68px)/.95 var(--display);margin:0;letter-spacing:-.01em;text-wrap:balance}
+h2{font:600 32px/1.05 var(--display);margin:0 0 14px;text-wrap:balance}
+h3{font:600 22px/1.1 var(--display);margin:22px 0 8px}
+p{margin:0 0 12px}
+.lede{font-size:19px;color:var(--muted);max-width:68ch;margin:0}
+a{color:var(--accent)}
+code,.num{font-family:var(--mono);font-size:.86em}
+.num{font-variant-numeric:tabular-nums}
+section{display:grid;gap:4px;min-width:0}
+.tldr{background:var(--sheet);border:1px solid var(--rule);border-left:6px solid var(--accent);padding:20px 24px;border-radius:4px}
+.tldr h2{font-size:26px;margin-bottom:10px}
+.tldr ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.gauges{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.gauge{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:14px 16px;display:grid;gap:4px;align-content:start}
+.gauge b{font:700 38px/1 var(--display);font-variant-numeric:tabular-nums}
+.gauge span{color:var(--muted);font-size:14px;line-height:1.35}
+.gauge.bad b{color:var(--bad)} .gauge.warn b{color:var(--warn)} .gauge.ok b{color:var(--ok)}
+ol.lessons{margin:0;padding-left:24px;display:grid;gap:10px}
+ol.lessons li::marker{font-weight:700;color:var(--accent)}
+.table{overflow-x:auto;background:var(--sheet);border:1px solid var(--rule);border-radius:4px;margin:6px 0 14px}
+table{border-collapse:collapse;width:100%;font-size:15px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font:600 12px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--accent-soft)}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+tr.total td{font-weight:700}
+.clips{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:16px}
+figure.clip{margin:0;background:var(--sheet);border:1px solid var(--rule);border-radius:4px;overflow:hidden;display:grid}
+figure.clip video,figure.clip img{display:block;width:100%;height:auto;max-width:100%;background:#000;aspect-ratio:auto}
+figure.clip figcaption{padding:10px 14px 14px;display:grid;gap:4px;font-size:14px;color:var(--muted)}
+figure.clip figcaption strong{font:600 20px/1.15 var(--display);color:var(--ink)}
+.chip{justify-self:start;font:600 11px/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:5px 8px;border-radius:999px}
+.chip.ok{background:var(--ok-soft);color:var(--ok)} .chip.warn{background:var(--warn-soft);color:var(--warn)} .chip.bad{background:var(--bad-soft);color:var(--bad)}
+figure.clip.ok{border-top:4px solid var(--ok)} figure.clip.warn{border-top:4px solid var(--warn)} figure.clip.bad{border-top:4px solid var(--bad)}
+.note{font-size:14px;color:var(--muted)}
+.photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+.photos img{width:100%;height:auto;border-radius:4px;border:1px solid var(--rule)}
+.checklist{margin:0;padding-left:20px;display:grid;gap:8px}
+pre{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:12px 14px;overflow-x:auto;font:400 13.5px/1.5 var(--mono);margin:6px 0 14px}
+footer{color:var(--muted);font-size:14px;border-top:1px solid var(--rule);padding-top:16px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media print{
+  body{background:#fff;font-size:11.5pt}
+  .wrap{padding:0;gap:22px;max-width:none}
+  .col{max-width:none}
+  h1{font-size:44pt}
+  section,figure.clip,.table,.tldr,.gauge{break-inside:avoid}
+  .clips{grid-template-columns:1fr}
+  .photos{grid-template-columns:1fr 1fr}
+  a{color:var(--ink)}
+}
+</style>
+<div class="wrap">
+<header>
+  <div class="eyebrow">OpenFlight field report · 2026-11-01 · indoor studio · IWR6843 self-trigger</div>
+  <h1>Studio Session 2026-11-01</h1>
+  <p class="lede">OpenFlight on the IWR6843 self-trigger, hitting into a net beside a TrackMan 4. 127 IWR triggers over four runs, matched shot by shot against 76 TrackMan shots exported with SwingSync.</p>
+</header>
+
+<section class="tldr col" aria-labelledby="tldr">
+  <h2 id="tldr">TL;DR</h2>
+  <ul>
+    <li><strong>The OPS243 read 1.49 × TrackMan's ball speed from 11:37:53 until a restart at 12:35.</strong> Its capture window grew from 34 to 48 ms at the same moment: it looks like the radar dropped from 30 to ~20 kS/s mid-run. Outside that period, ball speed matched TrackMan to 0.995 ± 0.028.</li>
+    <li><strong>The self-trigger caught 57 of 76 real shots on time (75 %).</strong> Six fired on the takeaway or backswing, ten never fired, three fired 60-70 ms too early.</li>
+    <li><strong>False triggers are frequent and SNR does not fix them.</strong> Addresses, waggles, practice swings, placing a ball and walking up all fired it at SNR 1.5, 2.0 and 3.0; each one blinds the IWR for 7.7 s and can cost the next real shot.</li>
+    <li><strong>IWR launch was 2.4° MAE (n=8)</strong>, three times the project's 0.83° TrackMan baseline. <code>--iwr6843-net-m</code> must be unit → net; entering ball → net (3.0 m) clipped every track.</li>
+    <li><strong>Real-time scheduling buys nothing:</strong> S! reaches the OPS in 0.17 ± 0.01 ms either way.</li>
+  </ul>
+</section>
+
+<section aria-label="Key numbers">
+  <div class="gauges">
+    <div class="gauge ok"><b class="num">57 / 76</b><span>real shots captured on time</span></div>
+    <div class="gauge warn"><b class="num">×1.49</b><span>OPS ball speed, 11:37:53-12:34 (27 shots)</span></div>
+    <div class="gauge bad"><b class="num">61</b><span>false shots and no-ball triggers with no TrackMan shot</span></div>
+    <div class="gauge bad"><b class="num">2.4°</b><span>IWR launch MAE, against a 0.83° baseline</span></div>
+    <div class="gauge ok"><b class="num">0.17 ms</b><span>S! → OPS, normal or real-time</span></div>
+  </div>
+</section>
+
+<section class="col" aria-labelledby="lessons">
+  <h2 id="lessons">Lessons learned</h2>
+  <ol class="lessons">
+    <li><strong>The OPS changed its sampling mid-run.</strong> At 11:37:53, with no host command in between, ball speed went to 1.486 ± 0.035 × TrackMan, club speed to 1.37 ×, the J3 post-trigger window from ~32 to ~48 ms, the log's <code>post-trigger</code> from 34.5 to 0.0 ms, and the clock sync from 36 to 59 valid readings. A restart fixed it.</li>
+    <li><strong><code>--iwr6843-net-m</code> is unit → net.</strong> 3.0 m (meant as ball → net) left the tracker 0.5 m, about 10 ms of flight. Replaying the same dumps with 4.6 m tracked 24-41 ms on every real shot. Unit → net was 5.30 m.</li>
+    <li><strong>The self-trigger caught 75 % of real shots on time.</strong> Early triggers on the takeaway left the OPS reading the slow backswing (20-50 mph) and the real shot fell in the blind window.</li>
+    <li><strong>False triggers are frequent; SNR does not fix them.</strong> 20 saved shots and 41 no-ball triggers had no TrackMan shot behind them. At SNR 3.0 a practice swing still triggered and real shots went missing.</li>
+    <li><strong>Every trigger blinds the IWR for ~7.7 s</strong> with <code>--debug</code>: 7.1 s readback plus a radar restart.</li>
+    <li><strong>IWR launch angles were 3× worse than the baseline</strong>: 2.4° MAE, 1.4° median, +1.5° bias on 8 clean shots, with the radar 0.04 m above the floor, lower than any validated mount.</li>
+    <li><strong>Real-time scheduling buys nothing.</strong> The window jitter that looked halved was the 11:37:53 switch.</li>
+    <li><strong>“TI radar capture failed” is misleading.</strong> It shows on every shot because the firmware never has an onboard result ready; the data is still saved.</li>
+    <li><strong>Launch OpenFlight from the desktop icon.</strong> Over SSH with <code>nohup … &amp;</code> the server ignored SIGINT, and SIGTERM skipped the OPS idle step.</li>
+  </ol>
+</section>
+
+<section aria-labelledby="clips">
+  <div class="col">
+    <h2 id="clips">What the camera saw</h2>
+    <p class="note">{{CLIP_NOTE}} OV9281 at 320×200, 150 ms before and 50 ms after each IWR trigger.</p>
+  </div>
+  <div class="clips">
+{{CLIPS}}
+  </div>
+</section>
+
+<section class="col" aria-labelledby="trackman">
+  <h2 id="trackman">Against TrackMan</h2>
+  <p>TrackMan's clock ran 425.5 s ahead of the Pi's NTP time; at that offset 66 of its 76 shots line up with an IWR trigger within 1 s. TrackMan stamps a shot 70 ± 29 ms after OpenFlight's trigger, so a trigger more than 0.3 s before TrackMan's stamp is an early one.</p>
+  <h3>Did each real shot get captured?</h3>
+  <div class="table"><table>
+    <thead><tr><th>Period</th><th class="r">TrackMan</th><th class="r">On time</th><th class="r">Early</th><th class="r">No trigger</th><th class="r">On time, no ball</th></tr></thead>
+    <tbody>
+      <tr><td>SNR 1.5, net 3.0 · 11:15-11:31</td><td class="r">8</td><td class="r">7</td><td class="r">0</td><td class="r">0</td><td class="r">1</td></tr>
+      <tr><td>SNR 1.5 · 11:32-11:37</td><td class="r">6</td><td class="r">5</td><td class="r">0</td><td class="r">1</td><td class="r">0</td></tr>
+      <tr><td>SNR 1.5, OPS ×1.49 · 11:37-12:34</td><td class="r">44</td><td class="r">31</td><td class="r">6</td><td class="r">6</td><td class="r">1</td></tr>
+      <tr><td>SNR 2.0 · 12:35-12:45</td><td class="r">5</td><td class="r">4</td><td class="r">0</td><td class="r">1</td><td class="r">0</td></tr>
+      <tr><td>SNR 3.0 · 12:45-12:55</td><td class="r">13</td><td class="r">10</td><td class="r">0</td><td class="r">2</td><td class="r">1</td></tr>
+      <tr class="total"><td>Total</td><td class="r">76</td><td class="r">57</td><td class="r">6</td><td class="r">10</td><td class="r">3</td></tr>
+    </tbody></table></div>
+  <p>Six on-time captures still got a wrong OPS speed (0.14-0.71 × TrackMan). OpenFlight shots with no TrackMan shot behind them: 11 at SNR 1.5, 7 at SNR 2.0, 2 at SNR 3.0.</p>
+  <h3>Accuracy against the project's validation</h3>
+  <div class="table"><table>
+    <thead><tr><th>Measure</th><th>This session</th><th>Project baseline</th></tr></thead>
+    <tbody>
+      <tr><td>OPS ball speed − TrackMan, before cosine correction</td><td>−0.5 mph bias, 2.6 mph MAE (n=24)</td><td>−2.15 mph bias, 2.83 mph MAE (128 shots)</td></tr>
+      <tr><td>OPS club speed − TrackMan</td><td>−0.4 mph bias, 4.9 mph MAE, p50 2.7 (n=24)</td><td>—</td></tr>
+      <tr><td>IWR LCMF launch − TrackMan, irons</td><td>+1.5° bias, 2.4° MAE, p50 1.4° (n=8)</td><td>−0.04° bias, 0.83° MAE, p50 0.67° (87 shots)</td></tr>
+      <tr><td>LCMF coverage on captured shots</td><td>24 of 57 (42 %)</td><td>87 % strict, irons and wedges</td></tr>
+    </tbody></table></div>
+  <p class="note">Baseline from OpenFlight's <a href="https://github.com/open-flight/openflight/blob/feat/iwr-self-trigger/docs/how-it-works/launch-angle.md">launch-angle report</a> and <code>speed_correction.py</code>. LCMF takes OPS speed as an input, so the 16 results inside the ×1.49 period or the net-3.0 run (2.6° MAE) are not a fair test.</p>
+  <h3>The ×1.49 period</h3>
+  <div class="table"><table>
+    <thead><tr><th></th><th>Before 11:37:53, after 12:35</th><th>11:37:53-12:34</th></tr></thead>
+    <tbody>
+      <tr><td>OPS / TrackMan ball speed</td><td>0.995 ± 0.028 (n=24)</td><td>1.486 ± 0.035 (n=27)</td></tr>
+      <tr><td>OPS / TrackMan club speed</td><td>1.00 ± 0.11</td><td>1.37 ± 0.13</td></tr>
+      <tr><td>J3 window (S#24 post-trigger)</td><td>30-34 ms</td><td>46-51 ms</td></tr>
+      <tr><td>Log <code>post-trigger</code></td><td>34.5 ms</td><td>0.0 ms</td></tr>
+    </tbody></table></div>
+  <p>It started between two shots with nothing logged but a normal rearm, and survived the move next to the TrackMan at ~11:52, so it is not TrackMan proximity.</p>
+</section>
+
+<section class="col" aria-labelledby="runs">
+  <h2 id="runs">Runs</h2>
+  <div class="table"><table>
+    <thead><tr><th>Start</th><th>Time</th><th class="r">SNR</th><th>Net</th><th class="r">Triggers</th><th class="r">Shots</th><th class="r">No-ball</th></tr></thead>
+    <tbody>
+      <tr><td><code>111546</code></td><td>11:15-11:31</td><td class="r">1.5</td><td>3.0 m ✗</td><td class="r">20</td><td class="r">10</td><td class="r">10</td></tr>
+      <tr><td><code>113221</code></td><td>11:32-12:34</td><td class="r">1.5</td><td>5.30 m</td><td class="r">76</td><td class="r">49</td><td class="r">27</td></tr>
+      <tr><td><code>123514</code></td><td>12:35-12:45</td><td class="r">2.0</td><td>5.30 m</td><td class="r">17</td><td class="r">11</td><td class="r">6</td></tr>
+      <tr><td><code>124549</code></td><td>12:45-12:55</td><td class="r">3.0</td><td>5.30 m</td><td class="r">14</td><td class="r">12</td><td class="r">2</td></tr>
+    </tbody></table></div>
+  <p class="note">“No-ball” is the UI's “impact detected” without metrics. Real-time scheduling was on from 12:13:44 to 12:34.</p>
+</section>
+
+<section class="col" aria-labelledby="net">
+  <h2 id="net">Net distance</h2>
+  <p>Offline replay of the IWR ball tracker on the dumps from 11:18-11:27, which ran with <code>--iwr6843-net-m 3.0</code>:</p>
+  <div class="table"><table>
+    <thead><tr><th>Dump</th><th>net 3.0</th><th>net 4.6</th><th>no net</th></tr></thead>
+    <tbody>
+      <tr><td><code>111824_001</code></td><td>reject, 9 ms</td><td>ok, 27 ms</td><td>ok, 27 ms</td></tr>
+      <tr><td><code>111911_003</code></td><td>reject, 9 ms</td><td>ok, 41 ms</td><td>ok, 43 ms</td></tr>
+      <tr><td><code>112540_015</code></td><td>reject, 13 ms</td><td>ok, 41 ms</td><td>ok, 41 ms</td></tr>
+      <tr><td><code>112630_017</code></td><td>ok, 16 ms</td><td>ok, 27 ms</td><td>ok, 27 ms</td></tr>
+    </tbody></table></div>
+</section>
+
+<section class="col" aria-labelledby="latency">
+  <h2 id="latency">Trigger latency and the real-time A/B</h2>
+  <p>OPS J3 pin 1 was wired to the Pi's GPIO18 and logged with <code>gpiomon</code>; each camera capture records the host's trigger time on the same monotonic clock.</p>
+  <div class="table"><table>
+    <thead><tr><th>Window</th><th>Scheduling</th><th class="r">Triggers</th><th>S! → OPS</th><th>OPS window</th></tr></thead>
+    <tbody>
+      <tr><td>11:32-12:13</td><td>normal</td><td class="r">54</td><td>0.17 ± 0.01 ms</td><td>44.8 ± 6.1 ms (30-51)</td></tr>
+      <tr><td>12:13-12:35</td><td><code>chrt -a -f 50</code></td><td class="r">22</td><td>0.17 ± 0.01 ms</td><td>47.5 ± 2.5 ms (41-51)</td></tr>
+      <tr><td>12:35-12:45</td><td>normal, new process</td><td class="r">17</td><td>0.16 ± 0.01 ms</td><td>31.7 ± 1.8 ms (27-34)</td></tr>
+      <tr><td>12:45-12:55</td><td>normal, new process</td><td class="r">14</td><td>0.17 ± 0.01 ms</td><td>32.1 ± 1.1 ms (31-34)</td></tr>
+    </tbody></table></div>
+  <p>Impact → S! from the server log: 0.3 ± 3.6 ms (n=44) normal, −0.4 ± 2.9 ms (n=12) real-time, dominated by the impact estimate. Verdict: do not make real-time priority a default.</p>
+</section>
+
+<section class="col" aria-labelledby="setup">
+  <h2 id="setup">Setup</h2>
+  <div class="table"><table><tbody>
+    <tr><td>OpenFlight</td><td><code>feat/iwr-self-trigger</code> + 2 local commits (OPS idle, backlight)</td></tr>
+    <tr><td>IWR6843 firmware</td><td>1.0.3 (git 4e4e9c5d94b7, hybrid-cadence, built 2026-10-09)</td></tr>
+    <tr><td>OPS243-A</td><td>firmware 1.3.3, GPIO UART at 230400 baud, rolling buffer S#24, 30 kS/s</td></tr>
+    <tr><td>Trigger</td><td>IWR self-trigger <code>triggerCfg 36 &lt;snr&gt; 1</code>, default offset 0.2 m, no sound sensor</td></tr>
+    <tr><td>Geometry</td><td>ball 1.57 m, net 5.30 m, IWR board centre 0.04 m above the floor, tilt 10.1°</td></tr>
+    <tr><td>Camera</td><td>OV9281, 320×200 at 450 fps (430.9 delivered, 0 gaps on 127 captures)</td></tr>
+    <tr><td>Reference</td><td>TrackMan 4, exported with SwingSync</td></tr>
+    <tr><td>Storage</td><td>~6.6 MB per trigger with camera and <code>--debug</code>; 0.83 GB for this session</td></tr>
+  </tbody></table></div>
+  <div class="photos">
+    <img src="{{PHOTO_BASE}}IMG_2821.webp" alt="OpenFlight unit at the hitting area, seen from behind the radar">
+    <img src="{{PHOTO_BASE}}IMG_2823.webp" alt="OpenFlight beside the TrackMan 4, where it stood from about 11:52">
+  </div>
+</section>
+
+<section class="col" aria-labelledby="next">
+  <h2 id="next">Next studio session</h2>
+  <ul class="checklist">
+    <li><strong>Before the kiosk:</strong> sweep the self-trigger with <code>scripts/iwr6843/swing_trigger.py</code> at SNR 1.5, 2.0 and 3.0. It measures the lane's noise floor, arms the trigger and prints PASS or FAIL per swing, with no OPS and no 7.7 s blind window. Count fires for real swings, addresses, waggles, takeaways and walking past.</li>
+    <li><strong>Robinante's log tails</strong> in two extra SSH terminals for the whole session (forgotten this time).</li>
+    <li><strong>Self-trigger flags</strong>, one block each: <code>--iwr6843-self-trigger-offset-m</code> 0.4 and 0.6, <code>--iwr6843-ball-detector</code> on and follow (drives the “ball placed” banner), <code>--iwr6843-veto-no-ball</code>, then <code>self-trigger-bin</code>, SNR and <code>ball-snr</code>.</li>
+    <li><strong>Watch the J3 window live</strong> for the ×1.49 switch (34 → 48 ms) and query the OPS before restarting when it happens.</li>
+    <li><strong>Robinante's offset test</strong> against TrackMan interference: <code>?F</code>, <code>T=-2</code>, wait 15 s, <code>?F</code>, with OpenFlight stopped.</li>
+    <li><strong>A block without <code>--debug</code></strong> to shorten the blind window, and SwingSync export again for <code>python -m openflight_bench.session compare</code>.</li>
+  </ul>
+</section>
+
+<footer class="col">
+  Data, tools and the full report: <a href="https://github.com/HuggeK/OpenFlight-Radar-Workbench/tree/session/2026-11-01-studio/docs/reports/studio-session-2026-11-01">HuggeK/OpenFlight-Radar-Workbench</a>, <code>docs/reports/studio-session-2026-11-01</code>. Numbers come from the kiosk logs, the J3 edge log, the camera metadata and the SwingSync export, through <code>python -m openflight_bench.session</code>.
+</footer>
+</div>

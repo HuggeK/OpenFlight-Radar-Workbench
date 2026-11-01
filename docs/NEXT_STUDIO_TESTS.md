@@ -20,6 +20,34 @@ real shot that did not register, with its time or shot number.
       Timeouts are normal. Check that it captures on a valid swing, stays
       quiet when nothing moves, and rearms (also after a timeout).
 
+## Block 0: sweep the self-trigger without the kiosk
+
+[`scripts/iwr6843/swing_trigger.py`](https://github.com/open-flight/openflight/blob/feat/iwr-self-trigger/scripts/iwr6843/swing_trigger.py)
+in the OpenFlight checkout arms the IWR self-trigger on its own: it samples
+the empty lane for 2 s (prints the floor p95 and the threshold), arms
+`triggerCfg` at `--snr`, and for every fire prints the club track and
+**PASS** when the club track's range impact fired. No OPS, no readback, so no
+7.7 s blind window: a fast way to count what fires the trigger.
+
+Stop the kiosk first (it owns the UART). Then, per SNR:
+
+```bash
+cd ~/openflight
+uv run --no-sync python scripts/iwr6843/swing_trigger.py \
+  --port /dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_01310F8D-if00-port0 \
+  --tee-m 1.57 --snr 1.5
+```
+
+| SNR | Real swings (10) | Addresses (5) | Waggles (5) | Takeaways stopped at hip (5) | Practice swings beside the ball (5) | Walking past (1 min) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1.5 | | | | | | |
+| 2.0 | | | | | | |
+| 3.0 | | | | | | |
+
+Note the floor p95 for each run (it says how noisy the bay is), and whether a
+fire is PASS (club track) or FAIL (something else). Ctrl+C prints
+`passed/swings`. Pick the SNR for the kiosk blocks from this table.
+
 ## Self-trigger tuning
 
 All need `--iwr6843-self-trigger`. Baseline for every block: SNR 1.5, no other

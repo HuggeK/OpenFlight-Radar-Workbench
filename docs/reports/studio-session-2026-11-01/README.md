@@ -8,6 +8,25 @@ matched shot by shot. All numbers come from the files in [`data/`](data/),
 through `python -m openflight_bench.session` (see
 [session tools](../../../session_tools/README.md)).
 
+**PDF:** [OpenFlight-studio-session-2026-11-01.pdf](OpenFlight-studio-session-2026-11-01.pdf)
+(TL;DR, all tables, camera strips).
+
+## TL;DR
+
+- **The OPS243 read 1.49 × TrackMan's ball speed from 11:37:53 until a
+  restart at 12:35.** Its capture window grew from 34 to 48 ms at the same
+  moment; it looks like the radar dropped from 30 to ~20 kS/s mid-run.
+  Outside that period ball speed matched TrackMan to 0.995 ± 0.028.
+- **The self-trigger caught 57 of 76 real shots on time (75 %).** Six fired
+  on the takeaway or backswing, ten never fired, three fired 60-70 ms early.
+- **False triggers are frequent and SNR does not fix them.** Addresses,
+  waggles, practice swings, placing a ball and walking up fired it at SNR 1.5,
+  2.0 and 3.0; each one blinds the IWR for 7.7 s.
+- **IWR launch was 2.4° MAE (n=8)**, three times the project's 0.83°
+  baseline. `--iwr6843-net-m` is unit → net; ball → net clipped every track.
+- **Real-time scheduling buys nothing:** S! reaches the OPS in 0.17 ± 0.01 ms
+  either way.
+
 ## Lessons learned
 
 1. **The OPS243 changed its sampling in the middle of a run.** From
@@ -204,6 +223,7 @@ real-time priority a default.**
 | `data/ops_j3_20261101_111438.log` | GPIO18 edges (monotonic seconds) |
 | `data/camera_triggers_20261101.csv` | Camera trigger timestamps, 127 captures |
 | `data/trackman-build-info.txt`, `data/trackman-local-changes.patch` | Build stamp |
+| `OpenFlight-studio-session-2026-11-01.pdf` | This report as a PDF, with camera strips |
 
 The IWR dumps and camera clips stay on the Pi. The notes were written live;
 where they call a ~20 mph shot "false", TrackMan shows that #22 and #23 (run
