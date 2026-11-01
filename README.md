@@ -67,6 +67,7 @@ UART transfers; Windows remains useful for analysis and diagnostics. See the
 | Check an ILD1 dump | `python check_l3dump.py --help` |
 | Compare the upstream UART driver | `python upstream_uart_probe.py --help` |
 | Understand the metrics and limitations | [Analysis metrics](docs/ANALYSIS_METRICS.md) |
+| Triage a self-triggered range or studio session | `python -m openflight_bench.session` — [session tools](session_tools/README.md) |
 | Browse reports and technical notes | [Documentation index](docs/README.md) |
 
 ## Repository layout
@@ -75,6 +76,7 @@ UART transfers; Windows remains useful for analysis and diagnostics. See the
 | --- | --- |
 | `openflight_bench/` | Capture CLI, transport, configuration, and shared analysis package |
 | `workbench/` | Streamlit interface for saved captures |
+| `session_tools/` | Pi-side scripts for a session with the IWR self-trigger: build stamp, J3 edge logger, log tails |
 | `profiles/` | Reference radar configuration |
 | `tests/` | Automated tests and the committed integrity fixture |
 | `docs/` | Current guides and technical reference |
