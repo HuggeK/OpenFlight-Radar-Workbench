@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13">
+  <rect width="900" height="480" fill="#ffffff"/>
+  <text x="20" y="26" font-size="15" font-weight="600" fill="#1b2533">Top view, to scale: the hallway, with can marks on a line 1.40 m from the enclosure front</text>
+  <text x="20" y="46" font-size="12" fill="#5a6675">Seen from above, downrange to the right. Right of the target line (seen from behind the radar) is drawn downward.</text>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#1b2533"/></marker>
+  </defs>
+  <rect x="20" y="79" width="850" height="14" fill="#d5dbe0"/>
+  <rect x="20" y="387" width="850" height="14" fill="#d5dbe0"/>
+  <text x="26" y="72" font-size="12" fill="#5a6675">left side (with the stuff): 65 cm from the antenna centre</text>
+  <text x="26" y="418" font-size="12" fill="#5a6675">right side: 65 cm from the antenna centre</text>
+  <rect x="858" y="93" width="10" height="294" fill="#9aa6b4"/>
+  <text x="806" y="112" font-size="12" fill="#1b2533">door</text>
+  <text x="796" y="128" font-size="12" fill="#1b2533">3.40 m</text>
+  <line x1="650" y1="93" x2="650" y2="387" stroke="#9aa6b4" stroke-dasharray="3 5"/>
+  <text x="656" y="358" font-size="11" fill="#5a6675">radar's range window</text>
+  <text x="656" y="372" font-size="11" fill="#5a6675">ends ≈ 2.5 m (the door</text>
+  <text x="656" y="386" font-size="11" fill="#5a6675">is outside it)</text>
+  <rect x="50" y="222" width="40" height="36" fill="#e9edf0" stroke="#1b2533" stroke-width="2"/>
+  <circle cx="90" cy="240" r="4" fill="#c46a12"/>
+  <text x="96" y="226" font-size="11" fill="#c46a12">0 point (front face)</text>
+  <line x1="90" y1="240" x2="856" y2="240" stroke="#c46a12" stroke-width="1.5" stroke-dasharray="8 6"/>
+  <text x="560" y="232" font-size="12" fill="#c46a12">0° (boresight)</text>
+  <line x1="406" y1="100" x2="406" y2="380" stroke="#1b2533" stroke-width="2"/>
+  <path d="M406 252 L418 252 L418 240" fill="none" stroke="#1b2533"/>
+  <g stroke="#9aa6b4" stroke-width="0.8">
+    <line x1="90" y1="240" x2="406" y2="155"/><line x1="90" y1="240" x2="406" y2="184"/><line x1="90" y1="240" x2="406" y2="212"/>
+    <line x1="90" y1="240" x2="406" y2="268"/><line x1="90" y1="240" x2="406" y2="296"/><line x1="90" y1="240" x2="406" y2="325"/>
+  </g>
+  <g fill="#1d5be6"><circle cx="406" cy="212" r="6"/><circle cx="406" cy="184" r="6"/><circle cx="406" cy="155" r="6"/></g>
+  <g fill="#1f9d4c"><circle cx="406" cy="268" r="6"/><circle cx="406" cy="296" r="6"/><circle cx="406" cy="325" r="6"/></g>
+  <circle cx="406" cy="155" r="11" fill="none" stroke="#a86a00" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <circle cx="406" cy="325" r="11" fill="none" stroke="#a86a00" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <circle cx="406" cy="240" r="7" fill="#ffffff" stroke="#c46a12" stroke-width="3"/>
+  <g font-size="12" fill="#1b2533">
+    <text x="424" y="159">l375 · 15° (marginal)</text>
+    <text x="424" y="188">l247 · 10°</text>
+    <text x="424" y="216">l122 · 5°</text>
+    <text x="424" y="258">b1 / b2 / b3</text>
+    <text x="424" y="280">r122 · 5°</text>
+    <text x="424" y="300">r247 · 10°</text>
+    <text x="424" y="329">r375 · 15° (marginal)</text>
+  </g>
+  <text x="96" y="140" font-size="11" fill="#5a6675">Folder name = mm along the tape</text>
+  <text x="96" y="154" font-size="11" fill="#5a6675">from the 0° mark (l = left, r = right).</text>
+  <text x="96" y="340" font-size="11" fill="#5a6675">Square check at the line: 30 cm along</text>
+  <text x="96" y="354" font-size="11" fill="#5a6675">boresight, 40 cm along the tape, 50 cm diagonal.</text>
+  <line x1="90" y1="440" x2="406" y2="440" stroke="#1b2533" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="140" y="462" fill="#1b2533">1.40 m along boresight, from the enclosure front</text>
+</svg>
