@@ -108,7 +108,7 @@ OPS capture and the camera clip; a session can reach several GB.
 - [ ] **Set the OPS buffer split to S#10:** add `--sound-pre-trigger 10` to the
       start command. Without it, `feat/iwr-self-trigger` uses S#24 whenever
       `--iwr6843-self-trigger` is on, which kept only ~42 ms of ball on
-      2026-11-01 (see [OPS buffer split](#ops-buffer-split-s10-instead-of-s24)).
+      2026-11-01 (see [OPS buffer split](#test-1-ops-buffer-split-s10-instead-of-s24)).
       Check the first capture: `trigger_offset_ms` should read **42.67**.
 - [ ] **Run Robinante's log tails** in two extra SSH terminals for the whole
       session (forgotten on 2026-11-01):
@@ -152,15 +152,52 @@ Set-up at each position, and again after every move:
 
 | Block | Position | Why |
 | --- | --- | --- |
+| **First:** S#10 block for club speed and smash | **L** | needs TrackMan club data |
+| **First:** S#16 comparison block | **L**, same clubs | compared with the S#10 block at L |
 | Block 0 (`swing_trigger.py` sweep) | R (or at home) | trigger only, no reference needed |
 | Self-trigger tuning 1-6 | R | IWR and trigger, ball data is enough |
 | IWR launch vs TrackMan | R | best IWR results, no wall |
 | OPS ball speed and spin | R | ball data |
-| S#10 blocks for club speed and smash | **L** | needs TrackMan club data |
-| S#16 comparison block | **L**, same clubs | compared with the S#10 blocks at L |
 | IWR club path vs TrackMan | **L** | needs TrackMan club data |
 | OPS `T=-2` interference test | R and L | the test is the position difference |
 | Block without `--debug` | R | trigger and rearm timing |
+
+## Test 1: OPS buffer split (S#10 instead of S#24)
+
+The OPS keeps 4096 samples (136.5 ms at 30 kS/s) in 32 segments of ~4.27 ms;
+`S#n` is how many segments it keeps *before* the trigger. The IWR fires ~2
+frames after launch and `S!` reaches the OPS in 0.17 ms, so the trigger lands
+about 8 ms after impact (including the wait for the OPS's next segment). The
+flag is still called `--sound-pre-trigger`, but it sets the OPS split for any
+trigger that reaches the OPS as `S!`.
+
+| S#n | Before trigger | Club before impact | Ball after impact | `trigger_offset_ms` | J3 window (post-trigger) |
+| --- | --- | --- | --- | --- | --- |
+| 24 (branch default, 2026-11-01) | 102.4 ms | ~94 ms | ~42 ms | 102.00 | ~34 ms |
+| 16 | 68.3 ms | ~60 ms | ~76 ms | 68.27 | ~68 ms |
+| **10 (next session)** | 42.7 ms | ~35 ms | ~102 ms | 42.67 | ~94 ms |
+
+Why 10: ~35 ms of club (a driver head covers ~1.5 m in that time) is enough
+for club speed and the club-to-ball impact estimate, while the ball window
+grows from ~42 to ~102 ms for spin and speed-curve launch estimates
+([issue #355](https://github.com/open-flight/openflight/issues/355)). It also
+keeps shots whose trigger fires 60-70 ms *early* (3 on 2026-11-01): their
+impact still lands inside the buffer, where S#24 lost them. Indoors the ball
+hits the net after ~43 ms (driver) to ~86 ms (wedge), so the gain shows most
+on wedges and chips, and outdoors.
+
+This is the first test of the session, before Block 0, at position **L**
+(TrackMan club data, see [Placement](#placement)):
+
+- [ ] Block A, `--sound-pre-trigger 10`: 15 shots, mixed clubs (driver,
+      7-iron, wedge), noting each club.
+- [ ] Block B, `--sound-pre-trigger 16`: the same 15 shots with the same clubs.
+- [ ] Compare **club speed and smash** against TrackMan between A and B. If
+      they hold at S#10, keep S#10 for every later block and propose it as
+      the self-trigger default in `feat/iwr-self-trigger`; if not, run the
+      rest at S#16 and note why.
+- [ ] Note any shot where the OPS `impact_offset_from_trigger_ms` is missing
+      or the club phase looks cut short.
 
 ## Block 0: sweep the self-trigger without the kiosk
 
@@ -212,39 +249,6 @@ python -m openflight_bench.session triage --triggers terminal_logs/kiosk_*.log
 
 and walk a few minutes around the unit without swinging, then address and
 waggle without hitting, to count movement triggers.
-
-## OPS buffer split (S#10 instead of S#24)
-
-The OPS keeps 4096 samples (136.5 ms at 30 kS/s) in 32 segments of ~4.27 ms;
-`S#n` is how many segments it keeps *before* the trigger. The IWR fires ~2
-frames after launch and `S!` reaches the OPS in 0.17 ms, so the trigger lands
-about 8 ms after impact (including the wait for the OPS's next segment). The
-flag is still called `--sound-pre-trigger`, but it sets the OPS split for any
-trigger that reaches the OPS as `S!`.
-
-| S#n | Before trigger | Club before impact | Ball after impact | `trigger_offset_ms` | J3 window (post-trigger) |
-| --- | --- | --- | --- | --- | --- |
-| 24 (branch default, 2026-11-01) | 102.4 ms | ~94 ms | ~42 ms | 102.00 | ~34 ms |
-| 16 | 68.3 ms | ~60 ms | ~76 ms | 68.27 | ~68 ms |
-| **10 (next session)** | 42.7 ms | ~35 ms | ~102 ms | 42.67 | ~94 ms |
-
-Why 10: ~35 ms of club (a driver head covers ~1.5 m in that time) is enough
-for club speed and the club-to-ball impact estimate, while the ball window
-grows from ~42 to ~102 ms for spin and speed-curve launch estimates
-([issue #355](https://github.com/open-flight/openflight/issues/355)). It also
-keeps shots whose trigger fires 60-70 ms *early* (3 on 2026-11-01): their
-impact still lands inside the buffer, where S#24 lost them. Indoors the ball
-hits the net after ~43 ms (driver) to ~86 ms (wedge), so the gain shows most
-on wedges and chips, and outdoors.
-
-- [ ] Run every block at S#10.
-- [ ] One extra block of 15 shots at `--sound-pre-trigger 16`, same clubs,
-      at position **L** (TrackMan club data, see [Placement](#placement)):
-      compare **club speed and smash** against TrackMan with an S#10 block
-      at L. If they hold at S#10, propose S#10 as the self-trigger
-      default in `feat/iwr-self-trigger`.
-- [ ] Note any shot where the OPS `impact_offset_from_trigger_ms` is missing
-      or the club phase looks cut short.
 
 ## OPS and TrackMan interference (Robinante's offset theory)
 
