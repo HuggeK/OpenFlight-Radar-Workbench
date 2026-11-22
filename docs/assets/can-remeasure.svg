@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 650" width="860" height="650" font-family="Helvetica, Arial, sans-serif">
+<rect width="860" height="650" fill="#ffffff"/>
+<text x="20.0" y="30.0" font-size="16" fill="#1f2328" text-anchor="start" font-weight="bold" >Can re-measure: what changes from the 2026-11-18 trial</text>
+<text x="20.0" y="50.0" font-size="12" fill="#59636e" text-anchor="start" font-weight="normal" >Top view, sideways stretched about 2x. Same line distance (1.285 m) and marks.</text>
+<rect x="370.0" y="545.0" width="120" height="34" rx="4" fill="#1f2328"/>
+<text x="430.0" y="567.0" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold" >OpenFlight</text>
+<circle cx="430.0" cy="545.0" r="4" fill="#cf222e"/>
+<line x1="430.0" y1="545.0" x2="430.0" y2="119.5" stroke="#cf222e" stroke-width="2"/>
+<text x="420.0" y="501.0" font-size="12" fill="#cf222e" text-anchor="end" font-weight="bold" >1  laser / chalk line</text>
+<text x="420.0" y="516.0" font-size="11" fill="#cf222e" text-anchor="end" font-weight="normal" >from the antenna centre</text>
+<text x="420.0" y="531.0" font-size="11" fill="#59636e" text-anchor="end" font-weight="normal" >(trial: floor crease)</text>
+<line x1="262.0" y1="545.0" x2="430.0" y2="159.5" stroke="#bf8700" stroke-width="1.5" stroke-dasharray="6 4"/>
+<circle cx="262.0" cy="545.0" r="3.5" fill="#bf8700"/>
+<line x1="598.0" y1="545.0" x2="430.0" y2="159.5" stroke="#bf8700" stroke-width="1.5" stroke-dasharray="6 4"/>
+<circle cx="598.0" cy="545.0" r="3.5" fill="#bf8700"/>
+<text x="262.0" y="563.0" font-size="11" fill="#bf8700" text-anchor="middle" font-weight="normal" >-30 cm</text>
+<text x="598.0" y="563.0" font-size="11" fill="#bf8700" text-anchor="middle" font-weight="normal" >+30 cm</text>
+<text x="252.0" y="485.0" font-size="12" fill="#bf8700" text-anchor="end" font-weight="bold" >3  left / right check:</text>
+<text x="252.0" y="500.0" font-size="11" fill="#bf8700" text-anchor="end" font-weight="normal" >both tapes read the same;</text>
+<text x="252.0" y="515.0" font-size="11" fill="#bf8700" text-anchor="end" font-weight="normal" >0-mark error ≈ 2.2 × difference</text>
+<line x1="116.39999999999998" y1="159.5" x2="743.6" y2="159.5" stroke="#1f2328" stroke-width="3"/>
+<text x="116.4" y="151.5" font-size="11" fill="#59636e" text-anchor="start" font-weight="normal" >tape line, 1.285 m from the enclosure front</text>
+<path d="M430.0 249.5 L564.4 159.5" stroke="#0969da" stroke-width="1.5" fill="none" stroke-dasharray="3 3"/>
+<path d="M440.0 159.5 v10 h-10" stroke="#0969da" fill="none"/>
+<text x="570.4" y="199.5" font-size="12" fill="#0969da" text-anchor="start" font-weight="bold" >2  square the tape: 30 cm along the</text>
+<text x="570.4" y="214.5" font-size="11" fill="#0969da" text-anchor="start" font-weight="normal" >laser, 40 cm along the tape, 50 cm across</text>
+<text x="570.4" y="229.5" font-size="11" fill="#0969da" text-anchor="start" font-weight="normal" >(3-4-5); tape zero pinned ON the 0 cross</text>
+<path d="M390.84000000000003 154.5 l10 10 M400.84000000000003 154.5 l-10 10" stroke="#1f2328" stroke-width="2"/>
+<text x="395.8" y="179.5" font-size="10" fill="#1f2328" text-anchor="middle" font-weight="normal" >l61</text>
+<path d="M459.15999999999997 154.5 l10 10 M469.15999999999997 154.5 l-10 10" stroke="#1f2328" stroke-width="2"/>
+<text x="464.2" y="179.5" font-size="10" fill="#1f2328" text-anchor="middle" font-weight="normal" >r61</text>
+<path d="M356.68 154.5 l10 10 M366.68 154.5 l-10 10" stroke="#1f2328" stroke-width="2"/>
+<path d="M493.32 154.5 l10 10 M503.32 154.5 l-10 10" stroke="#1f2328" stroke-width="2"/>
+<path d="M322.52 154.5 l10 10 M332.52 154.5 l-10 10" stroke="#1f2328" stroke-width="2"/>
+<path d="M527.48 154.5 l10 10 M537.48 154.5 l-10 10" stroke="#1f2328" stroke-width="2"/>
+<path d="M287.8 154.5 l10 10 M297.8 154.5 l-10 10" stroke="#1f2328" stroke-width="2"/>
+<text x="292.8" y="179.5" font-size="10" fill="#1f2328" text-anchor="middle" font-weight="normal" >l245</text>
+<path d="M562.2 154.5 l10 10 M572.2 154.5 l-10 10" stroke="#1f2328" stroke-width="2"/>
+<text x="567.2" y="179.5" font-size="10" fill="#1f2328" text-anchor="middle" font-weight="normal" >r245</text>
+<path d="M252.51999999999998 154.5 l10 10 M262.52 154.5 l-10 10" stroke="#59636e" stroke-width="2"/>
+<path d="M597.48 154.5 l10 10 M607.48 154.5 l-10 10" stroke="#cf222e" stroke-width="2"/>
+<path d="M216.68 154.5 l10 10 M226.68 154.5 l-10 10" stroke="#59636e" stroke-width="2"/>
+<path d="M633.3199999999999 154.5 l10 10 M643.3199999999999 154.5 l-10 10" stroke="#cf222e" stroke-width="2"/>
+<path d="M179.72 154.5 l10 10 M189.72 154.5 l-10 10" stroke="#59636e" stroke-width="2"/>
+<path d="M670.28 154.5 l10 10 M680.28 154.5 l-10 10" stroke="#cf222e" stroke-width="2"/>
+<path d="M141.64 154.5 l10 10 M151.64 154.5 l-10 10" stroke="#59636e" stroke-width="2"/>
+<text x="146.6" y="179.5" font-size="10" fill="#59636e" text-anchor="middle" font-weight="normal" >l506</text>
+<path d="M708.36 154.5 l10 10 M718.36 154.5 l-10 10" stroke="#cf222e" stroke-width="2"/>
+<text x="713.4" y="179.5" font-size="10" fill="#cf222e" text-anchor="middle" font-weight="normal" >r506</text>
+<circle cx="430.0" cy="159.5" r="9" fill="#d0d7de" stroke="#1f2328" stroke-width="1.5"/>
+<text x="430.0" y="109.5" font-size="11" fill="#1f2328" text-anchor="middle" font-weight="normal" >can on the 0 cross</text>
+<rect x="592.4" y="137.5" width="140.0000000000001" height="50" fill="#cf222e" opacity="0.08" stroke="#cf222e" stroke-dasharray="4 3"/>
+<text x="840.0" y="84.5" font-size="12" fill="#cf222e" text-anchor="end" font-weight="bold" >4  clear the bag, stand and bin on the right;</text>
+<text x="840.0" y="99.5" font-size="11" fill="#cf222e" text-anchor="end" font-weight="normal" >until then fit the right side only out to r245</text>
+<text x="840.0" y="114.5" font-size="11" fill="#cf222e" text-anchor="end" font-weight="normal" >(r372-r506 read 12-17° where 16-21° was taped)</text>
+<text x="20.0" y="618.0" font-size="11" fill="#1f2328" text-anchor="start" font-weight="normal" >5  warm-up: one e1 round or ~10 min of RF before the first capture (b1→b3 drifted 0.4° as the RX warmed 54→62 °C).</text>
+<text x="20.0" y="636.0" font-size="11" fill="#1f2328" text-anchor="start" font-weight="normal" >Then run_session.sh --line-m 1.285, check, --save, and verify on l122 · b · r122 without --save.</text>
+</svg>

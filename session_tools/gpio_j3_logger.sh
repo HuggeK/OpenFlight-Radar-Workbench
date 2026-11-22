@@ -3,7 +3,8 @@
 #
 # Wiring used on 2026-11-01: OPS243-A J3 pin 1 -> Pi physical pin 12 (GPIO18).
 # In rolling-buffer mode the line rises ~0.17 ms after the OPS receives S! and
-# falls when its post-trigger capture closes (S#24 at 30 kS/s: ~34 ms).
+# falls when its post-trigger capture closes: (32 - S#) x 128 samples, so at
+# 30 kS/s ~94 ms for S#10 and ~34 ms for S#24 (2026-11-01). x1.5 = 20 kS/s.
 # Timestamps are CLOCK_MONOTONIC, the clock OpenFlight's camera metadata uses
 # for trigger_host_timestamp_ns, so the two can be paired afterwards.
 #
