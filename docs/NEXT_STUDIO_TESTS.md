@@ -103,7 +103,7 @@ OPS capture and the camera clip; a session can reach several GB.
       `session_tools/gpio_j3_logger.sh 17`
 - [ ] Keep the unit in **one position per block** and note any move with the
       time; on 2026-11-01 the IWR was much better on the right side than beside
-      the TrackMan.
+      the TrackMan. Which block goes where: [Placement](#placement).
 - [ ] Use `--session-location studio`, not a name that reads like TrackMan data.
 - [ ] **Set the OPS buffer split to S#10:** add `--sound-pre-trigger 10` to the
       start command. Without it, `feat/iwr-self-trigger` uses S#24 whenever
@@ -118,6 +118,49 @@ OPS capture and the camera clip; a session can reach several GB.
 
       Timeouts are normal. Check that it captures on a valid swing, stays
       quiet when nothing moves, and rearms (also after a timeout).
+
+## Placement
+
+Two positions, as on 2026-11-01. The distance between OpenFlight and the
+TrackMan does not bias the numbers: both measure the same ball from where
+they stand. What matters is that each knows its own geometry (distances,
+heights, tilt) and that both aim at the **same target line**, or horizontal
+launch and club path carry a constant offset.
+
+| Position | Where | TrackMan gives | 2026-11-01 |
+| --- | --- | --- | --- |
+| **R** | right side of the hitting area, looking downrange, open floor | ball data only | IWR launch 0.90° MAE vs TrackMan, 1 of 10 tracks wrong |
+| **L** | left side, ball in TrackMan's hitting area beside its wall alcove | ball **and club** data | 2.00° MAE, 5 of 13 tracks wrong (wall reflections and aim suspected) |
+
+Set-up at each position, and again after every move:
+
+- [ ] Lay an alignment stick on the target line through the ball, the same
+      target TrackMan uses. Put the unit behind the ball, centred on the
+      stick, pointing along it. Each 1 cm sideways off the line biases
+      horizontal launch by ~0.36° at 1.6 m.
+- [ ] Ball ~1.6 m from the unit (the branch's ideal band is 1.45-1.75 m;
+      closer gives a stronger ball echo and a longer IWR track, below 1.45 m
+      the club's approach starts to leave the IWR window). Measure tee, net and
+      heights as in [Before the first shot](#before-the-first-shot).
+- [ ] Ball detector (block 2) first: the banner should read **ideal** with a
+      range matching `--iwr6843-tee-m`, and a ball azimuth near 0° (it is the
+      unit's aim error).
+- [ ] At **L**: move the unit 30-50 cm out from the alcove wall if TrackMan
+      still reports club data there, and confirm it does before the block.
+- [ ] Note the position letter and time in the notes for every block. Never
+      compare R and L shots in one table.
+
+| Block | Position | Why |
+| --- | --- | --- |
+| Block 0 (`swing_trigger.py` sweep) | R (or at home) | trigger only, no reference needed |
+| Self-trigger tuning 1-6 | R | IWR and trigger, ball data is enough |
+| IWR launch vs TrackMan | R | best IWR results, no wall |
+| OPS ball speed and spin | R | ball data |
+| S#10 blocks for club speed and smash | **L** | needs TrackMan club data |
+| S#16 comparison block | **L**, same clubs | compared with the S#10 blocks at L |
+| IWR club path vs TrackMan | **L** | needs TrackMan club data |
+| OPS `T=-2` interference test | R and L | the test is the position difference |
+| Block without `--debug` | R | trigger and rearm timing |
 
 ## Block 0: sweep the self-trigger without the kiosk
 
@@ -196,8 +239,9 @@ on wedges and chips, and outdoors.
 
 - [ ] Run every block at S#10.
 - [ ] One extra block of 15 shots at `--sound-pre-trigger 16`, same clubs,
-      same position: compare **club speed and smash** against TrackMan with
-      the S#10 blocks. If they hold at S#10, propose S#10 as the self-trigger
+      at position **L** (TrackMan club data, see [Placement](#placement)):
+      compare **club speed and smash** against TrackMan with an S#10 block
+      at L. If they hold at S#10, propose S#10 as the self-trigger
       default in `feat/iwr-self-trigger`.
 - [ ] Note any shot where the OPS `impact_offset_from_trigger_ms` is missing
       or the club phase looks cut short.
