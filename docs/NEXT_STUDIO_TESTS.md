@@ -5,6 +5,81 @@ What to run on the next studio visit, from the
 thing per block, about 15 shots each, and note every false shot and every
 real shot that did not register, with its time or shot number.
 
+## At home, before the session
+
+### OPS: clean saved settings (keep rolling-buffer mode saved, for now)
+
+The sound trigger is gone, so the HOST_INT reason for saving rolling-buffer
+mode to the OPS's flash is gone too. **But do not remove it yet:** with
+`--iwr6843-self-trigger` the OPS still starts the sound-trigger way
+(`prepare_persisted_rolling_buffer()` in `feat/iwr-self-trigger`), which
+never sends `GC` and expects the OPS to *boot* in rolling-buffer mode. Without
+the saved mode the OPS boots in normal mode and the IWR's `S!` gives no dump.
+
+What to do instead:
+
+- [ ] Reset the OPS's saved settings to factory defaults (the reset command
+      is in OmniPreSense's API document AN-010; check it there first), then
+      re-run the one-time setup and power-cycle:
+
+      ```bash
+      uv run python scripts/hardware-test/test_rolling_buffer_persist.py --setup
+      # unplug the OPS for 3 s, plug it back in
+      uv run python scripts/hardware-test/test_rolling_buffer_persist.py --test
+      ```
+
+      The setup saves `GC` and `S#16` but never clears the speed trigger, so
+      a speed trigger left over from an `--trigger hardware` run can be saved
+      with it. That is the likely cause of Robinante's "OPS fires on its own
+      before the IWR's S!" (2026-11-22).
+- [ ] Self-fire check: OpenFlight running with `--iwr6843-self-trigger`,
+      nobody moving, 10 minutes. Any OPS dump in the OPS tail without an
+      `S!` just before it is the OPS firing on its own. On 1.3.3 its UART
+      trigger message says it was the speed trigger; without that message,
+      check that HOST_INT (J3 pin 3) is not floating now the mic is gone
+      (10 kΩ pull-down to GND).
+- Follow-up for `feat/iwr-self-trigger`, not for this session: send `GC`,
+  `S#` and "speed trigger off" at startup on the `S!` path, like
+  `--trigger hardware` does. Then the saved rolling-buffer mode and its
+  setup script can go.
+
+### Pi: logs that survive a reboot
+
+- [ ] Keep the system journal on disk permanently (not only for this
+      session), with a size cap so it cannot fill the card:
+
+      ```bash
+      sudo mkdir -p /var/log/journal
+      sudo sed -i 's/^#\?Storage=.*/Storage=persistent/; s/^#\?SystemMaxUse=.*/SystemMaxUse=500M/' /etc/systemd/journald.conf
+      sudo systemctl restart systemd-journald
+      journalctl --disk-usage            # check it took
+      journalctl --list-boots | tail -3  # older boots should now be kept
+      ```
+
+### Pi: room for recordings
+
+Each `--debug --iwr6843-full-capture` shot saves a ~0.7 MB IWR dump, plus the
+OPS capture and the camera clip; a session can reach several GB.
+
+- [ ] See what is free and what is using it:
+
+      ```bash
+      df -h /
+      du -sh ~/openflight_sessions ~/openflight_sessions/* | sort -h | tail
+      ```
+
+- [ ] Copy older sessions to the PC or a USB stick, check the copy, then
+      delete them on the Pi:
+
+      ```bash
+      rsync -a --info=progress2 ~/openflight_sessions/ <pc-or-usb>:/openflight_sessions/
+      ```
+
+- [ ] Free system space: `sudo apt clean`,
+      `sudo journalctl --vacuum-size=200M` (before turning on the cap above),
+      and old `~/.cache/uv` builds if space is still short.
+- [ ] Aim for at least ~10 GB free before the session.
+
 ## Before the first shot
 
 - [ ] Start OpenFlight from the desktop icon, not over SSH (Ctrl+C must work).
@@ -20,9 +95,10 @@ real shot that did not register, with its time or shot number.
 - [ ] Try the validated height: antenna centre ~0.15 m above the floor, ~10° tilt.
 - [ ] `session_tools/build_info.sh studio` and `session_tools/gpio_j3_logger.sh`.
 - [ ] Clock synced (`timedatectl`), battery charged above 0 °C.
-- [ ] Turn on persistent OS logs before the session, so kernel UART errors,
-      NTP and RTC events around a sample-rate change survive a reboot:
-      `sudo mkdir -p /var/log/journal && sudo sed -i 's/^#\?Storage=.*/Storage=persistent/' /etc/systemd/journald.conf && sudo systemctl restart systemd-journald`
+- [ ] Persistent OS logs are on (`journalctl --disk-usage`; see
+      [At home](#pi-logs-that-survive-a-reboot)), so kernel UART errors, NTP
+      and RTC events around a sample-rate change survive a reboot.
+- [ ] At least ~10 GB free (`df -h /`).
 - [ ] Log the IWR's GPIO17 trigger edge next to J3 (GPIO18):
       `session_tools/gpio_j3_logger.sh 17`
 - [ ] Keep the unit in **one position per block** and note any move with the
