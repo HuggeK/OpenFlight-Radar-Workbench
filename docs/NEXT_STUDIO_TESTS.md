@@ -29,6 +29,11 @@ real shot that did not register, with its time or shot number.
       time; on 2026-11-01 the IWR was much better on the right side than beside
       the TrackMan.
 - [ ] Use `--session-location studio`, not a name that reads like TrackMan data.
+- [ ] **Set the OPS buffer split to S#10:** add `--sound-pre-trigger 10` to the
+      start command. Without it, `feat/iwr-self-trigger` uses S#24 whenever
+      `--iwr6843-self-trigger` is on, which kept only ~42 ms of ball on
+      2026-11-01 (see [OPS buffer split](#ops-buffer-split-s10-instead-of-s24)).
+      Check the first capture: `trigger_offset_ms` should read **42.67**.
 - [ ] **Run Robinante's log tails** in two extra SSH terminals for the whole
       session (forgotten on 2026-11-01):
 
@@ -89,6 +94,38 @@ python -m openflight_bench.session triage --triggers terminal_logs/kiosk_*.log
 and walk a few minutes around the unit without swinging, then address and
 waggle without hitting, to count movement triggers.
 
+## OPS buffer split (S#10 instead of S#24)
+
+The OPS keeps 4096 samples (136.5 ms at 30 kS/s) in 32 segments of ~4.27 ms;
+`S#n` is how many segments it keeps *before* the trigger. The IWR fires ~2
+frames after launch and `S!` reaches the OPS in 0.17 ms, so the trigger lands
+about 8 ms after impact (including the wait for the OPS's next segment). The
+flag is still called `--sound-pre-trigger`, but it sets the OPS split for any
+trigger that reaches the OPS as `S!`.
+
+| S#n | Before trigger | Club before impact | Ball after impact | `trigger_offset_ms` | J3 window (post-trigger) |
+| --- | --- | --- | --- | --- | --- |
+| 24 (branch default, 2026-11-01) | 102.4 ms | ~94 ms | ~42 ms | 102.00 | ~34 ms |
+| 16 | 68.3 ms | ~60 ms | ~76 ms | 68.27 | ~68 ms |
+| **10 (next session)** | 42.7 ms | ~35 ms | ~102 ms | 42.67 | ~94 ms |
+
+Why 10: ~35 ms of club (a driver head covers ~1.5 m in that time) is enough
+for club speed and the club-to-ball impact estimate, while the ball window
+grows from ~42 to ~102 ms for spin and speed-curve launch estimates
+([issue #355](https://github.com/open-flight/openflight/issues/355)). It also
+keeps shots whose trigger fires 60-70 ms *early* (3 on 2026-11-01): their
+impact still lands inside the buffer, where S#24 lost them. Indoors the ball
+hits the net after ~43 ms (driver) to ~86 ms (wedge), so the gain shows most
+on wedges and chips, and outdoors.
+
+- [ ] Run every block at S#10.
+- [ ] One extra block of 15 shots at `--sound-pre-trigger 16`, same clubs,
+      same position: compare **club speed and smash** against TrackMan with
+      the S#10 blocks. If they hold at S#10, propose S#10 as the self-trigger
+      default in `feat/iwr-self-trigger`.
+- [ ] Note any shot where the OPS `impact_offset_from_trigger_ms` is missing
+      or the club phase looks cut short.
+
 ## OPS and TrackMan interference (Robinante's offset theory)
 
 The OPS243 and TrackMan both radiate in the same room; shifting the OPS
@@ -110,8 +147,11 @@ Export TrackMan through SwingSync again and run
 
 ## OPS sampling change (×1.49 speeds)
 
-- [ ] Keep `gpio_j3_logger.sh` running and watch the J3 window: ~34 ms is
-      normal for S#24 at 30 kS/s; ~48-51 ms means the OPS slowed down.
+- [ ] Keep `gpio_j3_logger.sh` running and watch the J3 window: at S#10 and
+      30 kS/s it should be ~94 ms; ~140 ms means the OPS slowed to 20 kS/s
+      (×1.5, as on 2026-11-01, when S#24 went from ~34 to ~48-51 ms). The
+      `S#24` → `S2` theory below means any `S#` re-arm can do this, so keep
+      the check whatever the split.
 - [ ] When it happens, stop OpenFlight and query the OPS before any restart:
       sample rate and module settings (`S?`, `??`; confirm the query commands
       in OmniPreSense's API document AN-010 first), and save the replies.
@@ -119,8 +159,8 @@ Export TrackMan through SwingSync again and run
       shot before had 83.5 mph and 1.34 % clipped samples).
 - [ ] Check whether a restart alone fixes it (it did on 2026-11-01).
 - [ ] Check without J3 too: every `rolling_buffer_capture` in the session
-      JSONL carries the OPS's `trigger_offset_ms`, 102.0 at 30 kS/s and 154.0
-      at 20 kS/s.
+      JSONL carries the OPS's `trigger_offset_ms`. At S#10 that is 42.67 at
+      30 kS/s and 64.0 at 20 kS/s (S#24 on 2026-11-01: 102.0 and 154.0).
 - [ ] Read the OPS's UART error counters (`query_uart_baud()` in
       `openflight.ops243`) before and after the session.
 - [ ] Note the time of the "cue" games (poking the ball to set off the
