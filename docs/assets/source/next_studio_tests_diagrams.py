@@ -73,9 +73,9 @@ o.append(f'<rect x="60" y="70" width="560" height="430" fill="#f6f8fa" stroke="{
 o.append(f'<line x1="70" y1="90" x2="610" y2="90" stroke="{MUTED}" stroke-width="6" stroke-dasharray="2 4"/>')
 o.append(text(340, 82, "net / screen (5.3 m from the unit)", 12, MUTED, "middle"))
 # TrackMan hit zone (ball + club data)
-o.append(f'<rect x="170" y="235" width="270" height="140" fill="#fff1e5" stroke="#bc4c00" stroke-dasharray="5 4"/>')
-o.append(text(432, 253, "TrackMan hit zone:", 12, "#bc4c00", "end"))
-o.append(text(432, 269, "ball + club data", 12, "#bc4c00", "end"))
+o.append(f'<rect x="170" y="235" width="420" height="140" fill="#fff1e5" stroke="#bc4c00" stroke-dasharray="5 4"/>')
+o.append(text(385, 253, "TrackMan hit zone: ball + club data", 12, "#bc4c00", "middle"))
+o.append(text(385, 269, "(a ball outside it is not recorded)", 11, "#bc4c00", "middle"))
 # back wall with the TrackMan alcove
 o.append(f'<rect x="275" y="490" width="120" height="30" fill="#ffffff" stroke="{INK}" stroke-width="2"/>')
 o.append(f'<rect x="290" y="478" width="90" height="22" fill="#fb8f44" stroke="#bc4c00"/>')
@@ -100,7 +100,7 @@ def ball_and_line(bx, by, ux, uy, name, col):
 # L: unit entirely to the left of the TrackMan alcove, ball inside its hit zone
 ball_and_line(235, 300, 235, 462, "L", "#bc4c00")
 unit(235, 462, "L")
-# R: open right side, ball outside the hit zone
+# R: open right side, ball still inside the hit zone
 ball_and_line(530, 300, 530, 462, "R", "#0969da")
 unit(530, 462, "R")
 o.append(text(385, 150, "target line = alignment stick,", 12, INK, "middle"))
@@ -108,10 +108,10 @@ o.append(text(385, 166, "the same target TrackMan uses", 12, INK, "middle"))
 # legend
 lx = 635
 o.append(text(lx, 110, "L", 13, "#bc4c00", weight="bold"))
-for i, s in enumerate(("left of TrackMan's alcove,", "ball in its hit zone", "TrackMan: ball + club", "→ Test 1, club path", "2026-11-01: 2.00° MAE,", "5 of 13 tracks wrong", "try 30-50 cm further left", "if the ball stays in the zone")):
+for i, s in enumerate(("left of TrackMan's alcove", "TrackMan: ball + club,", "face impact 9 of 33", "→ Test 1, club path", "2026-11-01: 2.00° MAE,", "5 of 13 tracks wrong", "try 30-50 cm further left", "if the ball stays in the zone")):
     o.append(text(lx, 128 + 16 * i, s, 11, INK))
 o.append(text(lx, 285, "R", 13, "#0969da", weight="bold"))
-for i, s in enumerate(("open right side,", "ball outside the hit zone", "TrackMan: ball only", "→ Block 0, tuning,", "IWR launch, OPS", "2026-11-01: 0.90° MAE,", "1 of 10 tracks wrong")):
+for i, s in enumerate(("open right side", "TrackMan: ball + club,", "face impact 1 of 15", "→ Block 0, tuning,", "IWR launch, OPS", "2026-11-01: 0.90° MAE,", "1 of 10 tracks wrong")):
     o.append(text(lx, 303 + 16 * i, s, 11, INK))
 o.append(text(lx, 435, "1 cm off the line", 11, MUTED))
 o.append(text(lx, 451, "≈ 0.36° launch bias", 11, MUTED))

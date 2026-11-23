@@ -24,6 +24,108 @@ flowchart LR
   home --> studio --> after
 ```
 
+## Step by step
+
+The short version. Tick the steps off as you go; each links to the details
+further down. Clap in front of the phone and write down the time (`date +%T`)
+at the start of every block, and note every false shot and every missed shot
+with its time.
+
+### Days before, at home
+
+- [ ] **1. Can calibration.** Laser line from the antenna centre, tape squared
+      3-4-5 with its zero on the 0 cross, right side cleared, 10 min warm-up.
+      Run `bash run_session.sh --line-m 1.285`, save with `--save` only if the
+      checks pass, then verify on three marks without `--save`.
+      [Details](#iwr-azimuth-re-measure-with-the-can-then-save)
+- [ ] **2. Camera.** Lens cover off, ribbon reseated,
+      `rpicam-hello --list-cameras` shows the 320×200 mode, a still looks
+      right, focus locked. [Details](#camera-check-the-picture)
+- [ ] **3. OPS.** Factory reset, `test_rolling_buffer_persist.py --setup`,
+      power-cycle, `--test`. Then 10 min with nobody moving: no dump without
+      an `S!` before it. Try `?F`, `T=-2`, `T=0` (never `A!`).
+      [Details](#ops-clean-saved-settings-keep-rolling-buffer-mode-saved-for-now)
+- [ ] **4. Pi.** Journal kept on disk (500 MB cap), old sessions copied off,
+      at least 10 GB free. [Details](#pi-logs-that-survive-a-reboot)
+- [ ] **5. Pack.** Tape measure, laser, alignment stick, inclinometer, phone
+      and tripod, a time sheet, balls, driver, 7-iron and wedge.
+
+### In the studio: set up at L
+
+- [ ] **6. Place the unit at L:** entirely to the left of TrackMan's alcove,
+      ball ~1.6 m in front of it inside TrackMan's hit zone, alignment stick
+      on the target line through the ball. [Details](#placement)
+- [ ] **7. Measure** tee and net (tape from the enclosure front), ball height
+      (mat + 0.021) and tilt. Write down every raw reading.
+      [Details](#measure)
+- [ ] **8. Launcher flags:** the measured `--iwr6843-tee-m`, `--iwr6843-net-m`,
+      `--iwr6843-ball-height-m` and `--iwr6843-tilt-deg`, plus
+      `--sound-pre-trigger 10`, `--camera-capture-post-ms 100`,
+      `--iwr6843-azimuth-offset-deg 0` and `--session-location studio`.
+- [ ] **9. Start** OpenFlight from the desktop icon. The log shows
+      `[IWR6843] Calibration:` with the saved file. [Details](#start-and-check)
+- [ ] **10. Loggers** in SSH terminals: `build_info.sh studio`,
+      `gpio_j3_logger.sh` and `gpio_j3_logger.sh 17`, and the two log tails
+      (`log_tails.sh iwr`, `log_tails.sh ops`).
+- [ ] **11. Phone video** on for the whole session.
+- [ ] **12. Camera still** at L: stick and ball in place, nobody in view,
+      `curl -s http://localhost:8080/api/camera/preview.jpg -o ~/openflight_sessions/studio/ref_L_$(date +%H%M%S).jpg`.
+- [ ] **13. One test shot:** OPS dump, IWR dump and camera clip all saved,
+      `trigger_offset_ms` reads 42.67, and TrackMan shows the shot.
+
+### In the studio: the tests, in order (about 15 shots each)
+
+- [ ] **14. Test 1A at L, S#10:** 15 shots, driver, 7-iron and wedge, write down
+      each club. These shots are also the IWR club-path comparison.
+      [Details](#test-1-ops-buffer-split-s10-instead-of-s24)
+- [ ] **15. Test 1B at L, S#16:** restart with `--sound-pre-trigger 16`, the
+      same 15 shots. Go back to 10 for the rest of the day, unless club speed
+      or smash got worse at 10.
+- [ ] **16. Move to R** (open right side, ball still inside TrackMan's hit
+      zone): repeat steps 6, 7, 12 and 13 there (`ref_R_` still), note the time.
+- [ ] **17. Block 0 at R:** stop the kiosk, run `swing_trigger.py` at SNR 1.5,
+      2.0 and 3.0, and fill in the table (real swings, addresses, waggles,
+      stopped takeaways and downswings, whiffs, practice swings, walking
+      past). Pick the SNR. [Details](#block-0-sweep-the-self-trigger-without-the-kiosk)
+- [ ] **18. Kiosk baseline at R:** that SNR, no other new flag, 15 shots.
+      [Details](#kiosk-baseline)
+- [ ] **19. Block 1:** `--iwr6843-self-trigger-offset-m 0.4`, then 0.6.
+      [Details](#self-trigger-tuning)
+- [ ] **20. Block 3:** `--iwr6843-veto-no-ball`.
+- [ ] **21. Block 2:** `--iwr6843-ball-detector on`, then `follow`.
+      *Short on time: stop the tuning here.*
+- [ ] **22. Only if false triggers are left:** block 4 (bin 36 ± 2), block 5
+      (SNR 1.5 vs 2.0); block 6 (ball SNR 2) only with block 2 or 3 on.
+- [ ] **23. Block without `--debug`** at R, with the best settings.
+- [ ] **24. Interference:** `T=-2`, 10 shots at R and 10 at L, only if the
+      speeds have not jumped ×1.49 today.
+      [Details](#ops-and-trackman-interference-robinantes-offset-theory)
+- [ ] **25. Last checks:** quick double shots, walking around the unit,
+      addressing and waggling without hitting. [Details](#other-checks)
+
+All day:
+
+- After every block, run `triage` on the kiosk log.
+- Watch the J3 window: ~94 ms is right at S#10. If it reads ~140 ms, the OPS
+  has slowed down. Stop and query the OPS **before** restarting.
+  [Details](#ops-sampling-change-149-speeds)
+- If TrackMan does not show a shot, the ball was outside its hit zone: that
+  shot has nothing to compare against.
+
+### Back home
+
+- [ ] **26. Copy everything off the Pi** (the whole `~/openflight_sessions/studio`
+      folder, terminal logs, tails, GPIO logs, stills) and the phone video.
+- [ ] **27. TrackMan export** through SwingSync.
+- [ ] **28. Label the camera clips** in `camera_labels.csv` (shot, false,
+      early, unclear, plus the impact frame), then run `latency`, `triage` and
+      `compare`. [Details](#after-the-session)
+- [ ] **29. Publish** the session as a release.
+
+---
+
+Everything below explains the steps above.
+
 ## At home, before the session
 
 ### IWR azimuth: re-measure with the can, then save
@@ -269,12 +371,18 @@ they stand. What matters is that each knows its own geometry (distances,
 heights, tilt) and that both aim at the **same target line**, or horizontal
 launch and club path carry a constant offset.
 
-![Studio from above: the net downrange, TrackMan in the back wall's alcove with its hit zone in front of it, OpenFlight at L entirely to the left of the alcove with its ball inside the hit zone, and at R on the open right side with its ball outside the zone, each about 1.6 m behind its ball on a target line to the net](assets/studio-placement.svg)
+TrackMan only reports balls hit inside its configured hit zone; a ball outside it
+is not recorded at all (11:49 and 11:51 on 2026-11-01). Inside the zone, ball
+speed, launch, spin, club speed, smash, attack angle, club path and face came
+through on every shot at both positions. Only TrackMan's extra club numbers
+(face impact, low point, swing radius, D-plane tilt) came more often at L.
+
+![Studio from above: the net downrange, TrackMan in the back wall's alcove with its hit zone in front of it, OpenFlight at L entirely to the left of the alcove and at R on the open right side, both balls inside the hit zone, each about 1.6 m behind its ball on a target line to the net](assets/studio-placement.svg)
 
 | Position | Where | TrackMan gives | 2026-11-01 |
 | --- | --- | --- | --- |
-| **R** | right side of the hitting area, looking downrange, open floor; ball outside TrackMan's hit zone | ball data only | IWR launch 0.90° MAE vs TrackMan, 1 of 10 tracks wrong |
-| **L** | unit entirely to the left of TrackMan's wall alcove, its ball inside TrackMan's hit zone | ball **and club** data | 2.00° MAE, 5 of 13 tracks wrong (wall reflections and aim suspected) |
+| **R** | right side of the hitting area, looking downrange, open floor; ball inside TrackMan's hit zone | ball and club data; face impact and low point on 1 of 15 shots | IWR launch 0.90° MAE vs TrackMan, 1 of 10 tracks wrong |
+| **L** | unit entirely to the left of TrackMan's wall alcove, its ball inside TrackMan's hit zone | ball and club data; face impact on 9 of 33, low point on 5 of 33 | 2.00° MAE, 5 of 13 tracks wrong (wall reflections and aim suspected) |
 
 Set-up at each position, and again after every move:
 
@@ -301,13 +409,13 @@ Set-up at each position, and again after every move:
 
 | Block | Position | Why |
 | --- | --- | --- |
-| **First:** S#10 block for club speed and smash | **L** | needs TrackMan club data |
+| **First:** S#10 block for club speed and smash | **L** | TrackMan club data, the most complete at L |
 | **First:** S#16 comparison block | **L**, same clubs | compared with the S#10 block at L |
 | Block 0 (`swing_trigger.py` sweep) | R (or at home) | trigger only, no reference needed |
-| Kiosk baseline and self-trigger tuning | R | IWR and trigger, ball data is enough |
+| Kiosk baseline and self-trigger tuning | R | IWR and trigger, no wall |
 | IWR launch vs TrackMan | R | best IWR results, no wall |
-| OPS ball speed and spin | R | ball data |
-| IWR club path vs TrackMan | **L** | needs TrackMan club data |
+| OPS ball speed and spin | R | from the R blocks, against TrackMan |
+| IWR club path vs TrackMan | **L** (the Test 1 shots) | TrackMan's extra club numbers more often at L |
 | OPS `T=-2` interference test | R and L | the test is the position difference |
 | Block without `--debug` | R | trigger and rearm timing |
 
