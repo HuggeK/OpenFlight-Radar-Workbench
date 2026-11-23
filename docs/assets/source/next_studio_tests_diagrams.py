@@ -72,15 +72,16 @@ o.append(f'<rect x="60" y="70" width="560" height="430" fill="#f6f8fa" stroke="{
 # net
 o.append(f'<line x1="70" y1="90" x2="610" y2="90" stroke="{MUTED}" stroke-width="6" stroke-dasharray="2 4"/>')
 o.append(text(340, 82, "net / screen (5.3 m from the unit)", 12, MUTED, "middle"))
-# mat
-o.append(f'<rect x="250" y="250" width="300" height="140" fill="#d8f0dc" stroke="#1a7f37"/>')
-o.append(text(400, 405, "hitting mat", 12, "#1a7f37", "middle"))
-# back wall with alcove
-o.append(f'<rect x="150" y="490" width="120" height="30" fill="#ffffff" stroke="{INK}" stroke-width="2"/>')
-o.append(f'<rect x="165" y="478" width="90" height="22" fill="#fb8f44" stroke="#bc4c00"/>')
-o.append(text(210, 493, "TrackMan", 11, "#ffffff", "middle", "bold"))
-o.append(text(210, 540, "wall alcove", 11, MUTED, "middle"))
-o.append(text(340, 540, "back wall", 11, MUTED, "middle"))
+# TrackMan hit zone (ball + club data)
+o.append(f'<rect x="170" y="235" width="270" height="140" fill="#fff1e5" stroke="#bc4c00" stroke-dasharray="5 4"/>')
+o.append(text(432, 253, "TrackMan hit zone:", 12, "#bc4c00", "end"))
+o.append(text(432, 269, "ball + club data", 12, "#bc4c00", "end"))
+# back wall with the TrackMan alcove
+o.append(f'<rect x="275" y="490" width="120" height="30" fill="#ffffff" stroke="{INK}" stroke-width="2"/>')
+o.append(f'<rect x="290" y="478" width="90" height="22" fill="#fb8f44" stroke="#bc4c00"/>')
+o.append(text(335, 493, "TrackMan", 11, "#ffffff", "middle", "bold"))
+o.append(text(335, 540, "wall alcove", 11, MUTED, "middle"))
+o.append(text(540, 540, "back wall", 11, MUTED, "middle"))
 
 def unit(x, y, lab):
     o.append(f'<rect x="{x-18}" y="{y-12}" width="36" height="24" rx="3" fill="{INK}"/>')
@@ -90,31 +91,31 @@ def ball_and_line(bx, by, ux, uy, name, col):
     o.append(f'<line x1="{ux}" y1="{uy-12}" x2="{bx}" y2="100" stroke="{col}" stroke-width="2" stroke-dasharray="7 5"/>')
     o.append(f'<path d="M{bx} 100 l-6 12 h12 z" fill="{col}"/>')
     o.append(f'<circle cx="{bx}" cy="{by}" r="7" fill="#ffffff" stroke="{INK}" stroke-width="1.5"/>')
-    o.append(f'<line x1="{ux+30}" y1="{uy}" x2="{bx+30}" y2="{by}" stroke="{MUTED}" stroke-width="1"/>')
+    o.append(f'<line x1="{ux-30}" y1="{uy}" x2="{bx-30}" y2="{by}" stroke="{MUTED}" stroke-width="1"/>')
     for yy in (uy, by):
-        o.append(f'<line x1="{ux+25}" y1="{yy}" x2="{ux+35}" y2="{yy}" stroke="{MUTED}" stroke-width="1"/>')
-    o.append(text(ux + 38, (uy + by) / 2 + 4, "~1.6 m", 11, MUTED))
-    o.append(text(bx - 12, by + 4, f"ball {name}", 12, INK, "end", "bold"))
+        o.append(f'<line x1="{ux-35}" y1="{yy}" x2="{ux-25}" y2="{yy}" stroke="{MUTED}" stroke-width="1"/>')
+    o.append(text(ux - 38, (uy + by) / 2 + 4, "~1.6 m", 11, MUTED, "end"))
+    o.append(text(bx + 12, by + 4, f"ball {name}", 12, INK, "start", "bold"))
 
-# L: unit beside the TrackMan alcove, ball in TrackMan's area
-ball_and_line(300, 300, 300, 462, "L", "#bc4c00")
-unit(300, 462, "L")
-# R: open right side
-ball_and_line(500, 300, 500, 462, "R", "#0969da")
-unit(500, 462, "R")
-o.append(text(400, 150, "target line = alignment stick,", 12, INK, "middle"))
-o.append(text(400, 166, "the same target TrackMan uses", 12, INK, "middle"))
+# L: unit entirely to the left of the TrackMan alcove, ball inside its hit zone
+ball_and_line(235, 300, 235, 462, "L", "#bc4c00")
+unit(235, 462, "L")
+# R: open right side, ball outside the hit zone
+ball_and_line(530, 300, 530, 462, "R", "#0969da")
+unit(530, 462, "R")
+o.append(text(385, 150, "target line = alignment stick,", 12, INK, "middle"))
+o.append(text(385, 166, "the same target TrackMan uses", 12, INK, "middle"))
 # legend
 lx = 635
 o.append(text(lx, 110, "L", 13, "#bc4c00", weight="bold"))
-for i, s in enumerate(("beside TrackMan's alcove", "TrackMan: ball + club", "→ Test 1, club path", "2026-11-01: 2.00° MAE,", "5 of 13 tracks wrong", "move 30-50 cm out", "from the alcove wall")):
+for i, s in enumerate(("left of TrackMan's alcove,", "ball in its hit zone", "TrackMan: ball + club", "→ Test 1, club path", "2026-11-01: 2.00° MAE,", "5 of 13 tracks wrong", "try 30-50 cm further left", "if the ball stays in the zone")):
     o.append(text(lx, 128 + 16 * i, s, 11, INK))
-o.append(text(lx, 270, "R", 13, "#0969da", weight="bold"))
-for i, s in enumerate(("open right side", "TrackMan: ball only", "→ Block 0, tuning,", "IWR launch, OPS", "2026-11-01: 0.90° MAE,", "1 of 10 tracks wrong")):
-    o.append(text(lx, 288 + 16 * i, s, 11, INK))
-o.append(text(lx, 420, "1 cm off the line", 11, MUTED))
-o.append(text(lx, 436, "≈ 0.36° launch bias", 11, MUTED))
-o.append(text(lx, 452, "at 1.6 m", 11, MUTED))
+o.append(text(lx, 285, "R", 13, "#0969da", weight="bold"))
+for i, s in enumerate(("open right side,", "ball outside the hit zone", "TrackMan: ball only", "→ Block 0, tuning,", "IWR launch, OPS", "2026-11-01: 0.90° MAE,", "1 of 10 tracks wrong")):
+    o.append(text(lx, 303 + 16 * i, s, 11, INK))
+o.append(text(lx, 435, "1 cm off the line", 11, MUTED))
+o.append(text(lx, 451, "≈ 0.36° launch bias", 11, MUTED))
+o.append(text(lx, 467, "at 1.6 m", 11, MUTED))
 o.append(text(340, 62, "downrange ↑", 12, MUTED, "middle"))
 o.append("</svg>")
 (OUT / "studio-placement.svg").write_text("\n".join(o) + "\n")

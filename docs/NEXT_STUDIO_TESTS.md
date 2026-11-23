@@ -269,12 +269,12 @@ they stand. What matters is that each knows its own geometry (distances,
 heights, tilt) and that both aim at the **same target line**, or horizontal
 launch and club path carry a constant offset.
 
-![Studio from above: the net downrange, TrackMan in the back wall's alcove on the left, OpenFlight at L beside it and at R on the open right side, each about 1.6 m behind its ball on a target line to the net](assets/studio-placement.svg)
+![Studio from above: the net downrange, TrackMan in the back wall's alcove with its hit zone in front of it, OpenFlight at L entirely to the left of the alcove with its ball inside the hit zone, and at R on the open right side with its ball outside the zone, each about 1.6 m behind its ball on a target line to the net](assets/studio-placement.svg)
 
 | Position | Where | TrackMan gives | 2026-11-01 |
 | --- | --- | --- | --- |
-| **R** | right side of the hitting area, looking downrange, open floor | ball data only | IWR launch 0.90° MAE vs TrackMan, 1 of 10 tracks wrong |
-| **L** | left side, ball in TrackMan's hitting area beside its wall alcove | ball **and club** data | 2.00° MAE, 5 of 13 tracks wrong (wall reflections and aim suspected) |
+| **R** | right side of the hitting area, looking downrange, open floor; ball outside TrackMan's hit zone | ball data only | IWR launch 0.90° MAE vs TrackMan, 1 of 10 tracks wrong |
+| **L** | unit entirely to the left of TrackMan's wall alcove, its ball inside TrackMan's hit zone | ball **and club** data | 2.00° MAE, 5 of 13 tracks wrong (wall reflections and aim suspected) |
 
 Set-up at each position, and again after every move:
 
@@ -291,8 +291,11 @@ Set-up at each position, and again after every move:
       calibration saved, what is left is the unit's aim error).
 - [ ] Camera reference still, with the stick and the ball in place and nobody in
       view (see [Camera](#camera-record-every-trigger-for-offline-tests)).
-- [ ] At **L**: move the unit 30-50 cm out from the alcove wall if TrackMan
-      still reports club data there, and confirm it does before the block.
+- [ ] At **L**: the unit stands entirely to the left of the alcove, as on
+      2026-11-01, so its ball lands in TrackMan's hit zone. To cut the alcove
+      wall's reflections, try it 30-50 cm further left, keep the ball inside
+      the hit zone, and confirm TrackMan still reports club data before the
+      block.
 - [ ] Note the position letter and time in the notes for every block. Never
       compare R and L shots in one table.
 
